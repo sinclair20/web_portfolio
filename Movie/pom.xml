@@ -23,6 +23,72 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
           <warSourceDirectory>WebContent</warSourceDirectory>
         </configuration>
       </plugin>
+      
+      <plugin>
+
+                <groupId>com.github.github</groupId>
+
+                <artifactId>site-maven-plugin</artifactId>
+
+                <version>3.6</version>
+
+                <configuration>
+
+                    <message>Maven artifacts for ${project.version}</message>
+
+                    <noJekyll>true</noJekyll>
+
+                    <outputDirectory>${project.build.directory}/mvn-repo</outputDirectory>
+
+                    <branch>refs/heads/mvn-repo</branch>
+
+                    <merge>true</merge> <!-- 이것도 추가 -->
+
+                    <includes>
+
+                        <include>**/*</include>
+
+                    </includes>
+
+                    <repositoryName>web_portfolio</repositoryName>
+
+                    <repositoryOwner>sinclair20</repositoryOwner>
+
+                </configuration>
+
+                <executions>
+
+                    <execution>
+
+                        <goals>
+
+                            <goal>site</goal>
+
+                        </goals>
+
+                        <phase>deploy</phase>
+
+                    </execution>
+
+                </executions>
+
+                <!-- site-maven-plugin 0.7 버전에서 에러 안 나도록, 아래 내용 추가 -->
+
+                <dependencies>
+
+                    <dependency>
+
+                        <groupId>org.eclipse.mylyn.github</groupId>
+
+                        <artifactId>org.eclipse.egit.github.core</artifactId>
+
+                        <version>2.0.3</version>
+
+                    </dependency>
+
+                </dependencies>
+
+            </plugin>
     </plugins>
     <finalName>Movie</finalName>
   </build>
