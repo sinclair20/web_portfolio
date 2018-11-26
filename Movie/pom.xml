@@ -24,13 +24,13 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
         </configuration>
       </plugin>
       
-      <plugin>
+          <plugin>
 
                 <groupId>com.github.github</groupId>
 
                 <artifactId>site-maven-plugin</artifactId>
 
-                <version>3.6</version>
+                <version>0.7</version>
 
                 <configuration>
 
@@ -50,9 +50,9 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
 
                     </includes>
 
-                    <repositoryName>web_portfolio</repositoryName>
+                    <repositoryName>깃헙리포지토리이름</repositoryName>
 
-                    <repositoryOwner>sinclair20</repositoryOwner>
+                    <repositoryOwner>깃헙ID</repositoryOwner>
 
                 </configuration>
 
@@ -89,6 +89,7 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
                 </dependencies>
 
             </plugin>
+      
     </plugins>
     <finalName>Movie</finalName>
   </build>
