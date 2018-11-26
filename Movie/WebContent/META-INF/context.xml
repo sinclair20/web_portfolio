@@ -1,0 +1,20 @@
+<Context path="/Movie" docBase="www">
+<Resource
+	name="jdbc/Movie"
+	auth="Container"
+	type="javax.sql.DataSource"
+	driverClassName="com.mysql.cj.jdbc.Driver"
+	loginTimeout="10" 
+	validationQuery="SELECT 1 FROM DUAL"
+	maxWait="5000"
+	username="root"
+	password="842693"
+	testOnBorrow="true"
+	url="jdbc:mysql://localhost:3306/Movie?serverTimezone=UTC">
+</Resource>
+
+<ResourceLink type="javax.sql.data.DataSource"
+	name="jdbc/Movie"
+	global="jdbc/Movie"/>
+	
+</Context> 
