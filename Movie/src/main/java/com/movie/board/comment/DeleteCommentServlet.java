@@ -31,7 +31,7 @@ public class DeleteCommentServlet extends HttpServlet {
 	    
 	    PrintWriter out = response.getWriter();
 	
-	    // Á¤»óÀûÀ¸·Î ´ñ±ÛÀ» »èÁ¦ÇßÀ»°æ¿ì 1À» Àü´ÞÇÑ´Ù.
+	    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 1ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ñ´ï¿½.
 	    if(result) out.println("1");
 	    
 	    out.close();
@@ -52,10 +52,10 @@ public class DeleteCommentServlet extends HttpServlet {
 			        boolean result = commentDAO.deleteComment(commentID);
 			        
 		        
-		        response.setContentType("text/html;charset=euc-kr");
+		        response.setContentType("text/html;charset=UTF-8");
 		        PrintWriter out = response.getWriter();
 		 
-		        // Á¤»óÀûÀ¸·Î ´ñ±ÛÀ» »èÁ¦ÇßÀ»°æ¿ì 1À» Àü´ÞÇÑ´Ù.
+		        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 1ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ñ´ï¿½.
 		        if(result) out.println("1");
 		        
 		        out.close();

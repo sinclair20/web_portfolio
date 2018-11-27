@@ -1,6 +1,7 @@
 package com.movie.user;
 
 import java.io.Console;
+
 import java.io.File;
 import java.io.IOException;
 
@@ -32,16 +33,16 @@ public class UserProfileServlet extends HttpServlet {
    		try {
    			multi = new MultipartRequest(request, savePath, fileMaxSize, "UTF-8", new DefaultFileRenamePolicy());
    		} catch (Exception e) {
-   			request.getSession().setAttribute("messageType", "¿À·ù ¸Þ½ÃÁö");
-			request.getSession().setAttribute("messageContent", "ÆÄÀÏ Å©±â´Â 10MB¸¦ ³ÑÀ» ¼ö ¾ø½À´Ï´Ù.");
+   			request.getSession().setAttribute("messageType", "ï¿½ï¿½ï¿½ï¿½ ï¿½Þ½ï¿½ï¿½ï¿½");
+			request.getSession().setAttribute("messageContent", "ï¿½ï¿½ï¿½ï¿½ Å©ï¿½ï¿½ï¿½ 10MBï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½.");
 			response.sendRedirect("profileUpdate.jsp");
 			return;
    		}
    		String userID = multi.getParameter("userID");
    		HttpSession session = request.getSession();
    		if (!userID.equals((String) session.getAttribute("userID"))) {
-			session.setAttribute("messageType", "¿À·ù ¸Þ½ÃÁö");
-			session.setAttribute("messageContent", "Á¢±ÙÇÒ ¼ö ¾ø½À´Ï´Ù.");
+			session.setAttribute("messageType", "ï¿½ï¿½ï¿½ï¿½ ï¿½Þ½ï¿½ï¿½ï¿½");
+			session.setAttribute("messageContent", "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½.");
 			response.sendRedirect("index.jsp");
 			return;
 		}
@@ -60,15 +61,15 @@ public class UserProfileServlet extends HttpServlet {
    				if (file.exists()) {
    					file.delete();
    				}
-   				session.setAttribute("messageType", "¿À·ù ¸Þ½ÃÁö");
-   				session.setAttribute("messageContent", "ÀÌ¹ÌÁö ÆÄÀÏ¸¸ ¾÷·Îµå °¡´ÉÇÕ´Ï´Ù.");
+   				session.setAttribute("messageType", "ï¿½ï¿½ï¿½ï¿½ ï¿½Þ½ï¿½ï¿½ï¿½");
+   				session.setAttribute("messageContent", "ï¿½Ì¹ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ï¸ï¿½ ï¿½ï¿½ï¿½Îµï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Õ´Ï´ï¿½.");
    				response.sendRedirect("profileUpdate.jsp");
    				return;
    			}
    		}
    		new UserDAO().profile(userID, fileName);
-   		session.setAttribute("messageType", "¼º°ø ¸Þ½ÃÁö");
-		session.setAttribute("messageContent", "¼º°øÀûÀ¸·Î ÇÁ·ÎÇÊÀÌ º¯°æµÇ¾ú½À´Ï´Ù.");
+   		session.setAttribute("messageType", "ï¿½ï¿½ï¿½ï¿½ ï¿½Þ½ï¿½ï¿½ï¿½");
+		session.setAttribute("messageContent", "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ç¾ï¿½ï¿½ï¿½ï¿½Ï´ï¿½.");
 		response.sendRedirect("index.jsp");
 		return;
 		
