@@ -29,7 +29,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.movie.chat.open.userList.UserListDAO;
 import com.movie.util.UserList;
 
-// ºê¶ó¿ìÀú°¡ WebsocketÀ» ÅëÇØ ¼­¹ö¿Í Åë½ÅÇÏ·Á¸é "@ServerEndpoint"·Î ÁÖ¼® Ã³¸® µÈ Å¬·¡½º¸¦ ¸¸µé¾î¾ßÇÕ´Ï´Ù.
+// ë¸Œë¼ìš°ì €ê°€ Websocketì„ í†µí•´ ì„œë²„ì™€ í†µì‹ í•˜ë ¤ë©´ "@ServerEndpoint"ë¡œ ì£¼ì„ ì²˜ë¦¬ ëœ í´ë˜ìŠ¤ë¥¼ ë§Œë“¤ì–´ì•¼í•©ë‹ˆë‹¤.
 @ServerEndpoint(value = "/chat")
 
 public class ChatEndpoint {
@@ -68,7 +68,7 @@ public class ChatEndpoint {
 						
 			userListDAO.write(URLDecoder.decode(userName,"UTF-8"));
 			room.join(session);
-			room.sendMessage(URLDecoder.decode(name, "UTF-8") + "´ÔÀÌ µé¾î¿Ô½À´Ï´Ù.");
+			room.sendMessage(URLDecoder.decode(name, "UTF-8") + "ë‹˜ì´ ë“¤ì–´ì™”ìŠµë‹ˆë‹¤.");
 		
 		} else if (chatMessage.getMessageType() == MessageType.USER) {
 			String name = (String) properties.get("name");			
@@ -90,7 +90,7 @@ public class ChatEndpoint {
 			e.printStackTrace();
 		}
 		room.leave(session);
-		room.sendMessage((String)session.getUserProperties().get("name") + "´ÔÀÌ ³ª°¬½À´Ï´Ù.");
+		room.sendMessage((String)session.getUserProperties().get("name") + "ë‹˜ì´ ë‚˜ê°”ìŠµë‹ˆë‹¤.");
 	}
 
 	@OnError

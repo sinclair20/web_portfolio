@@ -152,8 +152,8 @@ public class BoardDAO {
 		ResultSet rs = null;
 		
 		try {
-			if (searchType.equals("�ֽż�")) {				
-				// ���� �ι����� ������ ������.
+			if (searchType.equals("최신순")) {				
+				// 쿼리 두번으로 나누어 날리기.
 // "SELECT * FROM BOARD WHERE boardGroup > (SELECT MAX(boardGroup) FROM BOARD) - ? AND boardGroup <= (SELECT MAX(boardGroup) FROM BOARD) - ? ORDER BY boardGroup DESC, boardSequence ASC";			
 				//SQL = "SELECT * FROM BOARD WHERE boardTitle OR boardContent LIKE ? HAVING (boardGroup > (SELECT MAX(boardGroup) FROM BOARD) - ? AND boardGroup <= (SELECT MAX(boardGroup) FROM BOARD) - ?) ORDER BY boardGroup DESC, boardSequence ASC"; 
 				SQL = "SELECT * FROM BOARD WHERE CONCAT(boardTitle, boardContent) LIKE ? HAVING (boardGroup > (SELECT MAX(boardGroup) FROM BOARD) - ? AND boardGroup <= (SELECT MAX(boardGroup) FROM BOARD) - ?) ORDER BY boardGroup DESC, boardSequence ASC";
@@ -163,7 +163,7 @@ public class BoardDAO {
 				SQL = "SELECT * FROM BOARD WHERE CONCAT(boardTitle, boardContent) LIKE " +
 					  "? ORDER BY boardID"; */					 
 			} 
-			else if (searchType.equals("��õ��")){
+			else if (searchType.equals("추천순")){
 				SQL = "SELECT * FROM BOARD WHERE CONCAT(boardTitle, boardContent) LIKE ? HAVING (boardGroup > (SELECT MAX(boardGroup) FROM BOARD) - ? AND boardGroup <= (SELECT MAX(boardGroup) FROM BOARD) - ?) ORDER BY likeCount DESC";
 				//SQL = "SELECT * FROM BOARD WHERE CONCAT(boardTitle, boardContent) LIKE ? ORDER BY boardID boardGroup > (SELECT MAX(boardGroup) FROM BOARD) - ? AND boardGroup <= (SELECT MAX(boardGroup) FROM BOARD) - ? ORDER BY boardGroup DESC, boardSequence ASC";
 			
@@ -296,8 +296,8 @@ public class BoardDAO {
 		return "";
 	}
 	
-	// �Ⱦ��̴� �Լ�.
-	// �ش� �������� �������� ���� �������� �����ϴ��� ����� �Լ�.
+	// 안쓰이는 함수.
+	// 해당 페이지를 기준으로 다음 페이지가 존재하는지 물어보는 함수.
 	public boolean nextPage(String pageNumber, String search) {
 		
 		Connection conn = null;
@@ -312,7 +312,7 @@ public class BoardDAO {
 			pstmt.setInt(2, Integer.parseInt(pageNumber) * 10);
 			rs = pstmt.executeQuery();
 			if (rs.next()) {
-				return true;  // �Ѱ��� ������������ �Խñ��� �����Ѵٸ� true�� ��ȯ
+				return true;  // 한개라도 다음페이지에 게시글이 존재한다면 true값 반환
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -450,7 +450,7 @@ public class BoardDAO {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		// �������� �󸶳� �����ϴ��� ����ϴ� �Լ�.
+		// 페이지가 얼마나 존재하는지 계산하는 함수.
 		//String SQL = "SELECT COUNT(boardGroup) FROM BOARD WHERE boardGroup > ? ";
 		String SQL = "SELECT COUNT(boardGroup) FROM BOARD WHERE CONCAT (boardTitle, boardContent) LIKE ? AND boardGroup > ?";
 		try {
@@ -528,6 +528,6 @@ public class BoardDAO {
 				e.printStackTrace();
 			}
 		}
-		return null; // �������� �ʴ� ���̵�
+		return null; // 존재하지 않는 아이디
 	}
 }

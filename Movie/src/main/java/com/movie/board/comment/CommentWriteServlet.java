@@ -36,8 +36,8 @@ public class CommentWriteServlet  {
    		UserDTO user = userDAO.getUser(userID);
    		
    		/*if (!userID.equals((String) session.getAttribute("userID"))) {
-			session.setAttribute("messageType", "¿À·ù ¸Ş½ÃÁö");
-			session.setAttribute("messageContent", "Á¢±ÙÇÒ ¼ö ¾ø½À´Ï´Ù.");
+			session.setAttribute("messageType", "ì˜¤ë¥˜ ë©”ì‹œì§€");
+			session.setAttribute("messageContent", "ì ‘ê·¼í•  ìˆ˜ ì—†ìŠµë‹ˆë‹¤.");
 			response.sendRedirect("index.jsp");
 			return;
 		}*/
@@ -46,8 +46,8 @@ public class CommentWriteServlet  {
    		
    		   		
    		/*if ((userID == null || userID.equals("")) && (commentWriter == null || commentWriter.equals(""))) {
-   			session.setAttribute("messageType", "¿À·ù ¸Ş½ÃÁö");
-			session.setAttribute("messageContent", "´Ğ³×ÀÓÀ» ÀÔ·ÂÇØÁÖ¼¼¿ä.");
+   			session.setAttribute("messageType", "ì˜¤ë¥˜ ë©”ì‹œì§€");
+			session.setAttribute("messageContent", "ë‹‰ë„¤ì„ì„ ì…ë ¥í•´ì£¼ì„¸ìš”.");
 			response.sendRedirect("boardShow.jsp");
 			return;
    		}*/
@@ -64,8 +64,8 @@ public class CommentWriteServlet  {
    		System.out.println("commentContent :" + commentContent);
    		
    		if (commentContent == null || commentContent.equals("")) {
-   			session.setAttribute("messageType", "¿À·ù ¸Ş½ÃÁö");
-			session.setAttribute("messageContent", "³»¿ëÀ» ÀÔ·ÂÇØÁÖ¼¼¿ä");
+   			session.setAttribute("messageType", "ì˜¤ë¥˜ ë©”ì‹œì§€");
+			session.setAttribute("messageContent", "ë‚´ìš©ì„ ì…ë ¥í•´ì£¼ì„¸ìš”");
 			response.sendRedirect("boardShow.jsp");
 			return;
    		}
@@ -81,8 +81,8 @@ public class CommentWriteServlet  {
    		} else {
    			commentDAO.write(URLDecoder.decode(commentContent,"UTF-8"), URLDecoder.decode(commentWriter,"UTF-8"), boardID, userID, user.getUserPassword());	
    		}   		
-   	/*	session.setAttribute("messageType", "¼º°ø ¸Ş½ÃÁö");
-		session.setAttribute("messageContent", "¼º°øÀûÀ¸·Î °Ô½Ã¹°ÀÌ ÀÛ¼ºµÇ¾ú½À´Ï´Ù.");
+   	/*	session.setAttribute("messageType", "ì„±ê³µ ë©”ì‹œì§€");
+		session.setAttribute("messageContent", "ì„±ê³µì ìœ¼ë¡œ ê²Œì‹œë¬¼ì´ ì‘ì„±ë˜ì—ˆìŠµë‹ˆë‹¤.");
 		response.sendRedirect("boardShow.jsp");*/		
    		return;
 	}

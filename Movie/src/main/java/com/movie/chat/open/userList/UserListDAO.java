@@ -114,7 +114,7 @@ public class UserListDAO {
 			int flag = pstmt.executeUpdate();
             if(flag > 0){
                 result = true;
-                conn.commit(); // ¿Ï·á½Ã Ä¿¹Ô
+                conn.commit(); // ì™„ë£Œì‹œ ì»¤ë°‹
             }    
             
 			return result;			

@@ -39,6 +39,6 @@ public class LikeyDAO {
 				e.printStackTrace();
 			}
 		}
-		return -1; //ÃßÃµ Áßº¹ ¿À·ù
+		return -1; //ì¶”ì²œ ì¤‘ë³µ ì˜¤ë¥˜
 	}
 }

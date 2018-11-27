@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import javax.json.JsonValue;
 
-//°£´ÜÇÑ ´ëÈ­¹æÀÇ °æ¿ì ¸Ş½ÃÁöµµ °£´ÜÇÕ´Ï´Ù. ±×°ÍÀº "ChatMessage.java"ÆÄÀÏ¿¡ ±¸Çö µÈ ¸Ş½ÃÁö À¯Çü°ú ¸Ş½ÃÁö ³»¿ë¸¸À» °¡Áö°í ÀÖ½À´Ï´Ù.
+//ê°„ë‹¨í•œ ëŒ€í™”ë°©ì˜ ê²½ìš° ë©”ì‹œì§€ë„ ê°„ë‹¨í•©ë‹ˆë‹¤. ê·¸ê²ƒì€ "ChatMessage.java"íŒŒì¼ì— êµ¬í˜„ ëœ ë©”ì‹œì§€ ìœ í˜•ê³¼ ë©”ì‹œì§€ ë‚´ìš©ë§Œì„ ê°€ì§€ê³  ìˆìŠµë‹ˆë‹¤.
 
 public class ChatMessage {
 	private MessageType messageType;

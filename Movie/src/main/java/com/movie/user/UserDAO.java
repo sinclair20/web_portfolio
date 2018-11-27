@@ -81,7 +81,7 @@ public class UserDAO {
 				e.printStackTrace();
 			}		
 		}
-		return false; //µ¥ÀÌÅÍ º£ÀÌ½º ¿À·ù
+		return false; //ë°ì´í„° ë² ì´ìŠ¤ ì˜¤ë¥˜
 	}
 	
 	
@@ -137,7 +137,7 @@ public class UserDAO {
 				e.printStackTrace();
 			}		
 		}
-		return false; //µ¥ÀÌÅÍ º£ÀÌ½º ¿À·ù
+		return false; //ë°ì´í„° ë² ì´ìŠ¤ ì˜¤ë¥˜
 	}
 	
 	
@@ -190,7 +190,7 @@ public class UserDAO {
 			pstmt.setString(6, userEmail);
 			pstmt.setString(7, userProfile);
 			pstmt.setString(8, userEmailHash);
-			return pstmt.executeUpdate();  	// executeUpdate(), executeQuery() Â÷ÀÌ °­ÀÇÆò°¡ 8°­(7ºĞ 30ÃÊ)
+			return pstmt.executeUpdate();  	// executeUpdate(), executeQuery() ì°¨ì´ ê°•ì˜í‰ê°€ 8ê°•(7ë¶„ 30ì´ˆ)
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {

@@ -24,60 +24,60 @@ public class UserLoginServlet extends HttpServlet {
   		/*if (previousPage != "http://localhost:8080/Movie/openChat.jsp"){*/
   		if (previousPage.equals("http://localhost:8080/Movie/openChatIndex.jsp")) {
   			if (userID == null || userID.equals("") || userPassword ==  null || userPassword.equals("")) {
-  	  			request.getSession().setAttribute("messageType", "¿À·ù ¸Ş½ÃÁö");
-  	  			request.getSession().setAttribute("messageContent", "¸ğµç ³»¿ëÀ» ÀÔ·ÂÇØÁÖ¼¼¿ä");
+  	  			request.getSession().setAttribute("messageType", "ì˜¤ë¥˜ ë©”ì‹œì§€");
+  	  			request.getSession().setAttribute("messageContent", "ëª¨ë“  ë‚´ìš©ì„ ì…ë ¥í•´ì£¼ì„¸ìš”");
   	  			response.sendRedirect("userLogin.jsp");
   	  			return;
   	  		}
   	  		
   	  		if (result == 1) {
   	  			request.getSession().setAttribute("userID", userID);
-  	  			request.getSession().setAttribute("messageType", "¼º°ø ¸Ş½ÃÁö");
-  				request.getSession().setAttribute("messageContent", "·Î±×ÀÎ¿¡ ¼º°øÇß½À´Ï´Ù.");
+  	  			request.getSession().setAttribute("messageType", "ì„±ê³µ ë©”ì‹œì§€");
+  				request.getSession().setAttribute("messageContent", "ë¡œê·¸ì¸ì— ì„±ê³µí–ˆìŠµë‹ˆë‹¤.");
   				response.sendRedirect("chatRoom.jsp");
   	  			
   	  		} else if (result == 2) {
-  	  			request.getSession().setAttribute("messageType", "¿À·ù ¸Ş½ÃÁö");
-  	  			request.getSession().setAttribute("messageContent", "ºñ¹Ğ¹øÈ£¸¦ ´Ù½Ã È®ÀÎÇÏ¼¼¿ä.");
+  	  			request.getSession().setAttribute("messageType", "ì˜¤ë¥˜ ë©”ì‹œì§€");
+  	  			request.getSession().setAttribute("messageContent", "ë¹„ë°€ë²ˆí˜¸ë¥¼ ë‹¤ì‹œ í™•ì¸í•˜ì„¸ìš”.");
   	  			response.sendRedirect("userLogin.jsp");
   	  		
   	  		} else if (result == 0) {
-  	  			request.getSession().setAttribute("messageType", "¿À·ù ¸Ş½ÃÁö");
-  	  			request.getSession().setAttribute("messageContent", "¾ÆÀÌµğ°¡ Á¸ÀçÇÏÁö ¾Ê½À´Ï´Ù.");
+  	  			request.getSession().setAttribute("messageType", "ì˜¤ë¥˜ ë©”ì‹œì§€");
+  	  			request.getSession().setAttribute("messageContent", "ì•„ì´ë””ê°€ ì¡´ì¬í•˜ì§€ ì•ŠìŠµë‹ˆë‹¤.");
   	  			response.sendRedirect("userLogin.jsp");
   	  		
   	  		} else if (result == -1) {
-  	  			request.getSession().setAttribute("messageType", "¿À·ù ¸Ş½ÃÁö");
-  	  			request.getSession().setAttribute("messageContent", "µ¥ÀÌÅÍº£ÀÌ½º ¿À·ù°¡ ¹ß»ıÇß½À´Ï´Ù.");
+  	  			request.getSession().setAttribute("messageType", "ì˜¤ë¥˜ ë©”ì‹œì§€");
+  	  			request.getSession().setAttribute("messageContent", "ë°ì´í„°ë² ì´ìŠ¤ ì˜¤ë¥˜ê°€ ë°œìƒí–ˆìŠµë‹ˆë‹¤.");
   	  			response.sendRedirect("userLogin.jsp");
   	  		}
   		} else {
   		
   		if (userID == null || userID.equals("") || userPassword ==  null || userPassword.equals("")) {
-  			request.getSession().setAttribute("messageType", "¿À·ù ¸Ş½ÃÁö");
-  			request.getSession().setAttribute("messageContent", "¸ğµç ³»¿ëÀ» ÀÔ·ÂÇØÁÖ¼¼¿ä");
+  			request.getSession().setAttribute("messageType", "ì˜¤ë¥˜ ë©”ì‹œì§€");
+  			request.getSession().setAttribute("messageContent", "ëª¨ë“  ë‚´ìš©ì„ ì…ë ¥í•´ì£¼ì„¸ìš”");
   			response.sendRedirect("userLogin.jsp");
   			return;
   		}
   		if (result == 1) {
   			request.getSession().setAttribute("userID", userID);
-  			request.getSession().setAttribute("messageType", "¼º°ø ¸Ş½ÃÁö");
-			request.getSession().setAttribute("messageContent", "·Î±×ÀÎ¿¡ ¼º°øÇß½À´Ï´Ù.");
+  			request.getSession().setAttribute("messageType", "ì„±ê³µ ë©”ì‹œì§€");
+			request.getSession().setAttribute("messageContent", "ë¡œê·¸ì¸ì— ì„±ê³µí–ˆìŠµë‹ˆë‹¤.");
 			response.sendRedirect("index.jsp");
   			
   		} else if (result == 2) {
-  			request.getSession().setAttribute("messageType", "¿À·ù ¸Ş½ÃÁö");
-  			request.getSession().setAttribute("messageContent", "ºñ¹Ğ¹øÈ£¸¦ ´Ù½Ã È®ÀÎÇÏ¼¼¿ä.");
+  			request.getSession().setAttribute("messageType", "ì˜¤ë¥˜ ë©”ì‹œì§€");
+  			request.getSession().setAttribute("messageContent", "ë¹„ë°€ë²ˆí˜¸ë¥¼ ë‹¤ì‹œ í™•ì¸í•˜ì„¸ìš”.");
   			response.sendRedirect("userLogin.jsp");
   		
   		} else if (result == 0) {
-  			request.getSession().setAttribute("messageType", "¿À·ù ¸Ş½ÃÁö");
-  			request.getSession().setAttribute("messageContent", "¾ÆÀÌµğ°¡ Á¸ÀçÇÏÁö ¾Ê½À´Ï´Ù.");
+  			request.getSession().setAttribute("messageType", "ì˜¤ë¥˜ ë©”ì‹œì§€");
+  			request.getSession().setAttribute("messageContent", "ì•„ì´ë””ê°€ ì¡´ì¬í•˜ì§€ ì•ŠìŠµë‹ˆë‹¤.");
   			response.sendRedirect("userLogin.jsp");
   		
   		} else if (result == -1) {
-  			request.getSession().setAttribute("messageType", "¿À·ù ¸Ş½ÃÁö");
-  			request.getSession().setAttribute("messageContent", "µ¥ÀÌÅÍº£ÀÌ½º ¿À·ù°¡ ¹ß»ıÇß½À´Ï´Ù.");
+  			request.getSession().setAttribute("messageType", "ì˜¤ë¥˜ ë©”ì‹œì§€");
+  			request.getSession().setAttribute("messageContent", "ë°ì´í„°ë² ì´ìŠ¤ ì˜¤ë¥˜ê°€ ë°œìƒí–ˆìŠµë‹ˆë‹¤.");
   			response.sendRedirect("userLogin.jsp");
   		}
   	}

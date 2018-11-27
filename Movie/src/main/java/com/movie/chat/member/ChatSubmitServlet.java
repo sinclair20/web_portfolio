@@ -23,7 +23,7 @@ public class ChatSubmitServlet extends HttpServlet {
 		if (fromID == null || fromID.equals("") || toID == null || toID.equals("") 
 				|| chatContent == null || chatContent.equals("")) {			
 			response.getWriter().write("0");
-		} else if (fromID.equals(toID)) {  // ¸Ş½ÃÁö¸¦ Àü¼ÛÇÏ´Â »ç¶÷ÀÌ ÀÚ±â ÀÚ½ÅÀÎ °æ¿ì.
+		} else if (fromID.equals(toID)) { // ë©”ì‹œì§€ë¥¼ ì „ì†¡í•˜ëŠ” ì‚¬ëŒì´ ìê¸° ìì‹ ì¸ ê²½ìš°.
 			response.getWriter().write("-1");
 		} else {
 			fromID = URLDecoder.decode(fromID, "UTF-8");

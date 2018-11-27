@@ -199,9 +199,9 @@ public class CommentDAO {
 				comment.setCommentContent(rs.getString("commentContent").replaceAll(" ", "&nbsp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br>"));
 				/*comment.setCommentDate(rs.getString("commentDate").substring(5, 16));*/
 				int commentDate = Integer.parseInt(rs.getString("commentDate").substring(11, 13));
-				String timeType = "¿ÀÀü";
+				String timeType = "ì˜¤ì „";
 				if (commentDate >= 12) {
-					timeType = "¿ÀÈÄ";
+					timeType = "ì˜¤í›„";
 					commentDate -= 12;
 				}
 				comment.setCommentDate(rs.getString("commentDate").substring(0, 11) + " " + timeType + " " + commentDate + ":" + rs.getString("commentDate").substring(14, 16) + "");
@@ -269,7 +269,7 @@ public class CommentDAO {
 			int flag = pstmt.executeUpdate();
             if(flag > 0){
                 result = true;
-                conn.commit(); // ¿Ï·á½Ã Ä¿¹Ô
+                conn.commit(); // ì™„ë£Œì‹œ ì»¤ë°‹
             }    
             
 			return result;			
@@ -297,7 +297,7 @@ public class CommentDAO {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		// 7°­ ¿¡¼­ ³ª¿Â SQL¹®°ú º¯Çß´ÂÁö
+		// 7ê°• ì—ì„œ ë‚˜ì˜¨ SQLë¬¸ê³¼ ë³€í–ˆëŠ”ì§€
 		String SQL = "SELECT * FROM CHAT WHERE ((fromID = ? AND toID = ?) OR (fromID = ? AND toID = ?)) AND chatID > ? ORDER BY chatTime";
 		String SQL = "SELECT * FROM COMMENT WHERE boardID = ?";
 		
@@ -318,9 +318,9 @@ public class CommentDAO {
 				chat.setToID(rs.getString("toID").replaceAll(" ", "&nbsp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br>"));
 				chat.setChatContent(rs.getString("chatContent").replaceAll(" ", "&nbsp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br>"));
 				int chatTime = Integer.parseInt(rs.getString("chatTime").substring(11, 13));
-				String timeType = "¿ÀÀü";
+				String timeType = "ì˜¤ì „";
 				if (chatTime >= 12) {
-					timeType = "¿ÀÈÄ";
+					timeType = "ì˜¤í›„";
 					chatTime -= 12;
 				}
 				chat.setChatTime(rs.getString("chatTime").substring(0, 11) + " " + timeType + " " + chatTime +  ":" + rs.getString("chatTime").substring(14, 16) + "");

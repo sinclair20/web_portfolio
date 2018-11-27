@@ -30,8 +30,8 @@ public class BoardDeleteServlet extends HttpServlet {
   		String boardID = request.getParameter("boardID");
   		
   		if (boardID == null || boardID.equals("")) {  			
-  			request.getSession().setAttribute("messageType", "¿À·ù ¸Ş½ÃÁö");
-			request.getSession().setAttribute("messageContent", "Á¢±ÙÇÒ ¼ö ¾ø½À´Ï´Ù.");
+  			request.getSession().setAttribute("messageType", "ì˜¤ë¥˜ ë©”ì‹œì§€");
+			request.getSession().setAttribute("messageContent", "ì ‘ê·¼í•  ìˆ˜ ì—†ìŠµë‹ˆë‹¤.");
 			response.sendRedirect("index.jsp");
 			return;  			
   		} 
@@ -39,8 +39,8 @@ public class BoardDeleteServlet extends HttpServlet {
   		BoardDAO boardDAO = new BoardDAO();
   		BoardDTO board = boardDAO.getBoard(boardID);
   		if (!userID.equals(board.getUserID())) {
-  			request.getSession().setAttribute("messageType", "¿À·ù ¸Ş½ÃÁö");
-			request.getSession().setAttribute("messageContent", "Á¢±ÙÇÒ ¼ö ¾ø½À´Ï´Ù.");
+  			request.getSession().setAttribute("messageType", "ì˜¤ë¥˜ ë©”ì‹œì§€");
+			request.getSession().setAttribute("messageContent", "ì ‘ê·¼í•  ìˆ˜ ì—†ìŠµë‹ˆë‹¤.");
 			response.sendRedirect("index.jsp");
 			return;  	
   		}
@@ -49,8 +49,8 @@ public class BoardDeleteServlet extends HttpServlet {
   		int result = boardDAO.delete(boardID);
   		
   		if (result == -1) {
-  			request.getSession().setAttribute("messageType", "¿À·ù ¸Ş½ÃÁö");
-			request.getSession().setAttribute("messageContent", "Á¢±ÙÇÒ ¼ö ¾ø½À´Ï´Ù.");
+  			request.getSession().setAttribute("messageType", "ì˜¤ë¥˜ ë©”ì‹œì§€");
+			request.getSession().setAttribute("messageContent", "ì ‘ê·¼í•  ìˆ˜ ì—†ìŠµë‹ˆë‹¤.");
 			response.sendRedirect("index.jsp");
 			return;   			
   		} else {
@@ -58,8 +58,8 @@ public class BoardDeleteServlet extends HttpServlet {
   			if (prevFile.exists()) {
   				prevFile.delete();
   			}
-  			request.getSession().setAttribute("messageType", "¼º°ø ¸Ş½ÃÁö");
-			request.getSession().setAttribute("messageContent", "»èÁ¦¿¡ ¼º°øÇß½À´Ï´Ù.");
+  			request.getSession().setAttribute("messageType", "ì„±ê³µ ë©”ì‹œì§€");
+			request.getSession().setAttribute("messageContent", "ì‚­ì œì— ì„±ê³µí–ˆìŠµë‹ˆë‹¤.");
 			response.sendRedirect("boardView.jsp");
   		}
   		

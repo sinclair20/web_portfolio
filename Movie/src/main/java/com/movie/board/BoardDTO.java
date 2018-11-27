@@ -9,7 +9,7 @@ public class BoardDTO {
 	int boardHit;
 	String boardFile;
 	String boardRealFile;
-	int boardGroup; // °Ô½Ã±Û ±×·ìÈ­¿¡ ¾²ÀÌ´Â º¯¼ö
+	int boardGroup; // ê²Œì‹œê¸€ ê·¸ë£¹í™”ì— ì“°ì´ëŠ” ë³€ìˆ˜
 	int boardSequence; 
 	int boardLevel;
 	int boardAvailable;

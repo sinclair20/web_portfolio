@@ -16,8 +16,8 @@ import com.movie.board.comment.CommentDAO;
 	    public ActionForward execute(HttpServletRequest request,
 
 	            HttpServletResponse response) throws Exception {
-	    		response.setContentType("text/html;charset=euc-kr");
-	    		System.out.println("ÀÌµ¿ÆäÀÌÁö");
+	    		response.setContentType("text/html;charset=UTF-8");
+	    		System.out.println("ì´ë™í˜ì´ì§€");
 	    		response.sendRedirect("openChatIndex.jsp");
 		   			        
 	    		return null;

@@ -20,8 +20,8 @@ public class UserRegisterCheckServlet extends HttpServlet {
 		
 		if (userID == null || userID.equals("")) response.getWriter().write("-1");
 		
-		// response.getWriter() ÀÌ¿ëÇØ¼­ »ç¿ëÀÚ¿¡°Ô ¹İÈ¯ÇØÁÖ±â
-		response.getWriter().write(new UserDAO().registerCheck(userID) + ""); // ¹®ÀÚ¿­ ÇüÅÂ·Î Ãâ·ÂÇÏ±â À§ÇØ °ø¹é¹®ÀÚ¿­("") Ãß°¡
+		// response.getWriter() ì´ìš©í•´ì„œ ì‚¬ìš©ìì—ê²Œ ë°˜í™˜í•´ì£¼ê¸°
+		response.getWriter().write(new UserDAO().registerCheck(userID) + ""); // ï¿½ï¿½ï¿½Ú¿ï¿½ ï¿½ï¿½ï¿½Â·ï¿½ ï¿½ï¿½ï¿½ï¿½Ï±ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½é¹®ï¿½Ú¿ï¿½("") ï¿½ß°ï¿½
 		
 			
 			

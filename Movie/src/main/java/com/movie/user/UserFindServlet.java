@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-// ¼­ºí¸´ :  ÄÁÆ®·Ñ·¯ ¿ªÇÒ ¼öÇà.
+//ì„œë¸”ë¦¿ :  ì»¨íŠ¸ë¡¤ëŸ¬ ì—­í•  ìˆ˜í–‰.
 @WebServlet("/UserFindServlet")
 public class UserFindServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;

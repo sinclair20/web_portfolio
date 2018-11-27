@@ -33,8 +33,8 @@ public class CommentUpdateServlet extends HttpServlet {
    		BoardDAO boardDAO = new BoardDAO();
    		BoardDTO board = boardDAO.getBoard(boardID);
    		/*if (!userID.equals(comment.getUserID())) {
-   			session.setAttribute("messageType", "¿À·ù ¸Ş½ÃÁö");
-			session.setAttribute("messageContent", "Á¢±ÙÇÒ ¼ö ¾ø½À´Ï´Ù.");
+   			session.setAttribute("messageType", "ì˜¤ë¥˜ ë©”ì‹œì§€");
+			session.setAttribute("messageContent", "ì ‘ê·¼í•  ìˆ˜ ì—†ìŠµë‹ˆë‹¤.");
 			response.sendRedirect("index.jsp");
 			return;
    		}*/
@@ -43,8 +43,8 @@ public class CommentUpdateServlet extends HttpServlet {
    	
    	
    		commentDAO.update(boardID, commentID, commentContent);
-   		session.setAttribute("messageType", "¼º°ø ¸Ş½ÃÁö");
-		session.setAttribute("messageContent", "´ñ±ÛÀÌ ¼º°øÀûÀ¸·Î ¼öÁ¤µÇ¾ú½À´Ï´Ù.");
+   		session.setAttribute("messageType", "ì„±ê³µ ë©”ì‹œì§€");
+		session.setAttribute("messageContent", "ëŒ“ê¸€ì´ ì„±ê³µì ìœ¼ë¡œ ìˆ˜ì •ë˜ì—ˆìŠµë‹ˆë‹¤.");
 		response.sendRedirect("boardShow.jsp?boardID="+board.getBoardID());
 		return;
 		

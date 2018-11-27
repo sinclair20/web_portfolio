@@ -12,7 +12,7 @@ import com.movie.util.SHA256;
 
 
 
-// ¼­ºí¸´ :  ÄÁÆ®·Ñ·¯ ¿ªÇÒ ¼öÇà.
+//ì„œë¸”ë¦¿ :  ì»¨íŠ¸ë¡¤ëŸ¬ ì—­í•  ìˆ˜í–‰.
 @WebServlet("/UserRegisterServlet")
 public class UserRegisterServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -25,7 +25,7 @@ public class UserRegisterServlet extends HttpServlet {
 		String userPassword1 = request.getParameter("userPassword1");
 		String userPassword2 = request.getParameter("userPassword2");
 		String userName = request.getParameter("userName");
-		String userAge = request.getParameter("userAge");  // userAgeÀÇ ±âº»µ¥ÀÌÅÍ Å¸ÀÔÀº intÀÌ³ª »ç¿ëÀÚ·ÎºÎÅÍ ÀÔ·Â¹Ş´Â ÇüÅÂ´Â String ÇüÅÂÀÌ±â¶§¹®.
+		String userAge = request.getParameter("userAge");   // userAgeì˜ ê¸°ë³¸ë°ì´í„° íƒ€ì…ì€ intì´ë‚˜ ì‚¬ìš©ìë¡œë¶€í„° ì…ë ¥ë°›ëŠ” í˜•íƒœëŠ” String í˜•íƒœì´ê¸°ë•Œë¬¸.
 		String userGender = request.getParameter("userGender");
 		String userEmail = request.getParameter("userEmail");
 		String userProfile = request.getParameter("userProfile");
@@ -40,30 +40,30 @@ public class UserRegisterServlet extends HttpServlet {
 			userAge == null || userAge.equals("") || userGender == null || userGender.equals("") ||
 			userEmail == null || userEmail.equals("")) {
 			
-			request.getSession().setAttribute("messageType", "¿À·ù ¸Ş½ÃÁö");
-			request.getSession().setAttribute("messageContent", "¸ğµç ³»¿ëÀ» ÀÔ·ÂÇÏ¼¼¿ä.");
+			request.getSession().setAttribute("messageType", "ï¿½ï¿½ï¿½ï¿½ ï¿½Ş½ï¿½ï¿½ï¿½");
+			request.getSession().setAttribute("messageContent", "ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ô·ï¿½ï¿½Ï¼ï¿½ï¿½ï¿½.");
 			response.sendRedirect("userJoin.jsp");
 			return;
 		}
 		
 		if (!userPassword1.equals(userPassword2)) {
-			request.getSession().setAttribute("messageType", "¿À·ù ¸Ş½ÃÁö");
-			request.getSession().setAttribute("messageContent", "ºñ¹Ğ¹øÈ£°¡ ÀÏÄ¡ÇÏÁö ¾Ê½À´Ï´Ù.");
+			request.getSession().setAttribute("messageType", "ï¿½ï¿½ï¿½ï¿½ ï¿½Ş½ï¿½ï¿½ï¿½");
+			request.getSession().setAttribute("messageContent", "ï¿½ï¿½Ğ¹ï¿½È£ï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ï¿½ï¿½ ï¿½Ê½ï¿½ï¿½Ï´ï¿½.");
 			response.sendRedirect("userJoin.jsp");
 			return;
 		}
 		
 		//
-		// ""(°ø¹é) ºÎºĞÀº ¿ø·¡ userProfile ÀÎÀÚ ÀÎµ¥ È¸¿ø°¡ÀÔÇÒ¶§´Â ±âº»ÀûÀ¸·Î ÇÁ·ÎÇÊ¿¡ °ø¹é¹®ÀÚ¿­ÀÌ µé¾î°¡µµ·Ï ÇØÁÖ±âÀ§ÇØ
+		// ""(ê³µë°±) ë¶€ë¶„ì€ ì›ë˜ userProfile ì¸ì ì¸ë° íšŒì›ê°€ì…í• ë•ŒëŠ” ê¸°ë³¸ì ìœ¼ë¡œ í”„ë¡œí•„ì— ê³µë°±ë¬¸ìì—´ì´ ë“¤ì–´ê°€ë„ë¡ í•´ì£¼ê¸°ìœ„í•´
 		int result = new UserDAO().register(userID, userPassword1, userName, userAge, userGender, userEmail, "",  SHA256.getSHA256(userEmail), userEmailChecked);
 		if (result == 1) {
 			request.getSession().setAttribute("userID", userID);
-			request.getSession().setAttribute("messageType", "¼º°ø ¸Ş½ÃÁö");
-			request.getSession().setAttribute("messageContent", "È¸¿ø°¡ÀÔ¿¡ ¼º°øÇß½À´Ï´Ù. ÀÌ¸ŞÀÏ ÀÎÁõÀ» ¼öÇàÇØÁÖ¼¼¿ä.");
+			request.getSession().setAttribute("messageType", "ï¿½ï¿½ï¿½ï¿½ ï¿½Ş½ï¿½ï¿½ï¿½");
+			request.getSession().setAttribute("messageContent", "È¸ï¿½ï¿½ï¿½ï¿½ï¿½Ô¿ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ß½ï¿½ï¿½Ï´ï¿½. ï¿½Ì¸ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö¼ï¿½ï¿½ï¿½.");
 			response.sendRedirect("emailSendAction.jsp");
 		} else {
-			request.getSession().setAttribute("messageType", "¿À·ù ¸Ş½ÃÁö");
-			request.getSession().setAttribute("messageContent", "ÀÌ¹Ì Á¸ÀçÇÏ´Â È¸¿øÀÔ´Ï´Ù.");
+			request.getSession().setAttribute("messageType", "ï¿½ï¿½ï¿½ï¿½ ï¿½Ş½ï¿½ï¿½ï¿½");
+			request.getSession().setAttribute("messageContent", "ï¿½Ì¹ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ È¸ï¿½ï¿½ï¿½Ô´Ï´ï¿½.");
 			response.sendRedirect("userJoin.jsp");
 		}
 	}

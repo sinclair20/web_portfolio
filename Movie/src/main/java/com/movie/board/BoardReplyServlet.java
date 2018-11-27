@@ -32,23 +32,23 @@ public class BoardReplyServlet extends HttpServlet {
    		try {
    			multi = new MultipartRequest(request, savePath, fileMaxSize, "UTF-8", new DefaultFileRenamePolicy());
    		} catch (Exception e) {
-   			request.getSession().setAttribute("messageType", "¿À·ù ¸Ş½ÃÁö");
-			request.getSession().setAttribute("messageContent", "ÆÄÀÏ Å©±â´Â 10MB¸¦ ³ÑÀ» ¼ö ¾ø½À´Ï´Ù.");
+   			request.getSession().setAttribute("messageType", "ì˜¤ë¥˜ ë©”ì‹œì§€");
+			request.getSession().setAttribute("messageContent", "íŒŒì¼ í¬ê¸°ëŠ” 10MBë¥¼ ë„˜ì„ ìˆ˜ ì—†ìŠµë‹ˆë‹¤.");
 			response.sendRedirect("boardReply.jsp");
 			return;
    		}
    		String userID = multi.getParameter("userID");
    		HttpSession session = request.getSession();
    		if (!userID.equals((String) session.getAttribute("userID"))) {
-			session.setAttribute("messageType", "¿À·ù ¸Ş½ÃÁö");
-			session.setAttribute("messageContent", "Á¢±ÙÇÒ ¼ö ¾ø½À´Ï´Ù.");
+			session.setAttribute("messageType", "ì˜¤ë¥˜ ë©”ì‹œì§€");
+			session.setAttribute("messageContent", "ì ‘ê·¼í•  ìˆ˜ ì—†ìŠµë‹ˆë‹¤.");
 			response.sendRedirect("boardReply.jsp");
 			return;
 		}
    		String boardID = multi.getParameter("boardID");
    		if (boardID == null || boardID.equals("")) {
-   			session.setAttribute("messageType", "¿À·ù ¸Ş½ÃÁö");
-			session.setAttribute("messageContent", "³»¿ëÀ» ¸ğµÎ ÀÔ·Â»õÁÖ¼¼¿ä");
+   			session.setAttribute("messageType", "ì˜¤ë¥˜ ë©”ì‹œì§€");
+			session.setAttribute("messageContent", "ë‚´ìš©ì„ ëª¨ë‘ ì…ë ¥ìƒˆì£¼ì„¸ìš”");
 			response.sendRedirect("boardReply.jsp");
 			return;
    		}
@@ -56,8 +56,8 @@ public class BoardReplyServlet extends HttpServlet {
    		String boardTitle= multi.getParameter("boardTitle");
    		String boardContent= multi.getParameter("boardContent");
    		if (boardTitle == null || boardTitle.equals("") || boardContent == null || boardContent.equals("")) {
-   			session.setAttribute("messageType", "¿À·ù ¸Ş½ÃÁö");
-			session.setAttribute("messageContent", "³»¿ëÀ» ¸ğµÎ ÀÔ·Â»õÁÖ¼¼¿ä");
+   			session.setAttribute("messageType", "ì˜¤ë¥˜ ë©”ì‹œì§€");
+			session.setAttribute("messageContent", "ë‚´ìš©ì„ ëª¨ë‘ ì…ë ¥ìƒˆì£¼ì„¸ìš”");
 			response.sendRedirect("boardReply.jsp");
 			return;
    		}
@@ -74,8 +74,8 @@ public class BoardReplyServlet extends HttpServlet {
    		
    		boardDAO.replyUpdate(parent);
    		boardDAO.reply(userID, boardTitle, boardContent, boardFile, boardRealFile, parent);
-   		session.setAttribute("messageType", "¼º°ø ¸Ş½ÃÁö");
-		session.setAttribute("messageType", "¼º°øÀûÀ¸·Î ´äº¯ÀÌ ÀÛ¼ºµÇ¾ú½À´Ï´Ù.");
+   		session.setAttribute("messageType", "ì„±ê³µ ë©”ì‹œì§€");
+		session.setAttribute("messageType", "ì„±ê³µì ìœ¼ë¡œ ë‹µë³€ì´ ì‘ì„±ë˜ì—ˆìŠµë‹ˆë‹¤.");
 		response.sendRedirect("boardView.jsp");
 		return;
 		

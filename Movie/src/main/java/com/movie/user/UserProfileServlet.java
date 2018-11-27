@@ -1,7 +1,6 @@
 package com.movie.user;
 
 import java.io.Console;
-
 import java.io.File;
 import java.io.IOException;
 
@@ -33,16 +32,16 @@ public class UserProfileServlet extends HttpServlet {
    		try {
    			multi = new MultipartRequest(request, savePath, fileMaxSize, "UTF-8", new DefaultFileRenamePolicy());
    		} catch (Exception e) {
-   			request.getSession().setAttribute("messageType", "���� �޽���");
-			request.getSession().setAttribute("messageContent", "���� ũ��� 10MB�� ���� �� �����ϴ�.");
+   			request.getSession().setAttribute("messageType", "오류 메시지");
+			request.getSession().setAttribute("messageContent", "파일 크기는 10MB를 넘을 수 없습니다.");
 			response.sendRedirect("profileUpdate.jsp");
 			return;
    		}
    		String userID = multi.getParameter("userID");
    		HttpSession session = request.getSession();
    		if (!userID.equals((String) session.getAttribute("userID"))) {
-			session.setAttribute("messageType", "���� �޽���");
-			session.setAttribute("messageContent", "������ �� �����ϴ�.");
+			session.setAttribute("messageType", "오류 메시지");
+			session.setAttribute("messageContent", "접근할 수 없습니다.");
 			response.sendRedirect("index.jsp");
 			return;
 		}
@@ -61,15 +60,15 @@ public class UserProfileServlet extends HttpServlet {
    				if (file.exists()) {
    					file.delete();
    				}
-   				session.setAttribute("messageType", "���� �޽���");
-   				session.setAttribute("messageContent", "�̹��� ���ϸ� ���ε� �����մϴ�.");
+   				session.setAttribute("messageType", "오류 메시지");
+   				session.setAttribute("messageContent", "이미지 파일만 업로드 가능합니다.");
    				response.sendRedirect("profileUpdate.jsp");
    				return;
    			}
    		}
    		new UserDAO().profile(userID, fileName);
-   		session.setAttribute("messageType", "���� �޽���");
-		session.setAttribute("messageContent", "���������� �������� ����Ǿ����ϴ�.");
+   		session.setAttribute("messageType", "성공 메시지");
+		session.setAttribute("messageContent", "성공적으로 프로필이 변경되었습니다.");
 		response.sendRedirect("index.jsp");
 		return;
 		

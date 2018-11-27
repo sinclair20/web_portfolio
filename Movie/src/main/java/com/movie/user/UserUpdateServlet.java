@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-// ¼­ºí¸´ :  ÄÁÆ®·Ñ·¯ ¿ªÇÒ ¼öÇà.
+// ì„œë¸”ë¦¿ :  ì»¨íŠ¸ë¡¤ëŸ¬ ì—­í•  ìˆ˜í–‰.
 @WebServlet("/UserUpdateServlet")
 public class UserUpdateServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -23,7 +23,7 @@ public class UserUpdateServlet extends HttpServlet {
 		String userPassword1 = request.getParameter("userPassword1");
 		String userPassword2 = request.getParameter("userPassword2");
 		String userName = request.getParameter("userName");
-		String userAge = request.getParameter("userAge");  // userAgeÀÇ ±âº»µ¥ÀÌÅÍ Å¸ÀÔÀº intÀÌ³ª »ç¿ëÀÚ·ÎºÎÅÍ ÀÔ·Â¹Ş´Â ÇüÅÂ´Â String ÇüÅÂÀÌ±â¶§¹®.
+		String userAge = request.getParameter("userAge");  // userAgeì˜ ê¸°ë³¸ë°ì´í„° íƒ€ì…ì€ intì´ë‚˜ ì‚¬ìš©ìë¡œë¶€í„° ì…ë ¥ë°›ëŠ” í˜•íƒœëŠ” String í˜•íƒœì´ê¸°ë•Œë¬¸.
 		String userGender = request.getParameter("userGender");
 		String userEmail = request.getParameter("userEmail");
 
@@ -33,22 +33,22 @@ public class UserUpdateServlet extends HttpServlet {
 			userAge == null || userAge.equals("") || userGender == null || userGender.equals("") ||
 			userEmail == null || userEmail.equals("")) {
 			
-			request.getSession().setAttribute("messageType", "¿À·ù ¸Ş½ÃÁö");
-			request.getSession().setAttribute("messageContent", "¸ğµç ³»¿ëÀ» ÀÔ·ÂÇÏ¼¼¿ä.");
+			request.getSession().setAttribute("messageType", "ì˜¤ë¥˜ ë©”ì‹œì§€");
+			request.getSession().setAttribute("messageContent", "ëª¨ë“  ë‚´ìš©ì„ ì…ë ¥í•˜ì„¸ìš”.");
 			response.sendRedirect("update.jsp");
 			return;
 		}
 		
 		if (!userID.equals((String) session.getAttribute("userID"))) {
-			session.setAttribute("messageType", "¿À·ù ¸Ş½ÃÁö");
-			session.setAttribute("messageContent", "Á¢±ÙÇÒ ¼ö ¾ø½À´Ï´Ù.");
+			session.setAttribute("messageType", "ì˜¤ë¥˜ ë©”ì‹œì§€");
+			session.setAttribute("messageContent", "ì ‘ê·¼í•  ìˆ˜ ì—†ìŠµë‹ˆë‹¤.");
 			response.sendRedirect("index.jsp");
 			return;
 		}
 		
 		if (!userPassword1.equals(userPassword2)) {
-			request.getSession().setAttribute("messageType", "¿À·ù ¸Ş½ÃÁö");
-			request.getSession().setAttribute("messageContent", "ºñ¹Ğ¹øÈ£°¡ ÀÏÄ¡ÇÏÁö ¾Ê½À´Ï´Ù.");
+			request.getSession().setAttribute("messageType", "ì˜¤ë¥˜ ë©”ì‹œì§€");
+			request.getSession().setAttribute("messageContent", "ë¹„ë°€ë²ˆí˜¸ê°€ ì¼ì¹˜í•˜ì§€ ì•ŠìŠµë‹ˆë‹¤.");
 			response.sendRedirect("update.jsp");
 			return;
 		}
@@ -56,12 +56,12 @@ public class UserUpdateServlet extends HttpServlet {
 		int result = new UserDAO().update(userID, userPassword1, userName, userAge, userGender, userEmail);
 		if (result == 1) {
 			request.getSession().setAttribute("userID", userID);
-			request.getSession().setAttribute("messageType", "¼º°ø ¸Ş½ÃÁö");
-			request.getSession().setAttribute("messageContent", "È¸¿øÁ¤º¸ ¼öÁ¤¿¡ ¼º°øÇß½À´Ï´Ù.");
+			request.getSession().setAttribute("messageType", "ì„±ê³µ ë©”ì‹œì§€");
+			request.getSession().setAttribute("messageContent", "íšŒì›ì •ë³´ ìˆ˜ì •ì— ì„±ê³µí–ˆìŠµë‹ˆë‹¤.");
 			response.sendRedirect("index.jsp");
 		} else {
-			request.getSession().setAttribute("messageType", "¿À·ù ¸Ş½ÃÁö");
-			request.getSession().setAttribute("messageContent", "µ¥ÀÌÅÍº£ÀÌ½º ¿À·ù°¡ ¹ß»ıÇß½À´Ï´Ù.");
+			request.getSession().setAttribute("messageType", "ì˜¤ë¥˜ ë©”ì‹œì§€");
+			request.getSession().setAttribute("messageContent", "ë°ì´í„°ë² ì´ìŠ¤ ì˜¤ë¥˜ê°€ ë°œìƒí–ˆìŠµë‹ˆë‹¤.");
 			response.sendRedirect("update.jsp");
 		}
 	}
