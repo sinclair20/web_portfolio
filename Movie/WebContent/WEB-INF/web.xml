@@ -107,8 +107,9 @@
   </servlet-mapping>
   <servlet>
     <servlet-name>CommentWriteServlet</servlet-name>
-    <servlet-class>com.movie.board.comment.CommentWriteServlet</servlet-class>
+    <servlet-class>com.movie.board.comment.CommentWriteServlet</servlet-class>      
   </servlet>
+    
   <servlet-mapping>
     <servlet-name>CommentWriteServlet</servlet-name>
     <url-pattern>/commentWrite</url-pattern>

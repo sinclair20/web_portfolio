@@ -1,8 +1,6 @@
 package com.movie.board.comment;
 
 import java.io.IOException;
-
-
 import java.net.URLDecoder;
 
 import javax.servlet.ServletException;
@@ -18,7 +16,7 @@ import com.movie.user.UserDTO;
 
 
 @WebServlet("/CommentWriteServlet")
-public class CommentWriteServlet  {
+public class CommentWriteServlet extends HttpServlet  {
 	private static final long serialVersionUID = 1L;
    	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
    		request.setCharacterEncoding("UTF-8");
@@ -76,11 +74,13 @@ public class CommentWriteServlet  {
    		
    		System.out.println("boardID :" + boardID);
    		
-   		if (userID == null || userID.equals("")) {
-   			commentDAO.nonmemberWrite(URLDecoder.decode(commentContent,"UTF-8"), URLDecoder.decode(commentWriter,"UTF-8"), boardID, URLDecoder.decode(commentPassword,"UTF-8"));   			
-   		} else {
-   			commentDAO.write(URLDecoder.decode(commentContent,"UTF-8"), URLDecoder.decode(commentWriter,"UTF-8"), boardID, userID, user.getUserPassword());	
-   		}   		
+   			if (userID == null || userID.equals("")) {
+   	   			commentDAO.nonmemberWrite(URLDecoder.decode(commentContent,"UTF-8"), URLDecoder.decode(commentWriter,"UTF-8"), boardID, URLDecoder.decode(commentPassword,"UTF-8"));   			
+   	   		} else {
+   	   			commentDAO.write(URLDecoder.decode(commentContent,"UTF-8"), URLDecoder.decode(commentWriter,"UTF-8"), boardID, userID, user.getUserPassword());	
+   	   		}   	   			
+   		
+   			
    	/*	session.setAttribute("messageType", "성공 메시지");
 		session.setAttribute("messageContent", "성공적으로 게시물이 작성되었습니다.");
 		response.sendRedirect("boardShow.jsp");*/		
