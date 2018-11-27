@@ -4,6 +4,10 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
   <groupId>Movie</groupId>
   <artifactId>Movie</artifactId>
   <version>0.0.1-SNAPSHOT</version>
+  <properties>
+		<project.build.sourceEncoding>utf-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>utf-8</project.reporting.outputEncoding>
+	</properties>
   <packaging>war</packaging>
   <build>
     
@@ -14,6 +18,7 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
         <configuration>
           <source>1.8</source>
           <target>1.8</target>
+            <encoding>UTF-8</encoding>
         </configuration>
       </plugin>
       <plugin>
@@ -21,6 +26,8 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
         <version>3.2.1</version>
         <configuration>
           <warSourceDirectory>WebContent</warSourceDirectory>
+                  
+          
         </configuration>
       </plugin>
     </plugins>
