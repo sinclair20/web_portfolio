@@ -35,24 +35,24 @@ public class BoardWriteServlet extends HttpServlet {
    		try {
    			multi = new MultipartRequest(request, savePath, fileMaxSize, "UTF-8", new DefaultFileRenamePolicy());
    		} catch (Exception e) {
-   			request.getSession().setAttribute("messageType", "¿À·ù ¸Þ½ÃÁö");
-			request.getSession().setAttribute("messageContent", "ÆÄÀÏ Å©±â´Â 10MB¸¦ ³ÑÀ» ¼ö ¾ø½À´Ï´Ù.");
+   			request.getSession().setAttribute("messageType", "ï¿½ï¿½ï¿½ï¿½ ï¿½Þ½ï¿½ï¿½ï¿½");
+			request.getSession().setAttribute("messageContent", "ï¿½ï¿½ï¿½ï¿½ Å©ï¿½ï¿½ï¿½ 10MBï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½.");
 			response.sendRedirect("boardWrite.jsp");
 			return; 
    		}
    		String userID = multi.getParameter("userID");
    		HttpSession session = request.getSession();
    		if (!userID.equals((String) session.getAttribute("userID"))) {
-			session.setAttribute("messageType", "¿À·ù ¸Þ½ÃÁö");
-			session.setAttribute("messageContent", "Á¢±ÙÇÒ ¼ö ¾ø½À´Ï´Ù.");
+			session.setAttribute("messageType", "ï¿½ï¿½ï¿½ï¿½ ï¿½Þ½ï¿½ï¿½ï¿½");
+			session.setAttribute("messageContent", "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½.");
 			response.sendRedirect("index.jsp");
 			return;
 		}
    		String boardTitle= multi.getParameter("boardTitle");
    		String boardContent= multi.getParameter("boardContent");
    		if (boardTitle == null || boardTitle.equals("") || boardContent == null || boardContent.equals("")) {
-   			session.setAttribute("messageType", "¿À·ù ¸Þ½ÃÁö");
-			session.setAttribute("messageContent", "³»¿ëÀ» ¸ðµÎ ÀÔ·ÂÇØÁÖ¼¼¿ä");
+   			session.setAttribute("messageType", "ï¿½ï¿½ï¿½ï¿½ ï¿½Þ½ï¿½ï¿½ï¿½");
+			session.setAttribute("messageContent", "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½Ô·ï¿½ï¿½ï¿½ï¿½Ö¼ï¿½ï¿½ï¿½");
 			response.sendRedirect("boardWrite.jsp");
 			return;
    		}
@@ -66,8 +66,8 @@ public class BoardWriteServlet extends HttpServlet {
    		
    		BoardDAO boardDAO = new BoardDAO();
    		boardDAO.write(userID, boardTitle, boardContent, boardFile, boardRealFile);
-   		session.setAttribute("messageType", "¼º°ø ¸Þ½ÃÁö");
-		session.setAttribute("messageContent", "¼º°øÀûÀ¸·Î °Ô½Ã¹°ÀÌ ÀÛ¼ºµÇ¾ú½À´Ï´Ù.");
+   		session.setAttribute("messageType", "ï¿½ï¿½ï¿½ï¿½ ï¿½Þ½ï¿½ï¿½ï¿½");
+		session.setAttribute("messageContent", "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ô½Ã¹ï¿½ï¿½ï¿½ ï¿½Û¼ï¿½ï¿½Ç¾ï¿½ï¿½ï¿½ï¿½Ï´ï¿½.");
 		response.sendRedirect("boardView.jsp");
 		return;
 		

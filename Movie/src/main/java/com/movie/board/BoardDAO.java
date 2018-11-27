@@ -152,8 +152,8 @@ public class BoardDAO {
 		ResultSet rs = null;
 		
 		try {
-			if (searchType.equals("ÃÖ½Å¼ø")) {				
-				// Äõ¸® µÎ¹øÀ¸·Î ³ª´©¾î ³¯¸®±â.
+			if (searchType.equals("ï¿½Ö½Å¼ï¿½")) {				
+				// ï¿½ï¿½ï¿½ï¿½ ï¿½Î¹ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½.
 // "SELECT * FROM BOARD WHERE boardGroup > (SELECT MAX(boardGroup) FROM BOARD) - ? AND boardGroup <= (SELECT MAX(boardGroup) FROM BOARD) - ? ORDER BY boardGroup DESC, boardSequence ASC";			
 				//SQL = "SELECT * FROM BOARD WHERE boardTitle OR boardContent LIKE ? HAVING (boardGroup > (SELECT MAX(boardGroup) FROM BOARD) - ? AND boardGroup <= (SELECT MAX(boardGroup) FROM BOARD) - ?) ORDER BY boardGroup DESC, boardSequence ASC"; 
 				SQL = "SELECT * FROM BOARD WHERE CONCAT(boardTitle, boardContent) LIKE ? HAVING (boardGroup > (SELECT MAX(boardGroup) FROM BOARD) - ? AND boardGroup <= (SELECT MAX(boardGroup) FROM BOARD) - ?) ORDER BY boardGroup DESC, boardSequence ASC";
@@ -163,7 +163,7 @@ public class BoardDAO {
 				SQL = "SELECT * FROM BOARD WHERE CONCAT(boardTitle, boardContent) LIKE " +
 					  "? ORDER BY boardID"; */					 
 			} 
-			else if (searchType.equals("ÃßÃµ¼ø")){
+			else if (searchType.equals("ï¿½ï¿½Ãµï¿½ï¿½")){
 				SQL = "SELECT * FROM BOARD WHERE CONCAT(boardTitle, boardContent) LIKE ? HAVING (boardGroup > (SELECT MAX(boardGroup) FROM BOARD) - ? AND boardGroup <= (SELECT MAX(boardGroup) FROM BOARD) - ?) ORDER BY likeCount DESC";
 				//SQL = "SELECT * FROM BOARD WHERE CONCAT(boardTitle, boardContent) LIKE ? ORDER BY boardID boardGroup > (SELECT MAX(boardGroup) FROM BOARD) - ? AND boardGroup <= (SELECT MAX(boardGroup) FROM BOARD) - ? ORDER BY boardGroup DESC, boardSequence ASC";
 			
@@ -296,8 +296,8 @@ public class BoardDAO {
 		return "";
 	}
 	
-	// ¾È¾²ÀÌ´Â ÇÔ¼ö.
-	// ÇØ´ç ÆäÀÌÁö¸¦ ±âÁØÀ¸·Î ´ÙÀ½ ÆäÀÌÁö°¡ Á¸ÀçÇÏ´ÂÁö ¹°¾îº¸´Â ÇÔ¼ö.
+	// ï¿½È¾ï¿½ï¿½Ì´ï¿½ ï¿½Ô¼ï¿½.
+	// ï¿½Ø´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½îº¸ï¿½ï¿½ ï¿½Ô¼ï¿½.
 	public boolean nextPage(String pageNumber, String search) {
 		
 		Connection conn = null;
@@ -312,7 +312,7 @@ public class BoardDAO {
 			pstmt.setInt(2, Integer.parseInt(pageNumber) * 10);
 			rs = pstmt.executeQuery();
 			if (rs.next()) {
-				return true;  // ÇÑ°³¶óµµ ´ÙÀ½ÆäÀÌÁö¿¡ °Ô½Ã±ÛÀÌ Á¸ÀçÇÑ´Ù¸é true°ª ¹ÝÈ¯
+				return true;  // ï¿½Ñ°ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ô½Ã±ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ñ´Ù¸ï¿½ trueï¿½ï¿½ ï¿½ï¿½È¯
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -450,7 +450,7 @@ public class BoardDAO {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		// ÆäÀÌÁö°¡ ¾ó¸¶³ª Á¸ÀçÇÏ´ÂÁö °è»êÇÏ´Â ÇÔ¼ö.
+		// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ó¸¶³ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½Ô¼ï¿½.
 		//String SQL = "SELECT COUNT(boardGroup) FROM BOARD WHERE boardGroup > ? ";
 		String SQL = "SELECT COUNT(boardGroup) FROM BOARD WHERE CONCAT (boardTitle, boardContent) LIKE ? AND boardGroup > ?";
 		try {
@@ -460,7 +460,7 @@ public class BoardDAO {
 			pstmt.setInt(2, (Integer.parseInt(pageNumber) - 1) * 10);
 			rs = pstmt.executeQuery();
 			if (rs.next()) {
-				return rs.getInt(1) / 10; //³ª¿Â°á°ú¿¡¼­ 10À» ³ª´« °ªÀ» ¹ÝÈ¯.
+				return rs.getInt(1) / 10; //ï¿½ï¿½ï¿½Â°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 10ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È¯.
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -473,7 +473,7 @@ public class BoardDAO {
 				e.printStackTrace();
 			}
 		}
-		return 0; //¿À·ù ¹ß»ý½Ã 0 ¹ÝÈ¯.
+		return 0; //ï¿½ï¿½ï¿½ï¿½ ï¿½ß»ï¿½ï¿½ï¿½ 0 ï¿½ï¿½È¯.
 	}
 	
 	
@@ -528,6 +528,6 @@ public class BoardDAO {
 				e.printStackTrace();
 			}
 		}
-		return null; // Á¸ÀçÇÏÁö ¾Ê´Â ¾ÆÀÌµð
+		return null; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ê´ï¿½ ï¿½ï¿½ï¿½Ìµï¿½
 	}
 }
