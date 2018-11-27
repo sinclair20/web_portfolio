@@ -1,5 +1,9 @@
 eclipse.preferences.version=1
 encoding//WebContent/chat2.jsp=UTF-8
 encoding//src/chat/ChatListServlet.java=UTF-8
+encoding//src/main/java=UTF-8
 encoding//src/main/java/com/movie/board/BoardDAO.java=UTF-8
 encoding//src/main/java/com/movie/board/BoardWriteServlet.java=UTF-8
+encoding//src/test/java=UTF-8
+encoding//src/test/resources=UTF-8
+encoding/<project>=utf-8
