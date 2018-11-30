@@ -105,7 +105,7 @@
 		function updateFunction() {
 			var userID = '<%= userID%>';
 			var boardID = '<%= boardID %>';
-			var commentContent = $('.commentContent').val();
+			var commentContent = $('.commentContent').val().replace(/\n/g, "\\\\n").replace(/\r/g, "\\\\r").replace(/\t/g, "\\\\t").replace(/\t/g, "\\\\t").replace(/<br\s*\/?>/gi, '\n');
 			var commentWriter = $('.commentWriter').val();
 			
 			if (commentContent == '') { return; }
@@ -138,7 +138,7 @@
 	    function submitFunction() {
 			var userID = '<%= userID%>';
 			var boardID = '<%= boardID %>';
-			var commentContent = $('.commentContent').val().replace(/\n/g, "\\\\n").replace(/\r/g, "\\\\r").replace(/\t/g, "\\\\t");;		
+			var commentContent = $('.commentContent').val().replace(/\n/g, "\\\\n").replace(/\r/g, "\\\\r").replace(/\t/g, "\\\\t");		
 
 			console.log(commentContent);
 			if (userID == 'null') {

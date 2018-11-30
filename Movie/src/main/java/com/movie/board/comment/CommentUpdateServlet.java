@@ -42,7 +42,7 @@ public class CommentUpdateServlet extends HttpServlet {
    		
    	
    	
-   		commentDAO.update(boardID, commentID, commentContent);
+   		commentDAO.update(boardID, commentID, commentContent.replaceAll(" ", "&nbsp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br>"));
    		session.setAttribute("messageType", "성공 메시지");
 		session.setAttribute("messageContent", "댓글이 성공적으로 수정되었습니다.");
 		response.sendRedirect("boardShow.jsp?boardID="+board.getBoardID());

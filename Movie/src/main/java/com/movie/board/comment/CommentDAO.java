@@ -34,7 +34,7 @@ public class CommentDAO {
 		try {
 			conn = dataSource.getConnection();
 			pstmt = conn.prepareStatement(SQL);
-			pstmt.setString(1, commentContent);
+			pstmt.setString(1, commentContent.replaceAll(" ", "&nbsp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br>"));
 			pstmt.setString(2, commentWriter);
 			pstmt.setInt(3, Integer.parseInt(boardID));
 			pstmt.setString(4, userID);
@@ -66,7 +66,7 @@ public class CommentDAO {
 		try {
 			conn = dataSource.getConnection();
 			pstmt = conn.prepareStatement(SQL);
-			pstmt.setString(1, commentContent);
+			pstmt.setString(1, commentContent.replaceAll(" ", "&nbsp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br>"));
 			pstmt.setString(2, commentWriter);
 			pstmt.setInt(3, Integer.parseInt(boardID));
 			pstmt.setString(4, commentPassword);
@@ -234,7 +234,7 @@ public class CommentDAO {
 		try {
 			conn = dataSource.getConnection();
 			pstmt = conn.prepareStatement(SQL);
-			pstmt.setString(1, commentContent);			
+			pstmt.setString(1, commentContent.replaceAll(" ", "&nbsp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br>"));			
 			pstmt.setInt(2, Integer.parseInt(boardID));
 			pstmt.setInt(3, Integer.parseInt(commentID));
 			return pstmt.executeUpdate();			
