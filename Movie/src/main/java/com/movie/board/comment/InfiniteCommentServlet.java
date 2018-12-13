@@ -58,7 +58,7 @@ public class InfiniteCommentServlet extends HttpServlet {
 	public String getID (String boardID, String commentID, String page) throws UnsupportedEncodingException {
 		StringBuffer result = new StringBuffer("");
 		CommentDAO commentDAO = new CommentDAO();
-		ArrayList<CommentDTO> commentList = commentDAO.getCommentList(URLDecoder.decode(boardID, "UTF-8"),URLDecoder.decode(commentID, "UTF-8"));
+		ArrayList<CommentDTO> commentList = commentDAO.getCommentList(URLDecoder.decode(boardID, "UTF-8"), URLDecoder.decode(commentID, "UTF-8"));
 		
 		if (commentList.size() == 0) return "";
 		/*if (result.length() >= 1) result.setLength(0);*/

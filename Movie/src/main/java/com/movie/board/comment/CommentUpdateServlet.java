@@ -10,6 +10,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.movie.board.BoardDAO;
+import com.movie.board.BoardDTO;
+import com.movie.chat.member.ChatDAO;
 
 @WebServlet("/CommentUpdateServlet")
 public class CommentUpdateServlet extends HttpServlet {
