@@ -19,7 +19,7 @@ public class ChatDAO {
 		try {
 			InitialContext initContext = new InitialContext();
 			Context envContext = (Context) initContext.lookup("java:/comp/env");
-			dataSource = (DataSource) envContext.lookup("jdbc/Movie");
+			dataSource = (DataSource) envContext.lookup("jdbc/movie");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -33,7 +33,7 @@ public class ChatDAO {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		// 7°­ ¿¡¼­ ³ª¿Â SQL¹®°ú º¯Çß´ÂÁö
+		// 7ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ SQLï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ß´ï¿½ï¿½ï¿½
 		String SQL = "SELECT * FROM CHAT WHERE ((fromID = ? AND toID = ?) OR (fromID = ? AND toID = ?)) AND chatID > ? ORDER BY chatTime";  
 		
 		try {
@@ -53,9 +53,9 @@ public class ChatDAO {
 				chat.setToID(rs.getString("toID").replaceAll(" ", "&nbsp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br>"));
 				chat.setChatContent(rs.getString("chatContent").replaceAll(" ", "&nbsp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br>"));
 				int chatTime = Integer.parseInt(rs.getString("chatTime").substring(11, 13));
-				String timeType = "¿ÀÀü";
+				String timeType = "ï¿½ï¿½ï¿½ï¿½";
 				if (chatTime >= 12) {
-					timeType = "¿ÀÈÄ";
+					timeType = "ï¿½ï¿½ï¿½ï¿½";
 					chatTime -= 12;
 				}
 				chat.setChatTime(rs.getString("chatTime").substring(0, 11) + " " + timeType + " " + chatTime +  ":" + rs.getString("chatTime").substring(14, 16) + "");
@@ -82,7 +82,7 @@ public class ChatDAO {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		// sql ¹® - 13°­¿¡¼­ ÃÖÁ¾¼öÁ¤
+		// sql ï¿½ï¿½ - 13ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		String SQL = "SELECT * FROM CHAT WHERE ((fromID = ? AND toID = ? ) OR (fromID = ? AND toID = ?)) AND chatID > (SELECT MAX(chatID) - ? FROM CHAT WHERE (fromID = ?  AND toID = ?) OR (fromID = ? AND toID = ?)) ORDER BY chatTime";			
 		
 		try {
@@ -106,9 +106,9 @@ public class ChatDAO {
 				chat.setToID(rs.getString("toID").replaceAll(" ", "&nbsp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br>"));
 				chat.setChatContent(rs.getString("chatContent").replaceAll(" ", "&nbsp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br>"));
 				int chatTime = Integer.parseInt(rs.getString("chatTime").substring(11, 13));
-				String timeType = "¿ÀÀü";
+				String timeType = "ï¿½ï¿½ï¿½ï¿½";
 				if (chatTime >= 12) {
-					timeType = "¿ÀÈÄ";
+					timeType = "ï¿½ï¿½ï¿½ï¿½";
 					chatTime -= 12;
 				}
 				chat.setChatTime(rs.getString("chatTime").substring(0, 11) + " " + timeType + " " + chatTime +  ":" + rs.getString("chatTime").substring(14, 16) + "");
@@ -154,9 +154,9 @@ public class ChatDAO {
 				chat.setToID(rs.getString("toID").replaceAll(" ", "&nbsp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br>"));
 				chat.setChatContent(rs.getString("chatContent").replaceAll(" ", "&nbsp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br>"));
 				int chatTime = Integer.parseInt(rs.getString("chatTime").substring(11, 13));
-				String timeType = "¿ÀÀü";
+				String timeType = "ï¿½ï¿½ï¿½ï¿½";
 				if (chatTime >= 12) {
-					timeType = "¿ÀÈÄ";
+					timeType = "ï¿½ï¿½ï¿½ï¿½";
 					chatTime -= 12;
 				}
 				chat.setChatTime(rs.getString("chatTime").substring(0, 11) + " " + timeType + " " + chatTime +  ":" + rs.getString("chatTime").substring(14, 16) + "");
@@ -199,7 +199,7 @@ public class ChatDAO {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		String SQL = "INSERT INTO CHAT VALUES (NULL, ?, ?, ?, NOW(), 0)"; // null °ª ³ÖÀ½À¸·Î½á chatID ÀÚµ¿À¸·Î 1°³ Áõ°¡ , º¸³½»ç¶÷, ¹Þ´Â »ç¶÷, chatMessage, ÇöÀç½Ã°¢, 
+		String SQL = "INSERT INTO CHAT VALUES (NULL, ?, ?, ?, NOW(), 0)"; // null ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Î½ï¿½ chatID ï¿½Úµï¿½ï¿½ï¿½ï¿½ï¿½ 1ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ , ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½, ï¿½Þ´ï¿½ ï¿½ï¿½ï¿½, chatMessage, ï¿½ï¿½ï¿½ï¿½Ã°ï¿½, 
 		
 		try {
 			conn = dataSource.getConnection();

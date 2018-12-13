@@ -1,6 +1,6 @@
-<Context path="/Movie" docBase="www">
+<Context path="/movie" docBase="www">
 <Resource
-	name="jdbc/Movie"
+	name="jdbc/movie"
 	auth="Container"
 	type="javax.sql.DataSource"
 	driverClassName="com.mysql.cj.jdbc.Driver"
@@ -10,11 +10,11 @@
 	username="sinclair"
 	password="842693aa!!"
 	testOnBorrow="true"
-	url="jdbc:mysql://mydatabase.cf41ikdvjruh.ap-northeast-2.rds.amazonaws.com:3306/Movie?serverTimezone=UTC">
+	url="jdbc:mysql://mydatabase.cf41ikdvjruh.ap-northeast-2.rds.amazonaws.com:3306/movie?serverTimezone=UTC">
 </Resource>
 
 <ResourceLink type="javax.sql.data.DataSource"
-	name="jdbc/Movie"
-	global="jdbc/Movie"/>
+	name="jdbc/movie"
+	global="jdbc/movie"/>
 	
 </Context> 

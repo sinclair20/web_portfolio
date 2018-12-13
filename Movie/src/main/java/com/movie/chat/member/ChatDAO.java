@@ -19,7 +19,7 @@ public class ChatDAO {
 		try {
 			InitialContext initContext = new InitialContext();
 			Context envContext = (Context) initContext.lookup("java:/comp/env");
-			dataSource = (DataSource) envContext.lookup("jdbc/Movie");
+			dataSource = (DataSource) envContext.lookup("jdbc/movie");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -34,7 +34,7 @@ public class ChatDAO {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		// 7강 에서 나온 SQL문과 변했는지
-		String SQL = "SELECT * FROM CHAT WHERE ((fromID = ? AND toID = ?) OR (fromID = ? AND toID = ?)) AND chatID > ? ORDER BY chatTime";  
+		String SQL = "SELECT * FROM chat WHERE ((fromID = ? AND toID = ?) OR (fromID = ? AND toID = ?)) AND chatID > ? ORDER BY chatTime";  
 		
 		try {
 			conn = dataSource.getConnection();
@@ -83,7 +83,7 @@ public class ChatDAO {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		// sql 문 - 13강에서 최종수정
-		String SQL = "SELECT * FROM CHAT WHERE ((fromID = ? AND toID = ? ) OR (fromID = ? AND toID = ?)) AND chatID > (SELECT MAX(chatID) - ? FROM CHAT WHERE (fromID = ?  AND toID = ?) OR (fromID = ? AND toID = ?)) ORDER BY chatTime";			
+		String SQL = "SELECT * FROM chat WHERE ((fromID = ? AND toID = ? ) OR (fromID = ? AND toID = ?)) AND chatID > (SELECT MAX(chatID) - ? FROM CHAT WHERE (fromID = ?  AND toID = ?) OR (fromID = ? AND toID = ?)) ORDER BY chatTime";			
 		
 		try {
 			conn = dataSource.getConnection();
@@ -137,7 +137,7 @@ public class ChatDAO {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		String SQL = "SELECT * FROM CHAT WHERE chatID IN (SELECT MAX(chatID) FROM CHAT WHERE toID = ? OR fromID = ? GROUP BY fromID, toID)";
+		String SQL = "SELECT * FROM chat WHERE chatID IN (SELECT MAX(chatID) FROM chat WHERE toID = ? OR fromID = ? GROUP BY fromID, toID)";
 				
 		
 		try {
@@ -199,7 +199,7 @@ public class ChatDAO {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		String SQL = "INSERT INTO CHAT VALUES (NULL, ?, ?, ?, NOW(), 0)"; // null 값 넣음으로써 chatID 자동으로 1개 증가 , 보낸사람, 받는 사람, chatMessage, 현재시각, 
+		String SQL = "INSERT INTO chat VALUES (NULL, ?, ?, ?, NOW(), 0)"; // null 값 넣음으로써 chatID 자동으로 1개 증가 , 보낸사람, 받는 사람, chatMessage, 현재시각, 
 		
 		try {
 			conn = dataSource.getConnection();
@@ -227,7 +227,7 @@ public class ChatDAO {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		String SQL = "UPDATE CHAT SET chatRead = 1 WHERE (fromID = ? AND toID = ?)";
+		String SQL = "UPDATE chat SET chatRead = 1 WHERE (fromID = ? AND toID = ?)";
 		try {
 			conn = dataSource.getConnection();
 			pstmt = conn.prepareStatement(SQL);
@@ -254,7 +254,7 @@ public class ChatDAO {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		String SQL = "SELECT COUNT(chatID) FROM CHAT WHERE toID = ? AND chatRead = 0";
+		String SQL = "SELECT COUNT(chatID) FROM chat WHERE toID = ? AND chatRead = 0";
 		try {
 			conn = dataSource.getConnection();
 			pstmt = conn.prepareStatement(SQL);
@@ -284,7 +284,7 @@ public class ChatDAO {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		String SQL = "SELECT COUNT(chatID) FROM CHAT WHERE fromID = ? AND toID = ? AND chatRead = 0";
+		String SQL = "SELECT COUNT(chatID) FROM chat WHERE fromID = ? AND toID = ? AND chatRead = 0";
 		try {
 			conn = dataSource.getConnection();
 			pstmt = conn.prepareStatement(SQL);

@@ -1,6 +1,7 @@
 package com.movie.board.comment;
 
 import java.io.IOException;
+import java.net.URLDecoder;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -9,8 +10,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.movie.board.BoardDAO;
-import com.movie.board.BoardDTO;
 
 @WebServlet("/CommentUpdateServlet")
 public class CommentUpdateServlet extends HttpServlet {
@@ -30,22 +29,23 @@ public class CommentUpdateServlet extends HttpServlet {
    		System.out.println("commentContent: " + commentContent);
    		CommentDAO commentDAO = new CommentDAO();
    		
-   		BoardDAO boardDAO = new BoardDAO();
-   		BoardDTO board = boardDAO.getBoard(boardID);
+   		/*BoardDAO boardDAO = new BoardDAO();
+   		BoardDTO board = boardDAO.getBoard(boardID);*/
    		/*if (!userID.equals(comment.getUserID())) {
    			session.setAttribute("messageType", "오류 메시지");
 			session.setAttribute("messageContent", "접근할 수 없습니다.");
 			response.sendRedirect("index.jsp");
 			return;
    		}*/
-   		String commentWriter= request.getParameter("commentWriter");
+   		
    		
    	
-   	
-   		commentDAO.update(boardID, commentID, commentContent.replaceAll(" ", "&nbsp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br>"));
+   		
+   		commentDAO.update(boardID, commentID, URLDecoder.decode(commentContent, "UTF-8"));
    		session.setAttribute("messageType", "성공 메시지");
 		session.setAttribute("messageContent", "댓글이 성공적으로 수정되었습니다.");
-		response.sendRedirect("boardShow.jsp?boardID="+board.getBoardID());
+		response.sendRedirect("boardShow.jsp?boardID="+boardID);
+		System.out.println("댓글 수정");
 		return;
 		
 	}

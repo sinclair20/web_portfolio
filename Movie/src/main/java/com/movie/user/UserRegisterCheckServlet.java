@@ -21,7 +21,7 @@ public class UserRegisterCheckServlet extends HttpServlet {
 		if (userID == null || userID.equals("")) response.getWriter().write("-1");
 		
 		// response.getWriter() 이용해서 사용자에게 반환해주기
-		response.getWriter().write(new UserDAO().registerCheck(userID) + ""); // ���ڿ� ���·� ����ϱ� ���� ���鹮�ڿ�("") �߰�
+		response.getWriter().write(new UserDAO().registerCheck(userID) + ""); // 문자열 형태로 출력하기 위해 공백문자열("") 추가
 		
 			
 			

@@ -20,7 +20,7 @@ public class LikeyDAO {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		
-		String SQL = "INSERT INTO LiKEY VALUES (?, ?, ?)";
+		String SQL = "INSERT INTO likey VALUES (?, ?, ?)";
 		try {
 			conn = DatabaseUtil.getConnection();
 			pstmt = conn.prepareStatement(SQL);

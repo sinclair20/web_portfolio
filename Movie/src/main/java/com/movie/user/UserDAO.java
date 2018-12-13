@@ -16,7 +16,7 @@ public class UserDAO {
 		try {
 			InitialContext initContext = new InitialContext();
 			Context envContext = (Context) initContext.lookup("java:/comp/env");
-			dataSource = (DataSource) envContext.lookup("jdbc/Movie");
+			dataSource = (DataSource) envContext.lookup("jdbc/movie");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -27,13 +27,13 @@ public class UserDAO {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		
-		String SQL = "SELECT * FROM USER WHERE userID = ?";
+		String SQL = "SELECT * FROM user WHERE userID = ?";
 		try {
 			conn = dataSource.getConnection();
 			pstmt = conn.prepareStatement(SQL);
 			pstmt.setString(1, userID);
 			rs = pstmt.executeQuery();
-			if (rs.next()) {
+			if (rs.next()) {	
 				if (rs.getString("userPassword").equals(userPassword)) {
 					return 1;
 				}
@@ -57,7 +57,7 @@ public class UserDAO {
 	
 	
 	public boolean getUserEmailChecked(String userID) {
-		String SQL = "SELECT userEmailChecked FROM USER WHERE userID = ?";
+		String SQL = "SELECT userEmailChecked FROM user WHERE userID = ?";
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -86,7 +86,7 @@ public class UserDAO {
 	
 	
 	public String getUserEmail(String userID) {
-		String SQL = "SELECT userEmail FROM USER WHERE userID = ?";
+		String SQL = "SELECT userEmail FROM user WHERE userID = ?";
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -115,7 +115,7 @@ public class UserDAO {
 	
 	
 	public boolean setUserEmailChecked(String userID) {
-		String SQL = "UPDATE USER SET userEmailChecked = true WHERE userID = ?";
+		String SQL = "UPDATE user SET userEmailChecked = true WHERE userID = ?";
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -147,7 +147,7 @@ public class UserDAO {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		
-		String SQL = "SELECT * FROM USER WHERE userID = ?";
+		String SQL = "SELECT * FROM user WHERE userID = ?";
 		try {
 			conn = dataSource.getConnection();
 			pstmt = conn.prepareStatement(SQL);
@@ -172,13 +172,12 @@ public class UserDAO {
 		return -1;
 	}
 	
-	//
+	
 	public int register (String userID, String userPassword, String userName, String userAge, String userGender, String userEmail, String userProfile, String userEmailHash, boolean userEmailChecked) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 
-
-		String SQL = "INSERT INTO USER VALUES (?, ?, ?, ?, ?, ?, ?, ? ,false)";
+		String SQL = "INSERT INTO user VALUES (?, ?, ?, ?, ?, ?, ?, ? ,false)";
 		try {
 			conn = dataSource.getConnection();
 			pstmt = conn.prepareStatement(SQL);
@@ -210,7 +209,7 @@ public class UserDAO {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		String SQL = "SELECT * FROM USER WHERE userID = ?";
+		String SQL = "SELECT * FROM user WHERE userID = ?";
 		try {
 			conn = dataSource.getConnection();
 			pstmt = conn.prepareStatement(SQL);
@@ -244,7 +243,7 @@ public class UserDAO {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 
-		String SQL = "UPDATE USER SET userPassword = ?, userName = ?, userAge = ?, userGender = ?, userEmail = ? WHERE userID = ?";
+		String SQL = "UPDATE user SET userPassword = ?, userName = ?, userAge = ?, userGender = ?, userEmail = ? WHERE userID = ?";
 		try {
 			conn = dataSource.getConnection();
 			pstmt = conn.prepareStatement(SQL);
@@ -272,7 +271,7 @@ public class UserDAO {
 	public int profile(String userID, String userProfile) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
-		String SQL = "UPDATE USER SET userProfile = ? WHERE userID = ?";
+		String SQL = "UPDATE user SET userProfile = ? WHERE userID = ?";
 		
 		try {
 			conn = dataSource.getConnection();
@@ -307,9 +306,9 @@ public class UserDAO {
 			rs = pstmt.executeQuery();
 			if (rs.next()) {
 				if(rs.getString("userProfile").equals("") || rs.getString("userProfile").equals(null)) {
-					return "http://localhost:8080/Movie/images/userIcon.png";
+					return "http://ec2-54-180-114-30.ap-northeast-2.compute.amazonaws.com:8080/Movie/images/userIcon.png";
 				}
-				return "http://localhost:8080/Movie/upload/" + rs.getString("userProfile");
+				return "http://ec2-54-180-114-30.ap-northeast-2.compute.amazonaws.com:8080/Movie/upload/" + rs.getString("userProfile");
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -322,7 +321,7 @@ public class UserDAO {
 				e.printStackTrace();
 			}
 		}
-		return "http://localhost:8080/Movie/images/userIcon.png";
+		return "http://ec2-54-180-114-30.ap-northeast-2.compute.amazonaws.com:8080/Movie/images/userIcon.png";
 	}
 
 	

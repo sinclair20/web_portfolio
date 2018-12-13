@@ -12,8 +12,7 @@ import javax.servlet.http.HttpServletResponse;
     
 public class NocacheFilter implements Filter {
     
-    public void doFilter(ServletRequest request,
-            ServletResponse response,
+    public void doFilter(ServletRequest request, ServletResponse response,
             FilterChain chain) throws IOException, ServletException {
         
         HttpServletResponse httpResponse = (HttpServletResponse)response;

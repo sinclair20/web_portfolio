@@ -87,6 +87,7 @@
 				<li><a href="find.jsp">친구찾기</a></li>
 				<li><a href="box.jsp">메시지 함<span id="unread" class="label label-info"></span></a></li>
 				<li><a href="boardView.jsp">자유게시판</a></li>
+				<li><a href="openChatIndex.jsp">오픈채팅</a></li>
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
 				<li class="dropdown">

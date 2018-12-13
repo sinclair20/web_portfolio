@@ -60,7 +60,6 @@ public class InfiniteCommentServlet extends HttpServlet {
 		CommentDAO commentDAO = new CommentDAO();
 		ArrayList<CommentDTO> commentList = commentDAO.getCommentList(URLDecoder.decode(boardID, "UTF-8"),URLDecoder.decode(commentID, "UTF-8"));
 		
-		
 		if (commentList.size() == 0) return "";
 		/*if (result.length() >= 1) result.setLength(0);*/
 		result.append("{\"result\":[");			

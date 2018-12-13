@@ -3,9 +3,12 @@
 <%-- <%@ page import="com.movie.chat.open.ChatEndpoint" %> --%>
 
 <%@ page import="java.util.ArrayList" %>
+
+<%@ page import="com.movie.user.UserDAO" %>
+<%@ page import="com.movie.user.UserDTO" %>
 <%@ page import="com.movie.chat.open.userList.UserListDAO" %>
 <%@ page import="com.movie.chat.open.userList.UserListDTO" %>
-  
+<%@ page import="java.util.HashMap" %>
     <%@ page import="java.util.*" %>
 <%@ page import = "java.io.*"%>
 <%@ page import = "javax.servlet.*"%>  
@@ -27,25 +30,34 @@
 <%
 	request.setCharacterEncoding("UTF-8");
 	response.setContentType("text/html; charset=UTF-8");
+	String WsUrl = getServletContext().getInitParameter("WsUrl");
+	UserDAO userDAO = new UserDAO();
+	UserListDAO userListDAO = new UserListDAO();
+	
+	
+	String imgSrc = request.getParameter("imgSrc");
+	String nickName = request.getParameter("nickName");
+	
+	
+	String userID = (String) session.getAttribute("userID");
+	
+	System.out.println("1. userID:" + userID);
+	System.out.println("2. nickName:" + nickName);
+	System.out.println("3. userDAO.getProfile(userID):" + userDAO.getProfile(userID));
 
-/* 	String userID = null;
-	if (session.getAttribute("userID") != null) {
-		userID = (String) session.getAttribute("userID");
-	}
-	 */
- 	String nickName = request.getParameter("nickName");		
-	String userID = (String) session.getAttribute("userID"); 
-	 
+
+
 	if (nickName == null) {	 	
 		nickName = userID;
 	}
-	String WsUrl = getServletContext().getInitParameter("WsUrl");	
+		
 
-	 ArrayList<String> users = new ArrayList<String>();
-	UserListDAO userListDAO = new UserListDAO();
+	ArrayList<String> users = new ArrayList<String>();
+	
 	ArrayList<UserListDTO> userList = userListDAO.getUserList();
-	System.out.println("userList: "+userList);
-	System.out.println("userList.size(): "+userList.size());
+	
+	System.out.println("userList: " + userList);
+	System.out.println("userList.size(): " + userList.size());
 	for (int i=0; i < userList.size(); i++) {
 		users.add(i, userList.get(i).toString()); 	
 	}
@@ -58,7 +70,13 @@
 	
 		}
 	}
- */	
+ 	*/	
+ 	if (nickName == null) {
+ 		session.setAttribute("messageType", "실패 메시지");
+		session.setAttribute("messageContent", "닉네임을 설정하시고 입장해주세요.");
+		response.sendRedirect("openChatIndex.jsp");
+ 	}
+ 	
 	if (users.contains(nickName)) {
 		System.out.println("존재");
 		
@@ -66,68 +84,78 @@
 		session.setAttribute("messageContent", "이미 존재하는 닉네임입니다. 다시 설정해 주세요.");
 		response.sendRedirect("openChatIndex.jsp");
 		
-		return;
-	}
 		
+	}
+ 	
+	
+	
+ 	
 	System.out.println("---------");
+	
 	
 %>
 <script type="text/javascript">
+function noEvent() { // 새로 고침 방지
+    if (event.keyCode == 116) {
+        alert("새로고침을 할 수 없습니다.");
+        event.keyCode = 2;
+        return false;
+    } else if (event.ctrlKey
+            && (event.keyCode == 78 || event.keyCode == 82)) {
+        return false;
+    }
+}
+document.onkeydown = noEvent;
+
+
+
+
+
 let ajax_loading = false;
 var page = 1;
 var last = 0;
 function chatListFunction(name) {
 	
 	if(!ajax_loading) {
-		
+		var ss = '<%=imgSrc%>'
+		if ('<%=userDAO.getProfile(userID)%>' != "http://localhost:8000/localMovie/images/userIcon.png") {
+			ss = '<%=userDAO.getProfile(userID)%>';
+		}
 		ajax_loading = true;
-		<%-- var userID = '<%= userID%>'; // 널 나오는거 맞나요? 예 맞습니다. 현재 비로그인 회원으로 테스트하고있습니다.
-		var boardID = '<%= boardID %>'; --%>
+		<%-- var imgSrc = '<%=imgSrc%>'; --%>
+		/* console.log("imgSrc",imgSrc); */
 		var data = {
 			name: encodeURIComponent(name),
+			imgSrc: encodeURI(ss),
+			/* imgSrc: encodeURIComponent(imgSrc), */
 			page: page
-			
-		/*	boardID: encodeURIComponent(boardID),			
-			page: page */
+		
 		};
+		
 		if(page >= last+5) {
 			console.log(last);
 	        return;
 	    }			
 		
 		console.log(name);
-
-		/* console.log('요청', data); */  // 매요청마다 값이 같아요 아 0이라는 값이 전달되도록 만들었습니다. 매요청이 같아서 응답도 같아요 아.. 전 거기서 데이터를 몽땅 불러온후 
-									// 이부분에서 5개씩만 순차적으로 보여주려고 했습니다. 잘못된 방법인가요??
-									// 한번에 다 가져와서 스크롤이 내려갈때마다 5개씩 출력하는 방식으로 계획했습니다. 그건 문제가 없는데
-									// 요청때마다 같은자료를 가져와요 
 		$.ajax({
 			type: "POST",
-			url: "./userList", // 여기에 전달하는 변수가 lastID 넣도록 의도하신거같은데 맞나요 예 맞습니다. 변수이름이뭔가요? 음 마지막으로 출력된 댓글?  
+			url: "./userList",  
 			data: data, 
 			success: function(data) {
-			/* setTimeout(function() { ajax_loading = false; }, 10000); */
+			
 			if (data=="") return;
 			$('#userWindow').empty();
-			/* console.log('ㅅㅇ공,', data); */
-			//console.log();	
-			//console.log(data);
 			var parsed = JSON.parse(data);
-			/* console.log(JSON.stringify(parsed, undefined, 3)); */
-			/* var result = parsed.result; */
 			var result = parsed.result;		
 			
 			for (var i = 0; i < result.length; i++) {
 		
-				nonmemberAddChat(result[i][0].value);
+				nonmemberAddChat(result[i][0].value, result[i][1].value);
 			}
-				/* if (result[i][0].value == "null") {							
-				nonmemberAddChat(result[i][0], result[i][1].value, result[i][2].value, result[i][3].value, result[i][4].value, i+1, result[i][5].value);
-				} else {
-					addChat(result[i][0].value,  result[i][1].value,  result[i][2].value, result[i][3].value, result[i][4].value, i+1, result[i][5].value);
-				}
-				lastID = Number(parsed.last); */
-				last = i+1
+			var l = i;
+				last = l+1
+				
 			},						
 		
 			complete:function() {
@@ -139,7 +167,31 @@ function chatListFunction(name) {
 }
 
 
-function nonmemberAddChat(userName) {
+function nonmemberAddChat(userName, userProfile) {
+	
+	$('#userWindow').append('<div class ="row">' +
+			'<div class="col-lg-12">' +  
+			'<div class="media">' +			
+			'<a class="pull-left" href="#">' +
+			'<img class="media-object img-circle" src="'+ userProfile +'" style="width:70px; height: 70px; cursor: pointer;" onclick="imgPop('+"'"+userProfile+"'"+')"/>' +			
+			'</a>' +
+			'<div class="media-body">' +
+			'<h3>' +
+			userName +
+			'<span class="small pull-right">' +
+			'</span>' +
+			'</h3>' +
+				    
+			'</div>' +
+			'</div>' +
+			'</div>' +
+			'</div>' +
+			'<hr>');	
+	$('#userWindow').scrollTop($('#userWindow')[0].scrollHeight); 			
+} 
+
+
+function addChat(userName) {
 	
 	$('#userWindow').append('<div class ="row">' +
 			'<div class="col-lg-12">' +  
@@ -148,14 +200,12 @@ function nonmemberAddChat(userName) {
 			'<img class="media-object img-circle" style="width:30px; height: 30px;" alt="">' +
 			'</a>' +
 			'<div class="media-body">' +
-			'<h4 class="media-heading">' +
+			'<h3 class="media-heading">' +
 			userName +
 			'<span class="small pull-right">' +
 			'</span>' +
 			'</h4>' +
 			'<p>' +	    					
-			/* '<a href="#updateCommentModal" class="btn btn-info pull-right" data-toggle="modal"  data-title="' + commentID +"r}`3*"+ commentContent + "r}`3*" +  commentPassword +'">' + */
-					    				
 			'</p>' +		    
 			'</div>' +
 			'</div>' +
@@ -164,6 +214,7 @@ function nonmemberAddChat(userName) {
 			'<hr>');	
 	$('#userWindow').scrollTop($('#userWindow')[0].scrollHeight);			
 } 
+
 
 
 function getInfiniteComment(){
@@ -182,37 +233,45 @@ function getInfiniteChat(){
 }
 
 
+
+
+
+function imgPop(img){ 
+   img1= new Image(); 
+   img1.src=(img); 
+   imgControll(img); 
+} 
+  
+function imgControll(img){ 
+ if((img1.width!=0)&&(img1.height!=0)){ 
+    viewImage(img); 
+  } 
+  else{ 
+     controller = "imgControll('"+img+"')"; 
+     intervalID = setTimeout(controller,10); 
+  } 
+}
+
+function viewImage(img){ 
+	 /* O="width="+500+",height="+500+",scrollbars=yes"; */
+	 W=Number(img1.width * 0.6); 
+	 H=Number(img1.height * 0.6); 
+	 O="width="+W+",height="+H+""; 
+	 imgWin=window.open("","",O); 
+	 imgWin.document.write("<html><head><title>:*:*:*: 이미지상세보기 :*:*:*:*:*:*:</title></head>");
+	 imgWin.document.write("<body topmargin=0 leftmargin=0>");
+	 imgWin.document.write("<img src="+img+" onclick='self.close()' style='max-width:"+W+"; max-height:auto; cursor:pointer;' title ='클릭하시면 창이 닫힙니다.'>");
+	 imgWin.document.close();
+}
+
 </script>
 
 
 </head>
 
-<body>
+<body oncontextmenu="return false">
 
-<!-- 
-<div id="chatContainer">
-	<div id="loginPanel">
-	모달창을 이부분 id로 설정해주어야함. 
-		<div id="infoLabel">Type a name to join the room</div>
-		<div style="padding: 10px;">
-			<input id="txtLogin" type="text" class="loginInput"
-				onkeyup="proxy.login_keyup(event)" />
-			<button type="button" class="loginInput" onclick="proxy.login()">Login</button>
-		</div>
-	</div>   
- 	<div id="msgPanel">
-		<div id="msgContainer" style="overflow: auto;"></div>
-		<div id="msgController">
-			<textarea id="txtMsg" 
-				title="Enter to send message"
-				onkeyup="proxy.sendMessage_keyup(event)"
-				style="height: 30px; width: 100%"></textarea>
-			<button style="height: 30px; width: 100px" type="button"
-				onclick="proxy.logout()">Logout</button>
-		</div>
-	</div>
-</div>
- -->
+
  	<div id="chatRoom" class="container bootstrap snippet" >
 		<div class="row">
 			<div class="col-xs-12  col-lg-8">
@@ -234,13 +293,13 @@ function getInfiniteChat(){
 						<div class="portlet-footer">
 							<div class="row" style="height: 90px;">
 								<div class="form-group col-xs-10">
-									<!-- <textarea style="height: 80px;" id="chatContent" class="form-control" placeholder="메시지를 입력하세요." maxlength="100"></textarea> -->
-									<input id="inputMessage" 	title="Enter to send message"
+								
+									<input id="inputMessage" title="Enter to send message"
 											onkeyup="proxy.sendMessage_keyup(event)"
-											style="height: 30px; width: 100%">
+											style="height: 30px; width: 100%" maxlength="50">
 								</div>	 
 								<div class="form-group col-xs-2">
-									<!-- <button type="button" id="sendButton" class="btn btn-default pull-right" onclick="proxy.sendMessage_keyup(event)">전송</button> -->
+								
 									<button type="button" id="sendButton" class="btn btn-default pull-right" onclick="proxy.sendMessage();">전송</button>									
 									<div class="clearfix"></div>
 								</div>							
@@ -264,7 +323,7 @@ function getInfiniteChat(){
 						<div>
 						 
 						</div>
-						<div id="userWindow" class="portlet-body chat-widget" style="overflow: scroll; height:400px; overflow-y: scroll;" >						
+						<div id="userWindow" class="portlet-body chat-widget" style="overflow: scroll; height:500px; overflow-y: scroll;" >						
 						</div>					
 					</div>	
 				</div>
@@ -288,6 +347,10 @@ var CreateProxy = function(wsUri) {
 	var audio = null;
 	var elements = null;
 	var nickName = encodeURIComponent('<%=nickName%>');
+	var imgSrc = encodeURI('<%=imgSrc%>');
+	
+	
+	console.log("imgSrc: ",imgSrc)
 	var jbAry = new Array();
 	var jbAryy = new Array();
 	
@@ -303,31 +366,15 @@ var CreateProxy = function(wsUri) {
 	};
 	
  	var showMsgPanel = function() {
-			/* elements.loginPanel.style.display = "none"; */
+			
 			elements.msgPanel.style.display = "block";
 			elements.txtMsg.focus();
 	};
 			
 	
- 	 var hideMsgPanel = function() {
-			/* elements.loginPanel.style.display = "block"; */
-			elements.msgPanel.style.display = "block";
-			/* elements.txtLogin.focus(); */
+ 	 var hideMsgPanel = function() {			
+			elements.msgPanel.style.display = "block";			
 	}
-/* 
-	var displayMessage = function(msg) {		
-		if (elements.msgContainer.childNodes.length == 100) {
-			  elements.msgContainer.removeChild(elements.msgContainer.childNodes[0]);
-			} 			
-	 		var div = document.createElement('div');
-			div.className = 'msgrow';
-			var textnode = document.createTextNode(msg);
-			div.appendChild(textnode); 
-			elements.msgContainer.appendChild(div); 
-			
-			elements.msgContainer.scrollTop = elements.msgContainer.scrollHeight;
-	};
-	 */
 	 
 	 function showName(chat) {			
 	       
@@ -360,13 +407,42 @@ var CreateProxy = function(wsUri) {
 } 
 
 	
-	 function showChat(nick, chatMessage) {			
+	 function showChat(nick, chatMessage, img, time) {			
 	       
     	 $('#messageWindow').append('<div class ="row">' +
 			'<div class="col-lg-12">' +   
 			'<div class="media">' +			
 			'<a class="pull-left" href="#">' +
-			'<img class="media-object img-circle" style="width:30px; height: 30px;" alt="">' +
+			'<img class="media-object img-circle" src="'+ img +'" style="width:80px; height: 80px; cursor: pointer;" onclick="imgPop('+"'"+img+"'"+')"/>' +
+			/* '<img class="media-object img-circle" style="width:80px; height: 80px;" src="'+ img +'" alt="">' + */
+			'</a>' +
+			'<div class="media-body">' +
+			'<h3 style="color:#8C8C8C" class="media-heading">' +			
+			nick +			
+			'<span class="small pull-right">' +
+			time +
+			'</span>' +
+			'</h3>' +
+			'<p>' +
+			'<font size="4">' +
+			chatMessage +
+			'<font>' + 
+			'</p>' +
+			'</div>' +
+			'</div>' +
+			'</div>' +
+			'</div>' +
+			'<hr>'); 
+              	
+} 
+	 
+	 function showUserChat(nick, chatMessage) {			
+	       
+    	 $('#messageWindow').append('<div class ="row">' +
+			'<div class="col-lg-12">' +   
+			'<div class="media">' +			
+			'<a class="pull-left" href="#">' +
+			'<img class="media-object img-circle" style="width:30px; height: 30px;" src="<%=userDAO.getProfile(userID)%>" alt="">' +
 			'</a>' +
 			'<div class="media-body">' +
 			'<h4 class="media-heading">' +			
@@ -384,9 +460,7 @@ var CreateProxy = function(wsUri) {
 			'<hr>'); 
     	 	     	 
     $('#messageWindow').scrollTop($('#messageWindow')[0].scrollHeight);   		
-  /*  	textarea.value += input + "\n"; */
-    /*  webSocket.send(inputMessage.value); */
-    /* inputMessage.value = ""; */              	
+                	
 } 
   
 	var clearMessage = function() {
@@ -430,10 +504,18 @@ var CreateProxy = function(wsUri) {
 			            }
 			            var nick = jbAryy[0]
 			            var ChatMessage = jbAryy[1]
+			            var img = jbAryy[2]
+			            var time = jbAryy[3]
 			            console.log(nick);
 			            console.log(chat);
-			   			            
-			        	showChat(nick, ChatMessage);
+			            
+			            var currentDate = new Date();            
+			            var msg = currentDate.getHours()+"시 "
+				        msg += currentDate.getMinutes()+"분 ";
+				        msg += currentDate.getSeconds()+"초";
+				        
+			            showChat(nick, ChatMessage, img, msg);	
+			            
 		        	} else if (chat.match('님이 들어왔습니다.')){
 		        		var userAry = chat.split('님이 들어왔습니다.')		        			
 		        		var name = userAry[0];
@@ -464,15 +546,30 @@ var CreateProxy = function(wsUri) {
 		
 		sendMessage: function() {
 			/* elements.txtMsg.focus(); */
-			
+			var sendImg = "";
 			if (websocket != null && websocket.readyState == 1) {
-				/* var input = elements.txtMsg.value.trim(); */
-				var input = $('#inputMessage').val();
-				if (input == '') { return; }
+				
+				
+				if (imgSrc == "http://localhost:8000/localMovie/images/1.jpg") {
+				  sendImg = "r}`3*http://localhost:8000/localMovie/images/1.jpg";
+			    } else if (imgSrc == "http://localhost:8000/localMovie/images/2.jpg") {
+			    	sendImg= "r}`3*http://localhost:8000/localMovie/images/2.jpg";
+			    } else if (imgSrc == "http://localhost:8000/localMovie/images/3.jpg") {
+			    	sendImg = "r}`3*http://localhost:8000/localMovie/images/3.jpg";
+			    } else if (imgSrc == "http://localhost:8000/localMovie/images/4.jpg") {
+			    	sendImg = "r}`3*http://localhost:8000/localMovie/images/4.jpg";
+			    } else {
+			    	sendImg = 'r}`3*<%=userDAO.getProfile(userID)%>';
+			    }
+			    		   
+				var input = $('#inputMessage').val() + sendImg
+				
+				if ($('#inputMessage').val() == '') { return; }
 				
 				/* elements.inputMessage.value = ''; */
 				
 				var message = { messageType: 'MESSAGE', message: input };
+				
 				// Send a message through the web-socket
 				websocket.send(JSON.stringify(message));
 				inputMessage.value = "";   						    		     
@@ -484,8 +581,6 @@ var CreateProxy = function(wsUri) {
 		sendMessage_keyup: function(e) { if (e.keyCode == 13) { this.sendMessage(); } },
 		initiate: function(e) {
 			elements = e;
-			/*elements.txtMsg.focus(); */
-			/*elements.txtLogin.focus();*/
 		}
 	}
 };
@@ -532,6 +627,7 @@ proxy.login();
 					}   
 				
 				});
+				     
 			
 		});
 			

@@ -32,7 +32,8 @@
 	
 	/* 현재 사용자가 보낸 코드가 정확히 해당 사용자의 해시값을 적용한 이메일주소와 일치하는지 확인하기  */
 	String userEmail = userDAO.getUserEmail(userID);
-	boolean isRight = (new SHA256().getSHA256(userEmail).equals(code)) ? true : false; /* 사용자의 코드값과 일치하면 true, 아니면 false 값을 반환 */ 
+	boolean isRight = (new SHA256().getSHA256(userEmail).equals(code)) ? true : false; /* 사용자의 코드값과 일치하면 true, 아니면 false 값을 반환 */
+	System.out.println(isRight);
 	
 	if (isRight == true) { /* 정확한 코드라면 */
 		userDAO.setUserEmailChecked(userID); /* 실제 사용자의 이메일 인증을 처리해주는 부분 */

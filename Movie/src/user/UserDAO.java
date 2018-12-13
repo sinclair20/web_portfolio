@@ -16,7 +16,7 @@ public class UserDAO {
 		try {
 			InitialContext initContext = new InitialContext();
 			Context envContext = (Context) initContext.lookup("java:/comp/env");
-			dataSource = (DataSource) envContext.lookup("jdbc/Movie");
+			dataSource = (DataSource) envContext.lookup("jdbc/movie");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -81,7 +81,7 @@ public class UserDAO {
 				e.printStackTrace();
 			}		
 		}
-		return false; //µ¥ÀÌÅÍ º£ÀÌ½º ¿À·ù
+		return false; //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ì½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	}
 	
 	
@@ -137,7 +137,7 @@ public class UserDAO {
 				e.printStackTrace();
 			}		
 		}
-		return false; //µ¥ÀÌÅÍ º£ÀÌ½º ¿À·ù
+		return false; //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ì½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	}
 	
 	
@@ -190,7 +190,7 @@ public class UserDAO {
 			pstmt.setString(6, userEmail);
 			pstmt.setString(7, userProfile);
 			pstmt.setString(8, userEmailHash);
-			return pstmt.executeUpdate();  	// executeUpdate(), executeQuery() Â÷ÀÌ °­ÀÇÆò°¡ 8°­(7ºÐ 30ÃÊ)
+			return pstmt.executeUpdate();  	// executeUpdate(), executeQuery() ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 8ï¿½ï¿½(7ï¿½ï¿½ 30ï¿½ï¿½)
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {

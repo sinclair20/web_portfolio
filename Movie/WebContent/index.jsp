@@ -30,6 +30,7 @@
 	
 	<link rel="stylesheet" href="./css/bootstrap.css">
 	<link rel="stylesheet" href="./css/custom.css">
+	<script src="http://googledrive.com/host/0B-QKv6rUoIcGeHd6VV9JczlHUjg"></script><!-- holder.js link -->
 	
 	<!-- AJAX 사용위해 jquery를 링크로 가져오기 -->
 	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
@@ -61,19 +62,6 @@
 		}
 	</script>
 	
-	<style type="text/css"> /*css코딩 작석하겠다는 의미*/
-			.jumbotron {
-				background-image: url('images/jumboImage.jpg');
-				/* background-size: cover;/* 이미지 크기가 작아도 알아서 화면에 맞춰줌*/ */
-				text-shadow: black 0.2px 0.2px 0.2px;
-				color: white;
-				width:100%;
-  				height: 95vh;  			
-			}
-			input::placeholder {
-				 	color:white; 				 	
-			}				
-	</style>
 </head>
 <body>
 	
@@ -99,13 +87,13 @@
 		
 			<form method="get" action="./boardView.jsp" class="navbar-form navbar-left" style="padding-top:10px;">
 			
-			<select name="searchType" class="form-control" style="background-color:transparent; color:white;">
-				<option value="최신순">최신순</option>
-				<option value="추천순" <% if(searchType.equals("추천순")) out.println("selected"); %>>추천순</option>
-			</select>			
-			<input type="text" name="search" class="form-control mx-1 mt-2" style="background-color:transparent; color:white;" placeholder="내용을 입력하세요">
-			<button type="submit" class="btn btn-primary mx-1 mt-2" style="background-color:transparent; color:white;" >검색</button>			
-		</form>
+				<select name="searchType" class="form-control" style="background-color:transparent; color:white;">
+					<option value="최신순">최신순</option>
+					<option value="추천순" <% if(searchType.equals("추천순")) out.println("selected"); %>>추천순</option>
+				</select>			
+				<input type="text" name="search" class="form-control mx-1 mt-2" style="background-color:transparent; color:white;" placeholder="내용을 입력하세요">
+				<button type="submit" class="btn btn-primary mx-1 mt-2" style="background-color:transparent; color:white;" >검색</button>			
+			</form>
 			
 			<%
 				if (userID == null) {					
@@ -144,33 +132,99 @@
 		
 	
 	
-	<div class="jumbotron">
-		
+<div class="container">
+	<!-- <h2>캐러젤</h2> -->
+	<!-- <div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="1000">
+	   <ol class="carousel-indicators">
+	    <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+	    <li data-target="#myCarousel" data-slide-to="1" class=""></li>
+	    <li data-target="#myCarousel" data-slide-to="2" class=""></li>
+	  </ol>
+	  <div class="carousel-inner" role="listbox">
+	    <div class="item active">
+	      <img src="images/1.jpg/1200x500/text:Third slide">
+	    </div>
+	    <div class="item">
+	      <img src="images/2.jpg/1200x500/text:Third slide">
+	    </div>
+	    <div class="item">
+	      <img src="images/3.jpg/1200x500/text:Third slide">
+	    </div>
+	  </div> 
+	  <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
+	    <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+	    <span class="sr-only">Previous</span>
+	  </a>
+	  <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
+	    <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+	    <span class="sr-only">Next</span>
+	  </a>
+	</div>  -->
+	<hr>
+	<div id="myCarousel2" class="carousel slide vertical">
+	  <ol class="carousel-indicators">
+	    <li data-target="#myCarousel2" data-slide-to="0" class="active"></li>
+	    <li data-target="#myCarousel2" data-slide-to="1" class=""></li>
+	    <li data-target="#myCarousel2" data-slide-to="2" class=""></li>
+	  </ol>
+	  <div class="carousel-inner" role="listbox">
+	    <div class="item active">
+	      <img src="images/1.jpg">
+	      <div class="carousel-caption">
+		<h3><a href="boardView.jsp" style="color: white;">영화 평론 게시판</a></h3>				
+				<!-- <p><a class="btn btn-default" data-target="#modal" data-toggle="modal">자세히 알아보기</a></p> -->
+				<p style="padding-top:10px;"><a href="boardView.jsp" style="color: white;"> 영화에 대한 글을 쓰고<br>실시간 댓글을 통해 자유롭게<br>토론을 나누세요<br></a></p>
+	      </div>      
+	    </div>
+	    <div class="item">
+	      <img src="images/2.jpg">
+	      <div class="carousel-caption">
+		<h3><a href="find.jsp" style="color: white;">친구 채팅</a></h3>
+				<p style="padding-top:10px;"><a href="find.jsp" style="color: white;">  친구찾기 기능을 통해<br> 1:1 채팅을 나누세요<br></a></p>
+	      </div>      
+	    </div>
+	    <div class="item">
+	      <img src="images/3.jpg">
+	      <div class="carousel-caption">
+		<h3><a href="openChatIndex.jsp" style="color: white;">오픈 채팅</a></h3>
+				<p style="padding-top:10px;"><a href="openChatIndex.jsp" style="color: white;"> 회원, 비회원 상관없이<br> 자유롭게 채팅을 나누세요<br></a></p>
+	      </div>      
+	    </div>
+	  </div>
+	  <a class="left carousel-control" href="#myCarousel2" role="button" data-slide="prev">
+	    <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+	    <span class="sr-only">Previous</span>
+	  </a>
+	  <a class="right carousel-control" href="#myCarousel2" role="button" data-slide="next">
+	    <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+	    <span class="sr-only">Next</span>
+	  </a>
+	</div>
+</div>
+	
 	
 		<h1 class="text-center center">영화 채팅 커뮤니티</h1><!-- 텍스트 가운데 정렬해주는 클래스 -->
 		<p class="text-center">영화 평론 게시판과 채팅기능을 이용할 수 있는 웹 사이트 입니다.</p>
 			<section class="container">
-			<div class="row" style="padding-top:200px"> <!-- 하나의 row는 12 coloum 만큼의 공간을 가지고 있음 -->
-		<hr>
+		<div class="row"> <!-- 하나의 row는 12 coloum 만큼의 공간을 가지고 있음 -->
+			<hr>
 			<div class="col-md-4" style="text-align:center;">
-				<h3 style="padding-left: 20px; "><a href="boardView.jsp" style="color: white;">영화 평론 게시판</a></h3>				
-				<!-- <p><a class="btn btn-default" data-target="#modal" data-toggle="modal">자세히 알아보기</a></p> -->
-				<p style="padding-left:10px; padding-top:10px;"> 영화에 대한 글을 쓰고<br>실시간 댓글을 통해 자유롭게<br>토론을 나누세요</p>
+				<h3 style="color:black;"><a href="boardView.jsp" style="color: black;">영화 평론 게시판</a></h3>				
+				<!-- <p><a class="btn btn-default" data-target="#modal" data-toggle="modal">자세히 알아보기</a></p> -->				
+				<p style="padding-top:10px; color: black;"><a href="boardView.jsp" style="color: black;"> 영화에 대한 글을 쓰고<br>실시간 댓글을 통해 자유롭게<br>토론을 나누세요<br></a></p>
 			</div>
 			<div class="col-md-4" style="text-align:center;">
-				<h3><a href="find.jsp" style="color: white;">친구 채팅</a></h3>
-				<p style="padding-top:10px;"> 친구찾기 기능을 통해<br> 1:1 채팅을 나누세요</p>
-				
+				<h3><a href="find.jsp" style="color:black;">친구 채팅</a></h3>				
+				<p style="padding-top:10px; color: black;"><a href="find.jsp" style="color: black;">  친구찾기 기능을 통해<br> 1:1 채팅을 나누세요<br></a></p>				
 			</div>
 			<div class="col-md-4" style="text-align:center;">
-				<h3><a href="openChatIndex.jsp" style="color: white;">오픈 채팅</a></h3>
-				<p style="padding-top:10px;"> 회원, 비회원 상관없이<br> 자유롭게 채팅을 나누세요<br></p>
+				<h3><a href="openChatIndex.jsp" style="color:black;">오픈 채팅</a></h3>				
+				<p style="padding-top:10px;"><a href="openChatIndex.jsp" style="color: black;"> 회원, 비회원 상관없이<br> 자유롭게 채팅을 나누세요<br></a></p>
 			</div>
 		</div>	
 	
 			</section>
 		
-		</div>
 		
 	
 	
@@ -178,13 +232,13 @@
 			<div class="container">
 				<br>
 				<div class="row">
-					<div class="col-sm-2" style="text-align: center;"><h5>Copyright &copy; 2018</h5><h5>지창호(Changho JI)</h5></div>
-					<div class="col-sm-4"><h4>개발자 소개</h4><p>저는 웹개발자 지창호 입니다. 가천대에서 경영학을 전공, 컴퓨터공학을 복수전공 하였으며 Java, JSP, Servlet, MySQL, Ajax, jQuery, Bootstrap 을 사용하여 개발했습니다.</p></div>
-					<div class="col-sm-2"><h4 style="text-align: center;">네비게이션</h4>
+					<div class="col-sm-3" style="text-align: center;"><h5>Copyright &copy; 2018</h5><h5>지창호(Changho JI)</h5></div>
+					<div class="col-sm-5"><h4>개발자 소개</h4><p>저는 웹개발자 지창호 입니다. 가천대에서 경영학을 전공, 컴퓨터공학을 복수전공 하였으며 Java, JSP, Servlet, MySQL, Ajax, jQuery, Bootstrap 을 사용하여 개발했습니다.</p></div>
+					<!-- <div class="col-sm-2"><h4 style="text-align: center;">네비게이션</h4>
 						<div class="list-group">
 							<a href="index.jsp" class="list-group-item">개발자 소개</a>							
 						</div>
-					</div>
+					</div> -->
 					<div class="col-sm-2"><h4 style="text-align: center;">SNS</h4>
 						<div class="list-group">
 							<a href="https://www.facebook.com/profile.php?id=100008338392748" class="list-group-item">페이스북</a>
@@ -241,17 +295,29 @@
 		session.removeAttribute("messageType");
 		}
 	%>
-	<%
-		if (userID != null) {
-	%>
+	
+		
+	
+	
+	
 		<script type="text/javascript">
 			$(document).ready(function() {
-				getUnread();
-				getInfiniteUnread();
+			<%
+				if (userID != null) {
+			%>
+						getUnread();
+						getInfiniteUnread();
+			<%
+					}
+			%>
+				 $('.carousel').carousel({
+	                interval: 3000
+	            })
+				
+				/* $('#myCarousel2').carousel('cycle');*/
+				 
+
 			});
 		</script>
-	<%
-			}
-	%>
 </body>
 </html>

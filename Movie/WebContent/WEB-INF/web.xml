@@ -151,7 +151,7 @@
   
   
     <filter-name>nocachefilter</filter-name>
-    <filter-class>            
+    <filter-class>            s
             com.movie.chat.open.NocacheFilter
         </filter-class>
   </filter>
@@ -161,10 +161,10 @@
   </filter-mapping>
   <context-param>
     <param-name>BaseUrl</param-name>
-    <param-value>http://localhost:8080/Movie/</param-value>
+    <param-value>http://ec2-13-124-231-86.ap-northeast-2.compute.amazonaws.com:8080/Movie/</param-value>
   </context-param>
   <context-param>
     <param-name>WsUrl</param-name>
-    <param-value>ws://localhost:8080/Movie/chat</param-value>
+    <param-value>ws://ec2-13-124-231-86.ap-northeast-2.compute.amazonaws.com:8080/Movie/chat</param-value>
   </context-param>
 </web-app>

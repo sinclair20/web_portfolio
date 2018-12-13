@@ -19,7 +19,7 @@ public class UserListDAO {
 		try {
 			InitialContext initContext = new InitialContext();
 			Context envContext = (Context) initContext.lookup("java:/comp/env");
-			dataSource = (DataSource) envContext.lookup("jdbc/Movie");
+			dataSource = (DataSource) envContext.lookup("jdbc/movie");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -31,7 +31,7 @@ public class UserListDAO {
 		
 		Connection conn = null;
 		PreparedStatement pstmt = null;
-		String SQL = "INSERT INTO USERLIST(userName) SELECT ? FROM DUAL WHERE NOT EXISTS (SELECT * FROM USERLIST WHERE userName = ?)";
+		String SQL = "INSERT INTO userlist(userName) SELECT ? FROM DUAL WHERE NOT EXISTS (SELECT * FROM userlist WHERE userName = ?)";
 		/*String SQL = "INSERT INTO UserList(userName) values (?)";*/
 		
 		try {
@@ -64,7 +64,7 @@ public class UserListDAO {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		
-		String SQL = "SELECT * FROM USERLIST";
+		String SQL = "SELECT * FROM userlist";
 		
 		try {
 			conn = dataSource.getConnection();
@@ -102,7 +102,7 @@ public class UserListDAO {
 		
         boolean result = false;
 
-		String SQL = "DELETE FROM USERLIST WHERE USERNAME = ?";
+		String SQL = "DELETE FROM userlist WHERE userName = ?";
 		try {
 			conn = dataSource.getConnection();
 			pstmt = conn.prepareStatement(SQL);

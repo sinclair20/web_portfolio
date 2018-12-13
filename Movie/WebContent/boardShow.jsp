@@ -55,6 +55,10 @@
 		System.out.println(boardID);
 		
 		String commentID = (String) request.getParameter("commentID");
+		
+		
+		
+		
 	%>
 	
 <head>
@@ -87,60 +91,28 @@
 				}
 			});
 		}
+		
 		function getInfiniteUnread() {
 			setInterval(function() {
 				getUnread();
 			}, 4000);
 		}
+		
 		function showUnread(result) {
 			$('#unread').html(result);
 		}
 		
-		function autoClosingAlert(selector, delay) {
-			var alert = $(selector).alert();
-			alert.show();
-			window.setTimeout(function() { alert.hide() }, delay);
-		}
+	
 		
-		function updateFunction() {
-			var userID = '<%= userID%>';
-			var boardID = '<%= boardID %>';
-			var commentContent = $('.commentContent').val().replace(/\n/g, "\\\\n").replace(/\r/g, "\\\\r").replace(/\t/g, "\\\\t").replace(/\t/g, "\\\\t").replace(/<br\s*\/?>/gi, '\n');
-			var commentWriter = $('.commentWriter').val();
-			
-			if (commentContent == '') { return; }
-			
-			$.ajax({
-				type: "POST",
-				url: "./commentUpdate",
-				data: {
-					userID: encodeURIComponent(userID),
-					boardID: encodeURIComponent(boardID),
-					commentContent: encodeURIComponent(commentContent),
-					commentWriter: encodeURIComponent(commentWriter)
-				},
-				success: function (result) {
-					if (result == 1) {
-						autoClosingAlert('#successMessage', 2000);
-					} else if (result == 0) {
-						autoClosingAlert('#dangerMessage', 2000);
-						} else {
-						autoClosingAlert('#warningMessage', 2000);
-					}
-				}
-			});
-			$('.commentContent').val('');
-			$('.commentWriter').val('');
-		}
 		 
 		  
 		var lastComment = $('#lastComment').text();
 	    function submitFunction() {
+			
 			var userID = '<%= userID%>';
 			var boardID = '<%= boardID %>';
 			var commentContent = $('.commentContent').val().replace(/\n/g, "\\\\n").replace(/\r/g, "\\\\r").replace(/\t/g, "\\\\t");		
-
-			console.log(commentContent);
+			
 			if (userID == 'null') {
 				var commentWriter = $('.commentWriter').val();
 				var commentPassword = $('.commentPassword').val();
@@ -149,8 +121,7 @@
 				}		
 			} else {
 				var commentWriter = '<%= userID%>';
-				var commentPassword = '<%= userPassword %>';
-				
+				var commentPassword = '<%= userPassword %>';				
 			}		
 			if (commentContent == '') { return; }
 			$.ajax({
@@ -163,16 +134,24 @@
 					commentWriter: encodeURIComponent(commentWriter),
 					commentPassword: encodeURIComponent(commentPassword)
 				},
-				success: function (result) {
-					if (result == 1) {
-						autoClosingAlert('#successMessage', 2000);
-					} else if (result == 0) {
-						autoClosingAlert('#dangerMessage', 2000);
-					} else {
-						autoClosingAlert('#warningMessage', 2000);
+				success: function (data) {
+					if (data=="") return;
+					var parsed = JSON.parse(data);
+					var result = parsed.result;
+					var l = Number($('.commentOrder').last().text());
+
+					if (l == 0) {
+						l = 0;
 					}
+					
+					if (result[0][0].value == "null") {							
+						nonmemberAddChat(result[0][0].value, result[0][1].value, result[0][2].value, result[0][3].value, result[0][4].value, l+1, result[0][5].value);
+					} else {
+						addChat(result[0][0].value, result[0][1].value, result[0][2].value, result[0][3].value, result[0][4].value, l+1, result[0][5].value);
+					}
+					
 				}
-			});
+			});			
 			$('.commentContent').val('');
 			$('.commentWriter').val('');
 			$('.commentPassword').val('');
@@ -189,6 +168,7 @@
 				ajax_loading = true;
 				var userID = '<%= userID%>'; // 널 나오는거 맞나요? 예 맞습니다. 현재 비로그인 회원으로 테스트하고있습니다.
 				var boardID = '<%= boardID %>';
+				var lastCommentOrder = Number($('.commentOrder').last().text());
 				var data = {
 					userID: encodeURIComponent(userID),
 					boardID: encodeURIComponent(boardID),			
@@ -199,7 +179,6 @@
 					console.log(last);
 			        return;
 			    }			
-				
 				/* console.log('요청', data); */  // 매요청마다 값이 같아요 아 0이라는 값이 전달되도록 만들었습니다. 매요청이 같아서 응답도 같아요 아.. 전 거기서 데이터를 몽땅 불러온후 
 											// 이부분에서 5개씩만 순차적으로 보여주려고 했습니다. 잘못된 방법인가요??
 											// 한번에 다 가져와서 스크롤이 내려갈때마다 5개씩 출력하는 방식으로 계획했습니다. 그건 문제가 없는데
@@ -216,18 +195,22 @@
 					//console.log();	
 					//console.log(data);
 					var parsed = JSON.parse(data);
+					
 					/* console.log(JSON.stringify(parsed, undefined, 3)); */
 					/* var result = parsed.result; */
- 					var result = parsed.result;			 					 
+ 					var result = parsed.result;	
+ 					
 					for (var i = 0; i < result.length; i++) {								
 						if (result[i][0].value == "null") {							
 							nonmemberAddChat(result[i][0], result[i][1].value, result[i][2].value, result[i][3].value, result[i][4].value, i+1, result[i][5].value);
 						} else {
-							addChat(result[i][0].value,  result[i][1].value,  result[i][2].value, result[i][3].value, result[i][4].value, i+1, result[i][5].value);
+							addChat(result[i][0].value,  result[i][1].value, result[i][2].value, result[i][3].value, result[i][4].value, i+1, result[i][5].value);
 						}
 						lastID = Number(parsed.last);
 						last = i+1
-					}						
+					}
+					
+					
 					},
 					complete:function() {
 						ajax_loading = false;
@@ -237,156 +220,57 @@
 		}		 
 		
 		
+	function autoClosingAlert() {
+			
+			
+			$('#updateCommentModal').modal('hide');
+			alert('댓글 수정 완료!');
+			
+		}
 		
+	function updateFunction() {
+		var userID = '<%= userID%>';
+		var boardID = '<%= boardID %>';
+		var commentContent = $('#updateContent').val();
+		var commentID = $('#updateID').val();
+		/* var commentWriter = $('.commentWriter').val(); */
 		
-		function nonmemberAddChat(userID, commentWriter, commentContent, commentTime, commentID, commentOrder, commentPassword) {
-					
-					$('#commentList').append('<div class ="row">' +
-		    				'<div class="col-lg-12">' +  
-		    				'<div class="media">' +			
-		    				'<a class="pull-left" href="#">' +
-							'<span id="lastComment">' + 
-		    				commentOrder +
-		    				'</span>' + 
-		    				/* a (commentOrder, commentLength) +  */
-		    				'<img class="media-object img-circle" style="width:30px; height: 30px;" alt="">' +
-		    				'</a>' +
-		    				'<div class="media-body">' +
-		    				'<h4 class="media-heading">' +
-		    				commentWriter +
-		    				'<span class="small pull-right">' +
-		    				commentTime +
-		    				'</span>' +
-		    				'</h4>' +
-		    				'<p>' +
-		    				commentContent +		    					
-		    				/* '<a href="#updateCommentModal" class="btn btn-info pull-right" data-toggle="modal"  data-title="' + commentID +"r}`3*"+ commentContent + "r}`3*" +  commentPassword +'">' + */
-		    				'<a href="#updateCommentModal" class="btn btn-info pull-right" data-toggle="modal"  data-title="' + commentID +"r}`3*"+ userID +"r}`3*"+commentWriter + "r}`3*" + commentContent + "r}`3*"+ commentPassword +'">댓글 수정</a>' +		    				
-	                        '<a href="#" onclick="cmDeleteOpen('+ commentID +')">삭제</a>' +		    				
-		    				'</p>' +		    
-		    				'</div>' +
-		    				'</div>' +
-		    				'</div>' +
-		    				'</div>' +
-		    				'<hr>');	
-				$('#commentList').scrollTop($('#commentList')[0].scrollHeight);			
-			} 
-			
-			
-			function addChat(userID, commentWriter, commentContent, commentTime, commentID, commentOrder, commentPassword) {
-
-				$('#commentList').append('<div class ="row">' +
-	    				'<div class="col-lg-12">' +  
-	    				'<div class="media">' +			
-	    				'<a id="lastComment" class="pull-left" href="#">' +	    				
-	    				'<span id="lastComment">' + 
-	    				commentOrder +
-	    				'</span>' + 	    				
-	    				'<img class="media-object img-circle" style="width:30px; height: 30px;" alt="">' +
-	    				'</a>' +
-	    				'<div class="media-body">' +
-	    				'<h4 class="media-heading">' +
-	    				userID +
-	    				'<span class="small pull-right">' +
-	    				commentTime +
-	    				'</span>' +
-	    				'</h4>' +
-	    				'<p>' +
-	    				commentContent +
-	    					
-	    				'<a href="#updateCommentModal" class="btn btn-info pull-right" data-toggle="modal" data-title="' + commentID +"r}`3*"+ + userID +"r}`3*"+ commentWriter + "r}`3*" + commentContent + "r}`3*"+ commentPassword + '">댓글 수정</a>' + 
-	    				/* '<a class="btn btn-info" href="./commentUpdate" data-toggle="modal" onclick="location.href="#commentModal"">' + */ 
-	    				/* '<a href="#updateCommentModal" class="btn btn-info pull-right" data-toggle="modal"  data-title="' + commentID +"r}`3*"+ commentContent + "r}`3*" +  commentPassword +'">' + */		    	
-
-                        '<a href="#" onclick="cmDeleteOpen('+ commentID +')">삭제</a>' +
-	    				'</p>' +		    
-	    				'</div>' +
-	    				'</div>' +
-	    				'</div>' +
-	    				'</div>' +
-	    				'<hr>');	
-			$('#commentList').scrollTop($('#commentList')[0].scrollHeight);
-		} 
-
-		
-		// 채팅 화면에 메시지 출력하는 함수
-		<%-- function addChat(commentWriter, commentContent, commentTime, commentID, commentOrder, commentLength, lastComment) {
-			
-			var last = commentLength + 1
-			
-			 if (lastComment != 1) {
-			  
-					$('#commentList').append('<div class ="row">' +
-		    				'<div class="col-lg-12">' +  
-		    				'<div class="media">' +			
-		    				'<a class="pull-left" href="#">' +
-		    				commentOrder +
-		    				/* a (commentOrder, commentLength) +  */
-		    				'<img class="media-object img-circle" style="width:30px; height: 30px;" alt="">' +
-		    				'</a>' +
-		    				'<div class="media-body">' +
-		    				'<h4 class="media-heading">' +
-		    				commentWriter +
-		    				'<span class="small pull-right">' +
-		    				commentTime +
-		    				'</span>' +
-		    				'</h4>' +
-		    				'<p>' +
-		    				commentContent + 
-		    				'<a class="btn btn-info pull-right" data-toggle="modal" href="#commentModal" data-title="' + commentID +"r}`3*"+ commentContent +'">' +
-	                        '<a href="#" onclick="cmDeleteOpen('+ commentID +')">삭제</a>' +
-		    				/* '<a class="btn btn-info" href="./commentUpdate" data-toggle="modal" onclick="location.href="#commentModal"">' + */ 
-		    				'</p>' +
-		    				'<a href="deleteCommentAction.jsp?boardID='+ <%= boardID %> + '&&' + <%= commentID %> +'" onclick="return confirm("정말로 삭제하시겠습니까?");">' +
-		    				'</div>' +
-		    				'</div>' +
-		    				'</div>' +
-		    				'</div>' +
-		    				'<hr>');					
-			} else {
-			
-					var array = new Array();
-					for (i=0; i < commentLength; i++) {
-						array = i
-					}
-			
-					b = array.length;
-					commentOrder.indexOf(b)
-				$('#commentList').append('<div class ="row">' +
-	    				'<div class="col-lg-12">' +  
-	    				'<div class="media">' +			
-	    				'<a class="pull-left" href="#">' +
-	    				last +
-	    				/* a (commentOrder, commentLength) +  */
-	    				'<img class="media-object img-circle" style="width:30px; height: 30px;" alt="">' +
-	    				'</a>' +
-	    				'<div class="media-body">' +
-	    				'<h4 class="media-heading">' +
-	    				commentWriter +
-	    				'<span class="small pull-right">' +
-	    				commentTime +
-	    				'</span>' +
-	    				'</h4>' +
-	    				'<p>' +
-	    				commentContent + 
-	    				'<a class="btn btn-info pull-right" data-toggle="modal" href="#commentModal" data-title="' + commentID +"r}`3*"+ commentContent +'">' +
-                        '<a href="#" onclick="cmDeleteOpen('+ commentID +')">삭제</a>' +
-	    				/* '<a class="btn btn-info" href="./commentUpdate" data-toggle="modal" onclick="location.href="#commentModal"">' + */ 
-	    				'</p>' +
-	    				'<a href="deleteCommentAction.jsp?boardID='+ <%= boardID %> + '&&' + <%= commentID %> +'" onclick="return confirm("정말로 삭제하시겠습니까?");">' +
-	    				'</div>' +
-	    				'</div>' +
-	    				'</div>' +
-	    				'</div>' +
-	    				'<hr>');
+		if (commentContent == '') { return; }
+		console.log('updateFunction();')
+		$.ajax({
+			type: "POST",
+			url: "./commentUpdate",
+			data: {
+				userID: encodeURIComponent(userID),
+				boardID: encodeURIComponent(boardID),
+				commentContent: encodeURIComponent(commentContent),
+				commentID: encodeURIComponent(commentID)
+				/* commentWriter: encodeURIComponent(commentWriter) */
+			},
+			success: function (result) {
+				$('.lastComment'+commentID).text(commentContent);
+				autoClosingAlert();
 			}
-					$('#commentList').scrollTop($('#commentList')[0].scrollHeight);
-			} 
-		 --%>
+		});			
+	}
+		
+	
+		function autoOrder() {
+			setInterval(function() {
+			var lastCommentOrder = Number($('.commentOrder').last().text());
+			for (var i=1; i <=lastCommentOrder; i++) { 
+				$('.commentOrder'+i).text('1');
+				console.log('commentOrder' + $('.commentOrder'+i).text(i));
+			}
+			}, 3000);
+		}	
+			
+
 
 		function getInfiniteChat(){
-			setInterval(function() {
+			setInterval(function() {				
 				chatListFunction('0');
+				autoNumber();
 			}, 3000);
 		}
 		
@@ -397,63 +281,226 @@
 			}, 600);
 		}
 		
-		var httpRequest = null;
-        
-        // httpRequest 객체 생성
-        function getXMLHttpRequest(){
-            var httpRequest = null;
-        
-            if (window.ActiveXObject){
-                try{
-                    httpRequest = new ActiveXObject("Msxml2.XMLHTTP");    
-                } catch(e) {
-                    try{
-                        httpRequest = new ActiveXObject("Microsoft.XMLHTTP");
-                    } catch (e2) { httpRequest = null; }
-                }
-            }
-            else if(window.XMLHttpRequest){
-                httpRequest = new window.XMLHttpRequest();
-            }
-            return httpRequest;    
-        }		
-
-        
-        function checkFunc(){
-            if (httpRequest.readyState == 4){
-                // 결과값을 가져온다.
-                var resultText = httpRequest.responseText;
-                if(resultText == 1){ 
-                    document.location.reload(); // 상세보기 창 새로고침
-                }
-            }
-        }
-
-
-        function cmDeleteOpen(commentID){
-            var msg = confirm("댓글을 삭제합니다.");    
-            if(msg == true){ // 확인을 누를경우
-                deleteCmt(commentID);
-            }
-            else{
-                return false; // 삭제취소
-            }
-        }
-        
-     // 댓글 삭제
-        function deleteCmt(commentID) {
-            var param="commentID="+ commentID;
-            /* console.log(commentID); */
-            httpRequest = getXMLHttpRequest();
-            httpRequest.onreadystatechange = checkFunc;
-          	/* httpRequest.open("POST", "http://localhost:8080/Movie/DeleteCommentAction.jsp", true); */
-          	httpRequest.open("POST", "./deleteComment", true);
-            httpRequest.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded;charset=EUC-KR'); 
-            httpRequest.send(param); 
-        }
-     
-
-        
+		function deleteCheck (commentID, userID, commentWriter, commentPassword) {    // myModal 윈도우가 오픈할때 아래의 옵션을 적용
+			  
+			if (userID == '[object Object]') {
+					var str = '비밀번호를 입력해주세요';
+					var content = prompt('메시지창', str);
+								
+						console.log('content',content);
+					if (content == commentPassword) {
+						deleteFunction(commentID);
+					    
+					} else if (content == null) {
+						$(location).attr('href', "boardShow.jsp?boardID=<%= board.getBoardID() %>");
+					} else if (content != commentPassword){
+						alert('비밀번호가 틀렸습니다.');						
+						$(location).attr('href', "boardShow.jsp?boardID=<%= board.getBoardID() %>");
+						
+					}
+					
+				} else if (userID != '[object Object]') {
+					var str = '회원 비밀번호를 입력해주세요';
+					var content = prompt('메시지창', str);											
+						
+					if (content == commentPassword) {
+						deleteFunction(commentID);
+						
+					} else if (content == null){
+						$(location).attr('href', "boardShow.jsp?boardID=<%= board.getBoardID() %>");
+					} else if (content != commentPassword){						
+						alert('비밀번호가 틀렸습니다.');
+						$(location).attr('href', "boardShow.jsp?boardID=<%= board.getBoardID() %>");
+						
+					} 									
+				
+				}
+			}
+		
+		function deleteFunction(commentID) {
+			$('.lastCom'+commentID).remove();
+			var userID = '<%= userID%>';
+			var boardID = '<%= boardID %>';
+			var lastCommentOrder = Number($('.commentOrder').last().text());
+			for (var k=1; k < lastCommentOrder; k++ ){								
+				$('.commentOrder'+ k ).text(k); 
+			}
+			
+			/* var commentWriter = $('.commentWriter').val(); */
+			
+			console.log('deleteFunction()')
+			$.ajax({
+				type: "POST",
+				url: "./deleteComment",				
+				data: {
+					userID: encodeURIComponent(userID),
+					boardID: encodeURIComponent(boardID),					
+					commentID: encodeURIComponent(commentID)
+					
+				},
+				success: function () {
+					
+					var order = Number($('.lastCom'+commentID).find('.commentOrder').text());
+					console.log(order);
+					
+					/* var a = $('.commentOrder'+ (order + Number(i) - 1)).text();
+					$('.commentOrder'+ order + Number(i)).text(a); */
+					/* var a = Number($('.commentOrder' + order +i+1).text());
+					$('.commentOrder'+ order + i ).text(a); */
+					
+					for (var i=1; i < lastCommentOrder; i++ ){
+						if (i != $('.commentOrder'+ i ).text()) {
+							console.log('다름!')
+							for (var k=1; k < lastCommentOrder; k++ ){								
+								$('.commentOrder'+ k ).text(k);
+								
+							}
+						} 
+					} 
+					
+					
+					/* for (var i=1; i < lastCommentOrder; i++) {
+						var a = Number($('.commentOrder' + i).text());
+						var b = Number($('.commentOrder' + i+1).text());
+						console.log("a",a);
+						console.log("b",b);
+						
+						if (a+1 != b) {
+							for (var k=1; k < lastCommentOrder; k++ ){								
+								$('.commentOrder'+ i ).text(i); 
+							}
+							break;
+						}		
+					}
+					 */
+					
+					
+					/* for (i=1; i <= lastCommentOrder; i++ ){
+						
+						$('.commentOrder'+i).text(i);
+					} 
+					 */
+					
+					
+					alert('댓글이 삭제되었습니다.')
+					console.log("order ",order);
+					console.log("lastCommentOrder ",lastCommentOrder);
+					
+				}
+			});			
+		}
+		
+		function autoNumber() {
+			console.log('autoNumber')
+			var lastCommentOrder = Number($('.commentOrder').last().text());
+			for (var i=1; i <= lastCommentOrder; i++) {
+				var a = $('.commentOrder' + i).text();
+				var s = i;
+				console.log('a',a);
+				console.log('s',s);
+				if (a == '') {
+					console.log('다름',s)
+		/* 			for (var k=s; k <= lastCommentOrder; k++) {
+						$('.commentOrder' + Number(k+1)).text(k);
+		
+					} */
+					while(s <= lastCommentOrder){
+						$('.commentOrder' + Number(s+1)).text(s);
+						s++
+					}
+						
+				}
+			}	
+		}
+		
+		
+		function nonmemberAddChat(userID, commentWriter, commentContent, commentTime, commentID, commentOrder, commentPassword) {
+		    
+			
+			$('#commentList').append('<div class="center-block lastCom'+commentID+'" style="background-color: #fafafa; color: #000000; width: 80%;">' +
+    				'<div class="col-lg-12">' +  
+    				'<div class="media">' +
+    				'<div class="col-sm-1">' +
+    				'<a class="pull-left" href="#">' +
+					
+    				'<span class="commentOrder commentOrder'+ commentOrder +'">' + 
+    				commentOrder +
+    				'</span>' +
+    				/* a (commentOrder, commentLength) +  */
+    				'<img class="media-object img-circle" style="width:30px; height: 30px;" alt="">' +
+    				'</a>' +
+    				'</div>' +
+    				'<div class="media-body">' +
+    				'<div class="col-sm-2">' +
+    				'<h4 class="media-heading">' +
+    				commentWriter +		    				
+    				'</h4>' +
+    				'</div>' +		    				
+    				'<div class="col-sm-6">' +
+    				'<h4>' +
+    				'<p class="lastComment'+commentID+'">' +
+    				commentContent +
+    				'</p>' +    			
+    				'</h4>' +
+    				'</div>' +
+    				'<span class="small pull-right">' +
+    				commentTime +
+    				'</span>' +
+    				/* '<a href="#updateCommentModal" class="btn btn-info pull-right" data-toggle="modal"  data-title="' + commentID +"r}`3*"+ commentContent + "r}`3*" +  commentPassword +'">' + */
+    				'<div class="col-sm-3">' +
+    				'<a href="#updateCommentModal" style="margin-bottom: 50px;" class="btn btn-info" data-toggle="modal"  data-title="' + commentID +"r}`3*"+ userID +"r}`3*"+commentWriter + "r}`3*" + commentContent + "r}`3*"+ commentPassword +'">댓글 수정</a>' +		    				
+    				'<a href="#" style="margin-left: 10px; margin-bottom: 50px;" class="btn btn-info" onclick="deleteCheck('+"'" + commentID +"'" + ',' + "'"+ userID + "'"+ ',' + "'"+commentWriter +"'"+ ',' + "'" +commentPassword +"'" +')">삭제</a>' +
+    				/* '<a href="#" style="margin-left: 10px; margin-bottom: 50px;" class="btn btn-info" onclick="deleteCheck(' + data +')">삭제</a>' + */ 
+    				'</div>' +		    				
+    				'</div>' +
+    				'</div>' +
+    				'</div>' +
+    				'<hr>');	
+			
+	} 
+	
+	function addChat(userID, commentWriter, commentContent, commentTime, commentID, commentOrder, commentPassword) {
+		
+		$('#commentList').append('<div class="center-block lastCom'+commentID+'" style="background-color: #fafafa; color: #000000; width: 80%;">' +
+				'<div class="col-lg-12">' +  
+				'<div class="media">' +
+				'<div class="col-sm-1">' +
+				'<a class="pull-left" href="#">' +
+				
+				'<span class="commentOrder commentOrder'+commentOrder +'">' + 
+				commentOrder +
+				'</span>' + 
+				/* a (commentOrder, commentLength) +  */
+				'<img class="media-object img-circle" style="width:30px; height: 30px;" alt="">' +
+				'</a>' +
+				'</div>' +
+				'<div class="media-body">' +
+				'<div class="col-sm-2">' +
+				'<h4 class="media-heading">' +
+				userID +	    				
+				'</h4>' +
+				'</div>' +	    				
+				'<div class="col-sm-6">' +
+				'<h4>' +
+				'<p class="lastComment'+commentID+'">' +
+				commentContent +
+				'</p>' +								
+				'</h4>' +
+				'</div>' +
+				'<span class="small pull-right">' +
+				commentTime +
+				'</span>' +
+				/* '<a href="#updateCommentModal" class="btn btn-info pull-right" data-toggle="modal"  data-title="' + commentID +"r}`3*"+ commentContent + "r}`3*" +  commentPassword +'">' + */
+				'<div class="col-sm-3">' +
+				'<a href="#updateCommentModal" style="margin-bottom: 50px;" class="btn btn-info" data-toggle="modal"  data-title="' + commentID +"r}`3*"+ userID +"r}`3*"+commentWriter + "r}`3*" + commentContent + "r}`3*"+ commentPassword +'">댓글 수정</a>' +
+				'<a href="#" style="margin-left: 10px; margin-bottom: 50px;" class="btn btn-info" onclick="deleteCheck('+"'" + commentID +"'" + ',' + "'"+ userID + "'"+ ',' + "'"+commentWriter +"'"+ ',' + "'" +commentPassword +"'" +')">삭제</a>' +		    					    					    					
+				'</div>' +
+				'</div>' +
+				'</div>' +
+				'</div>' +
+				'<hr>');	
+	
+		} 
 
 	</script>
 
@@ -576,7 +623,7 @@
 	    	<form class="form-horizontal" style="margin-top: 10px; width: 600px;">
 		  <div class="form-group">
 		    <div class="col-sm-10">
-		    	<textarea class="form-control commentContent" name="commentContent" placeholder="남기고 싶은 말" required="required"></textarea>      
+		    	<textarea class="form-control commentContent" name="commentContent" placeholder="댓글을 입력해주세요." required="required"></textarea>      
 		    </div>
 		    <div class="col-sm-2">
 		      <button id="submit" type="button" class="form-control btn btn-primary" onclick="submitFunction();">글쓰기</button>
@@ -612,6 +659,10 @@
 	%>
 	
 	
+	
+	
+	
+	
 	<div class="modal fade" id="updateCommentModal" tabindex="-1" role="dialog" aria-labelledby="modal" aria-hidden="true">
 		<div class="modal-dialog">
 			<div class = "modal-content">
@@ -622,33 +673,27 @@
 						</button>
 				</div>
 				<div class="modal-body">							
-				<form method="post" action="./commentUpdate">				 
 					<section class="container mt-5 mb-5" style="max-width: 560px;">
-						<div id="modal" class="input-group" role="group" aria-label="..." style="margin-top: 10px; width: 540px;">
+				<form class="form-horizontal" style="margin-top: 10px; width: 600px;"> 				 
+						<div id="modal" class="form-group" role="group" aria-label="..." style="margin-top: 10px; width: 540px;">
 						<div style="display:none">						
-							<textarea class="commentID" name="commentID" id="commentID"></textarea>
-							<textarea class="commentPassword" name="commentPassword" id="commentPassword"></textarea>
+							<textarea id = "updateID" class="form-control commentID" name="commentID" id="commentID"></textarea>
+							<textarea class="form-control commentPassword" name="commentPassword" id="commentPassword"></textarea>
 						</div>					
-					    <textarea class="form-control commentContent" rows="3" name="commentContent" placeholder="댓글을 입력하세요." style="width: 540px;" ></textarea>				    
-					    <div class="btn-group btn-group-sm" role="group" aria-label="...">       
-					        <button type="submit" class="btn btn-default" >댓글 쓰기</button>
-						    </div> 
+					    <textarea id="updateContent" class="form-control" rows="3" name="commentContent" placeholder="댓글을 입력하세요." style="width: 540px;" ></textarea>				    
+					    <div>       					        
+					        <button type="button" onclick="updateFunction();">댓글 수정</button>
+						   </div> 
 						</div>		
+				</form> 		
 					</section>
-				</form>			
 				</div>
 			</div>
 		</div>		
 	</div>
 	
-				
-	<div id="chat" class="panel-collapse collapse in">
-		<div id="commentList" class="portlet-body chat-widget" style="width: auto; height:600px; padding:30px;">						
-		</div>
-	</div>
-			
 	<%
-		String messageContent = null;
+		String messageContent = null;	
 		if (session.getAttribute("messageContent") != null) {
 			messageContent = (String) session.getAttribute("messageContent");
 		}
@@ -678,18 +723,30 @@
 					<div class="modal-footer">
 						<button type="button" class="btn btn-primary" data-dismiss="modal">확인</button>
 					</div>
-				</div>					
+				</div>
+					
 			</div>
 		</div>
 	</div>
-	<script>
-		$('#messageModal').modal("show");
-	</script>
 	<%
 		session.removeAttribute("messageContent");
 		session.removeAttribute("messageType");
 		}
 	%>
+	<script>
+		$('#messageModal').modal("show");
+	</script>
+	
+	
+	
+				
+	<div id="chat" class="panel-collapse collapse in">
+		<div id="commentList" class="portlet-body chat-widget" style="width: auto; height:600px; padding:30px;">						
+		</div>
+	</div>
+			
+
+	
 	
 <%-- 	
 	<%
@@ -783,56 +840,51 @@
 	%> --%>
 	
 	<script type="text/javascript">
-		$("#body").scrollTop(0);
+		/* $("#body").scrollTop(0); */
+		
+		
 		chatListFunction('0');
-		getInfiniteChat();  
+		getInfiniteChat();
+		autoNumber();
 		$(document).ready(function() {
+		<%
+			if (userID != null) {
+		%>
+		
+				getUnread();
+				getInfiniteUnread();
+			
+		<%
+		 	
+			} 
+		%>
 			
 			$(window).scroll(function() {									
 				/* http://ankyu.entersoft.kr/Lecture/jquery/jquery_02_31.asp */
 				var scrollSize = $(window).scrollTop() + $(window).height();
 				var documentSize = $(document).height();
-					if (scrollSize >= documentSize - 5) {
-						/* console.log('bottom'); */
-						/* chatListFunction('0'); */																					  
-						
+					if (scrollSize >= documentSize - 5) {						
 						getInfiniteComment();
 					}   
 				
 				});
 			
-	
-	
-				
-				
-				$('#updateCommentModal').on('hidden.bs.modal', function () {
-					    $(this).find('textarea').trigger('reset');
-					    $(this).find('textarea').trigger("reset");
-					    $(this).find('.commentContent').trigger("reset");
-					    
-
-
-				})
-				
-		
-		
+			
 		
 			$('#updateCommentModal').on('show.bs.modal', function (event) {    // myModal 윈도우가 오픈할때 아래의 옵션을 적용
 								
 				var jbAry = new Array();
-				var jbAryy = new Array();  
+				  
 					 
 				var button = $(event.relatedTarget); 				     // 모달 윈도우를 오픈하는 버튼
 				var titleTxt = button.data('title');				     // 버튼에서 data-title 값을 titleTxt 변수에 저장
 				var jbAry = titleTxt.split('r}`3*');
-				for (var i in jbAry) {
-					jbAryy[i] = jbAry[i];
-				}
-				var commentID = jbAryy[0];
-				var userID = jbAryy[1];
-				var commentWriter = jbAryy[2];
-				var commentContent = jbAryy[3];
-				var commentPassword = jbAryy[4];
+				
+				var commentID = jbAry[0];
+				var userID = jbAry[1];
+				var commentWriter = jbAry[2];
+				var commentContent = jbAry[3];
+				var commentPassword = jbAry[4];
 				console.log(commentID);
 				console.log(userID);
 				console.log(commentWriter);
@@ -842,91 +894,61 @@
 				if (userID == '[object Object]') {
 					var str = '비밀번호를 입력해주세요';
 					var content = prompt('메시지창', str);
+						var modal = $(this);		
+						console.log('content',content);
 					if (content == commentPassword) {
-						var modal = $(this);					
 						modal.find('.commentID').text(commentID); 		// 모달위도우에서 .modal-title을 찾아 titleTxt 값을 치환
-					     modal.find('.commentContent').text(commentContent);
+					     modal.find('#updateContent').text(commentContent);
 						console.log('11');
 					     $(location).attr('href', "#updateCommentModal");
-					} else {
-						console.log('33');
+					    
+					} else if (content == null) {
 						$(location).attr('href', "boardShow.jsp?boardID=<%= board.getBoardID() %>");
-					}		
+					} else if (content != commentPassword){
+						alert('비밀번호가 틀렸습니다.');						
+						$(location).attr('href', "boardShow.jsp?boardID=<%= board.getBoardID() %>");
+						
+					}
+					
 				} else if (userID != '[object Object]') {
 					var str = '회원 비밀번호를 입력해주세요';
-					var content = prompt('메시지창', str);
-					var modal = $(this);						
+					var content = prompt('메시지창', str);											
+						var modal = $(this);
 					if (content == commentPassword) {
 						modal.find('.commentID').text(commentID); 		// 모달위도우에서 .modal-title을 찾아 titleTxt 값을 치환
-					    modal.find('.commentContent').text(commentContent);
+					    modal.find('#updateContent').text(commentContent);
 					    console.log('22');
 					    $(location).attr('href', "#updateCommentModal");
-					} else {
-						console.log('33');
+					    
+					} else if (content == null){
 						$(location).attr('href', "boardShow.jsp?boardID=<%= board.getBoardID() %>");
-					}										
-				} 
+					} else if (content != commentPassword){						
+						alert('비밀번호가 틀렸습니다.');
+						$(location).attr('href', "boardShow.jsp?boardID=<%= board.getBoardID() %>");
+						
+					} 									
 				
-					/* 
-					if (userID == commentWriter && userPassword == content) {
-					   	modal.find('#commentID').text(commentID); 		// 모달위도우에서 .modal-title을 찾아 titleTxt 값을 치환
-					    modal.find('#commentContent').text(commentContent);				
-						$(location).attr('href', "#updateCommentModal");
-					 // 유저가 자신이 쓴 댓글이 아닌 다른유저나 비회원이 쓴 댓글을 클릭한 경우
-					} else if (commentPassword == content) { 						
-					    modal.find('#commentContent').text(commentContent);				
-					    $(location).attr('href', "#updateCommentModal");
-					}  */
-					<%-- else {
-						$(location).attr('href', "boardShow.jsp?boardID=<%= board.getBoardID() %>");
-					}
-						 --%>
-					
-			});
-			
-			
-			<%
-				if (userID != null) {
-			%>				
-					getUnread();
-					getInfiniteUnread();				
-			<%
 				}
-			%>
-			
-			/* 	$('#commentModal').on('show.bs.modal', function (event) {    // myModal 윈도우가 오픈할때 아래의 옵션을 적용
-			var jbAry = new Array();
-			var jbAryy = new Array();  
-			 
-			var button = $(event.relatedTarget); 				     // 모달 윈도우를 오픈하는 버튼
-			  var titleTxt = button.data('title');				     // 버튼에서 data-title 값을 titleTxt 변수에 저장
-			  var jbAry = titleTxt.split('r}`3*');
-			  for (var i in jbAry) {
-				  jbAryy[i] = jbAry[i];
-			  }				  
-			  var commentID = jbAryy[0];
-			  var commentContent = jbAryy[1];
-			  var commentPassword = jbAryy[2];
-			  console.log(commentPassword);
-			  var str = '비밀번호를 입력해주세요';
-		      var content = prompt('메시지창', str);
-		    if (commentPassword == str) {
-		    		 var modal = $(this);
-					  modal.find('.commentID').text(commentID); 		// 모달위도우에서 .modal-title을 찾아 titleTxt 값을 치환
-					  modal.find('#commentContent').text(commentContent);
-		    	 }else {
-		    		 return;
-		    	 }
-		    	 
-			  
 			});
-			 */
+			
+			
+		
+			
+			
+			$('#updateCommentModal').on('hidden.bs.modal', function () {				    
+				    $(this).find('textarea').trigger("reset");
+				    $(this).find('#updateContent').trigger("reset");
+			});
+			 
+			
+		
+			
 		});
+		
+	
+		
 	</script>
-	<%-- <%
-		}
-	%>
- --%>
+	
 	 
 
 

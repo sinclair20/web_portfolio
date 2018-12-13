@@ -40,7 +40,7 @@
 		return;
 	}
 	
-	String host = "http://localhost:8080/Movie/";
+	String host = "http://ec2-13-124-231-86.ap-northeast-2.compute.amazonaws.com:8080/Movie/";
 	String from = "jichangho20@gmail.com";
 	String to = userDAO.getUserEmail(userID);
 	String subject = "영화평론 사이트 회원가입을 위한 이메일 인증 메일입니다.";
@@ -49,12 +49,13 @@
 	
 	Properties p = new Properties();
 	p.put("mail.smtp.user", from);
-	p.put("mail.smtp.host", "smtp.googlemail.com");
+	/* p.put("mail.smtp.host", "smtp.googlemail.com"); */
+	p.put("mail.smtp.host", "smtp.gmail.com");
 	p.put("mail.smtp.port", "465");
 	p.put("mail.smtp.starttls.enable", "true");
 	p.put("mail.smtp.auth", "true");
 	p.put("mail.smtp.debug", "true");
-	p.put("mail.smtp.socketFactory.port", "465");
+	p.put("mail.smtp.socketFactory.port", "465"); 
 	p.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
 	p.put("mail.smtp.socketFactory.fallback", "false");
 	
@@ -118,6 +119,7 @@
 				<li><a href="find.jsp">친구찾기</a></li>
 				<li><a href="box.jsp">메세지 함<span id="unread" class="label label-info"></span></a></li>
 				<li><a href="boardView.jsp">자유게시판</a></li>
+				<li><a href="openChatIndex.jsp">오픈채팅</a></li>
 			</ul>
 		</div>
 	</nav>

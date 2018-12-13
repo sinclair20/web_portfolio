@@ -5,6 +5,9 @@ package com.movie.board.comment;
 import java.io.IOException;
 
 import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -21,17 +24,23 @@ public class DeleteCommentServlet extends HttpServlet {
    		response.setContentType("text/html; charset=UTF-8");
    		
    		HttpSession session = request.getSession();
-   		int commentID = Integer.parseInt(request.getParameter("commentID"));
-   		
+   		String commentID = request.getParameter("commentID");
+   		String boardID = request.getParameter("boardID");
+   		String lastCommentID = request.getParameter("lastCommentID");
         CommentDAO commentDAO = new CommentDAO();
         boolean result = commentDAO.deleteComment(commentID);
+        
+        /*response.getWriter().write(getID(URLDecoder.decode(boardID,"UTF-8"), lastCommentID));*/
+        
         PrintWriter out = response.getWriter();
-	
+        
 	    if(result) out.println("1");
 	    
 	    out.close();
 			
    		}
+   	
+   	
    
 	}
 

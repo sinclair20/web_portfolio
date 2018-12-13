@@ -9,7 +9,7 @@
 	<%
 		InitialContext initCtx = new InitialContext();
 		Context envContext = (Context) initCtx.lookup("java:/comp/env");
-		DataSource ds = (DataSource) envContext.lookup("jdbc/Movie");
+		DataSource ds = (DataSource) envContext.lookup("jdbc/movie");
 		Connection conn = ds.getConnection();
 		Statement stmt = conn.createStatement();
 		ResultSet rset = stmt.executeQuery("SELECT VERSION();");

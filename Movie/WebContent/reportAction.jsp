@@ -49,7 +49,7 @@
 		return;
 	}
 	
-	String host = "http://localhost:8080/Movie/";
+	String host = "ec2-13-124-231-86.ap-northeast-2.compute.amazonaws.com:8080/Movie/";
 	String from = "jichangho20@gmail.com";
 	String to = "sinclair_j@naver.com";
 	String subject = "강의평가 사이트에서 접수된 신고 메일입니다..";
@@ -60,7 +60,7 @@
 	
 	Properties p = new Properties();
 	p.put("mail.smtp.user", from);
-	p.put("mail.smtp.host", "smtp.googlemail.com");
+	p.put("mail.smtp.host", "smtp.gmail.com");
 	p.put("mail.smtp.port", "465");
 	p.put("mail.smtp.starttls.enable", "true");
 	p.put("mail.smtp.auth", "true");

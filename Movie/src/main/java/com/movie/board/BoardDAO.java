@@ -17,7 +17,7 @@ public class BoardDAO {
 		try {
 			InitialContext initContext = new InitialContext();
 			Context envContext = (Context) initContext.lookup("java:/comp/env");
-			dataSource = (DataSource) envContext.lookup("jdbc/Movie");
+			dataSource = (DataSource) envContext.lookup("jdbc/movie");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -28,7 +28,7 @@ public class BoardDAO {
 		
 		Connection conn = null;
 		PreparedStatement pstmt = null;
-		String SQL = "INSERT INTO BOARD SELECT ?, IFNULL((SELECT MAX(boardID) + 1 FROM BOARD), 1), ?, ?, now(), 0, ?, ?, IFNULL((SELECT MAX(boardGroup) + 1 FROM BOARD), 0), 0, 0, 1, 0	";
+		String SQL = "INSERT INTO board SELECT ?, IFNULL((SELECT MAX(boardID) + 1 FROM board), 1), ?, ?, now(), 0, ?, ?, IFNULL((SELECT MAX(boardGroup) + 1 FROM board), 0), 0, 0, 1, 0	";
 		
 		try {
 			conn = dataSource.getConnection();
@@ -58,7 +58,7 @@ public class BoardDAO {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		String SQL = "SELECT * FROM BOARD WHERE boardID = ?";
+		String SQL = "SELECT * FROM board WHERE boardID = ?";
 		try {
 			conn = dataSource.getConnection();
 			pstmt = conn.prepareStatement(SQL);
@@ -101,7 +101,7 @@ public class BoardDAO {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		String SQL = "SELECT * FROM BOARD WHERE boardGroup > (SELECT MAX(boardGroup) FROM BOARD) - ? AND boardGroup <= (SELECT MAX(boardGroup) FROM BOARD) - ? ORDER BY boardGroup DESC, boardSequence ASC";
+		String SQL = "SELECT * FROM board WHERE boardGroup > (SELECT MAX(boardGroup) FROM board) - ? AND boardGroup <= (SELECT MAX(boardGroup) FROM board) - ? ORDER BY boardGroup DESC, boardSequence ASC";
 		try {
 			conn = dataSource.getConnection();
 			pstmt = conn.prepareStatement(SQL);
@@ -156,7 +156,7 @@ public class BoardDAO {
 				// 쿼리 두번으로 나누어 날리기.
 // "SELECT * FROM BOARD WHERE boardGroup > (SELECT MAX(boardGroup) FROM BOARD) - ? AND boardGroup <= (SELECT MAX(boardGroup) FROM BOARD) - ? ORDER BY boardGroup DESC, boardSequence ASC";			
 				//SQL = "SELECT * FROM BOARD WHERE boardTitle OR boardContent LIKE ? HAVING (boardGroup > (SELECT MAX(boardGroup) FROM BOARD) - ? AND boardGroup <= (SELECT MAX(boardGroup) FROM BOARD) - ?) ORDER BY boardGroup DESC, boardSequence ASC"; 
-				SQL = "SELECT * FROM BOARD WHERE CONCAT(boardTitle, boardContent) LIKE ? HAVING (boardGroup > (SELECT MAX(boardGroup) FROM BOARD) - ? AND boardGroup <= (SELECT MAX(boardGroup) FROM BOARD) - ?) ORDER BY boardGroup DESC, boardSequence ASC";
+				SQL = "SELECT * FROM board WHERE CONCAT(boardTitle, boardContent) LIKE ? HAVING (boardGroup > (SELECT MAX(boardGroup) FROM board) - ? AND boardGroup <= (SELECT MAX(boardGroup) FROM board) - ?) ORDER BY boardGroup DESC, boardSequence ASC";
 					//(SELECT * FROM BOARD WHERE boardGroup > (SELECT MAX(boardGroup) FROM BOARD) - ? AND boardGroup <= (SELECT MAX(boardGroup) FROM BOARD) - ? ORDER BY boardGroup DESC, boardSequence ASC)\";
 
 				/*
@@ -164,7 +164,7 @@ public class BoardDAO {
 					  "? ORDER BY boardID"; */					 
 			} 
 			else if (searchType.equals("추천순")){
-				SQL = "SELECT * FROM BOARD WHERE CONCAT(boardTitle, boardContent) LIKE ? HAVING (boardGroup > (SELECT MAX(boardGroup) FROM BOARD) - ? AND boardGroup <= (SELECT MAX(boardGroup) FROM BOARD) - ?) ORDER BY likeCount DESC";
+				SQL = "SELECT * FROM board WHERE CONCAT(boardTitle, boardContent) LIKE ? HAVING (boardGroup > (SELECT MAX(boardGroup) FROM board) - ? AND boardGroup <= (SELECT MAX(boardGroup) FROM board) - ?) ORDER BY likeCount DESC";
 				//SQL = "SELECT * FROM BOARD WHERE CONCAT(boardTitle, boardContent) LIKE ? ORDER BY boardID boardGroup > (SELECT MAX(boardGroup) FROM BOARD) - ? AND boardGroup <= (SELECT MAX(boardGroup) FROM BOARD) - ? ORDER BY boardGroup DESC, boardSequence ASC";
 			
 			}
@@ -216,7 +216,7 @@ public class BoardDAO {
 	public int hit(String boardID) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
-		String SQL = "UPDATE BOARD SET boardHit = boardHit + 1 WHERE boardID = ?";
+		String SQL = "UPDATE board SET boardHit = boardHit + 1 WHERE boardID = ?";
 		
 		try {
 			conn = dataSource.getConnection();
@@ -242,7 +242,7 @@ public class BoardDAO {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		String SQL = "SELECT boardFile FROM BOARD WHERE boardID = ?";
+		String SQL = "SELECT boardFile FROM board WHERE boardID = ?";
 		try {
 			conn = dataSource.getConnection();
 			pstmt = conn.prepareStatement(SQL);
@@ -272,7 +272,7 @@ public class BoardDAO {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		String SQL = "SELECT boardRealFile FROM BOARD WHERE boardID = ?";
+		String SQL = "SELECT boardRealFile FROM board WHERE boardID = ?";
 		try {
 			conn = dataSource.getConnection();
 			pstmt = conn.prepareStatement(SQL);
@@ -304,7 +304,7 @@ public class BoardDAO {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		//String SQL = "SELECT * FROM BOARD WHERE boardGroup >= ?";
-		String SQL = "SELECT * FROM BOARD WHERE boardTitle OR boardContent LIKE ? AND boardGroup > ?";
+		String SQL = "SELECT * FROM board WHERE boardTitle OR boardContent LIKE ? AND boardGroup > ?";
 		try {
 			conn = dataSource.getConnection();
 			pstmt = conn.prepareStatement(SQL);
@@ -335,7 +335,7 @@ public class BoardDAO {
 		
 		Connection conn = null;
 		PreparedStatement pstmt = null;
-		String SQL = "UPDATE BOARD SET boardTitle = ?, boardContent = ?, boardFile = ?, boardRealFile = ? WHERE boardID = ?";
+		String SQL = "UPDATE board SET boardTitle = ?, boardContent = ?, boardFile = ?, boardRealFile = ? WHERE boardID = ?";
 		
 		try {
 			conn = dataSource.getConnection();
@@ -365,7 +365,7 @@ public class BoardDAO {
 		
 		Connection conn = null;
 		PreparedStatement pstmt = null;
-		String SQL = "UPDATE BOARD SET boardAvailable = 0 WHERE boardID = ?";
+		String SQL = "UPDATE board SET boardAvailable = 0 WHERE boardID = ?";
 		
 		try {
 			conn = dataSource.getConnection();
@@ -391,7 +391,7 @@ public class BoardDAO {
 		
 		Connection conn = null;
 		PreparedStatement pstmt = null;
-		String SQL = "INSERT INTO BOARD SELECT ?, IFNULL((SELECT MAX(boardID) + 1 FROM BOARD), 1), ?, ?, now(), 0, ?, ?, ?, ?, ?, 1, 0";
+		String SQL = "INSERT INTO board SELECT ?, IFNULL((SELECT MAX(boardID) + 1 FROM board), 1), ?, ?, now(), 0, ?, ?, ?, ?, ?, 1, 0";
 		
 		try {
 			conn = dataSource.getConnection();
@@ -424,7 +424,7 @@ public class BoardDAO {
 		
 		Connection conn = null;
 		PreparedStatement pstmt = null;
-		String SQL = "UPDATE BOARD SET boardSequence = boardSequence + 1 WHERE boardGroup = ? AND boardSequence > ?";				
+		String SQL = "UPDATE board SET boardSequence = boardSequence + 1 WHERE boardGroup = ? AND boardSequence > ?";				
 		try {
 			conn = dataSource.getConnection();
 			pstmt = conn.prepareStatement(SQL);
@@ -452,7 +452,7 @@ public class BoardDAO {
 		ResultSet rs = null;
 		// 페이지가 얼마나 존재하는지 계산하는 함수.
 		//String SQL = "SELECT COUNT(boardGroup) FROM BOARD WHERE boardGroup > ? ";
-		String SQL = "SELECT COUNT(boardGroup) FROM BOARD WHERE CONCAT (boardTitle, boardContent) LIKE ? AND boardGroup > ?";
+		String SQL = "SELECT COUNT(boardGroup) FROM board WHERE CONCAT (boardTitle, boardContent) LIKE ? AND boardGroup > ?";
 		try {
 			conn = dataSource.getConnection();
 			pstmt = conn.prepareStatement(SQL);
@@ -478,7 +478,7 @@ public class BoardDAO {
 	
 	
 	public int like(String boardID) {
-		String SQL = "UPDATE BOARD SET likeCount = likeCount + 1 WHERE boardID = ?";
+		String SQL = "UPDATE board SET likeCount = likeCount + 1 WHERE boardID = ?";
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -504,7 +504,7 @@ public class BoardDAO {
 	
 	
 	public String getUserID(String boardID) {
-		String SQL = "SELECT userID FROM BOARD WHERE boardID = ?";
+		String SQL = "SELECT userID FROM board WHERE boardID = ?";
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;

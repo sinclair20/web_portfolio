@@ -81,6 +81,7 @@
 				<li><a href="find.jsp">친구찾기</a></li>
 				<li><a href="box.jsp">메세지 함<span id="unread" class="label label-info"></span></a></li>
 				<li><a href="boardView.jsp">자유게시판</a></li>
+				<li><a href="openChatIndex.jsp">오픈채팅</a></li>
 			</ul>
 			<%
 				if (userID == null) {					
@@ -118,7 +119,7 @@
 		<div><input onkeyup="passwordCheckFunction();" style="width:360px; height:50px" type="password" name="userPassword1" id="userPassword1" class="form-control" maxlength="20" placeholder="비밀번호(6~10자)"></div>
 		<div><input onkeyup="passwordCheckFunction();" style="width:360px; height:50px" type="password" name="userPassword2" id="userPassword2" class="form-control" maxlength="20" placeholder="비밀번호 확인"></div> <!-- onkeyup함수: 비밀번호 입력할때마다 실행되도록 -->
 		<div><input style="width:360px; height:50px" class="form-control" name="userName" type="text" id="userName" maxlength="20" placeholder="이름"></div>
-		<div><input style="width:360px; height:50px" class="form-control" name="userEmail" type="email" id="userEmail" maxlength="20" placeholder="이메일 (example@naver.com)"></div>
+		<div><input style="width:360px; height:50px" class="form-control" name="userEmail" type="email" id="userEmail" maxlength="30" placeholder="이메일 (example@naver.com)"></div>
 		<div><input style="width:360px; height:50px" class="form-control" name="userAge" type="number" id="userAge" maxlength="20" placeholder="나이"></div>
 		<table>
 		<tr>

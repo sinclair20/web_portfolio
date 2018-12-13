@@ -11,16 +11,19 @@
 	<%
 	/* 	request.setCharacterEncoding("UTF-8");
 		response.setContentType("text/html;charset=UTF-8"); */
-		session.invalidate();
-	/* 	String previousPage = request.getHeader("referer");
-		if (previousPage.equals("http://localhost:8080/Movie/openChatIndex.jsp")) {
-			response.sendRedirect("openChatIndex.jsp");
+		String previousPage = request.getHeader("referer");
+		
+		if (previousPage.equals("http://localhost:8000/localMovie/openChatIndex.jsp")) {
+			session.invalidate();			
+			response.sendRedirect("openChatIndex.jsp?isLogout=Y"); 
+			return;
 		} else {
+			session.invalidate();
 			response.sendRedirect("index.jsp");
-		} */
-	%>
-	<script>
+		} 
+	%> 
+	<!-- <script>
 		location.href = 'index.jsp';
-	</script>
+	</script> -->
 </body>
 </html>

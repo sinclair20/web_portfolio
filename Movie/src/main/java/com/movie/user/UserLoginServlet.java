@@ -22,7 +22,7 @@ public class UserLoginServlet extends HttpServlet {
   		
  		
   		/*if (previousPage != "http://localhost:8080/Movie/openChat.jsp"){*/
-  		if (previousPage.equals("http://localhost:8080/Movie/openChatIndex.jsp")) {
+  		if (previousPage.equals("http://ec2-54-180-114-30.ap-northeast-2.compute.amazonaws.com:8080/Movie/openChatIndex.jsp")) {
   			if (userID == null || userID.equals("") || userPassword ==  null || userPassword.equals("")) {
   	  			request.getSession().setAttribute("messageType", "오류 메시지");
   	  			request.getSession().setAttribute("messageContent", "모든 내용을 입력해주세요");

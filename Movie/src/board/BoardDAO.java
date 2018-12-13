@@ -1,4 +1,4 @@
-package board;
+package com.movie.board;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -17,7 +17,7 @@ public class BoardDAO {
 		try {
 			InitialContext initContext = new InitialContext();
 			Context envContext = (Context) initContext.lookup("java:/comp/env");
-			dataSource = (DataSource) envContext.lookup("jdbc/Movie");
+			dataSource = (DataSource) envContext.lookup("jdbc/movie");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -28,7 +28,7 @@ public class BoardDAO {
 		
 		Connection conn = null;
 		PreparedStatement pstmt = null;
-		String SQL = "INSERT INTO BOARD SELECT ?, IFNULL((SELECT MAX(boardID) + 1 FROM BOARD), 1), ?, ?, now(), 0, ?, ?, IFNULL((SELECT MAX(boardGroup) + 1 FROM BOARD), 0), 0, 0, 1, 0	";
+		String SQL = "INSERT INTO board SELECT ?, IFNULL((SELECT MAX(boardID) + 1 FROM board), 1), ?, ?, now(), 0, ?, ?, IFNULL((SELECT MAX(boardGroup) + 1 FROM board), 0), 0, 0, 1, 0	";
 		
 		try {
 			conn = dataSource.getConnection();
@@ -58,7 +58,7 @@ public class BoardDAO {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		String SQL = "SELECT * FROM BOARD WHERE boardID = ?";
+		String SQL = "SELECT * FROM board WHERE boardID = ?";
 		try {
 			conn = dataSource.getConnection();
 			pstmt = conn.prepareStatement(SQL);
@@ -101,7 +101,7 @@ public class BoardDAO {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		String SQL = "SELECT * FROM BOARD WHERE boardGroup > (SELECT MAX(boardGroup) FROM BOARD) - ? AND boardGroup <= (SELECT MAX(boardGroup) FROM BOARD) - ? ORDER BY boardGroup DESC, boardSequence ASC";
+		String SQL = "SELECT * FROM board WHERE boardGroup > (SELECT MAX(boardGroup) FROM board) - ? AND boardGroup <= (SELECT MAX(boardGroup) FROM board) - ? ORDER BY boardGroup DESC, boardSequence ASC";
 		try {
 			conn = dataSource.getConnection();
 			pstmt = conn.prepareStatement(SQL);
@@ -152,19 +152,19 @@ public class BoardDAO {
 		ResultSet rs = null;
 		
 		try {
-			if (searchType.equals("ÃÖ½Å¼ø")) {				
-				// Äõ¸® µÎ¹øÀ¸·Î ³ª´©¾î ³¯¸®±â.
+			if (searchType.equals("ìµœì‹ ìˆœ")) {				
+				// ì¿¼ë¦¬ ë‘ë²ˆìœ¼ë¡œ ë‚˜ëˆ„ì–´ ë‚ ë¦¬ê¸°.
 // "SELECT * FROM BOARD WHERE boardGroup > (SELECT MAX(boardGroup) FROM BOARD) - ? AND boardGroup <= (SELECT MAX(boardGroup) FROM BOARD) - ? ORDER BY boardGroup DESC, boardSequence ASC";			
 				//SQL = "SELECT * FROM BOARD WHERE boardTitle OR boardContent LIKE ? HAVING (boardGroup > (SELECT MAX(boardGroup) FROM BOARD) - ? AND boardGroup <= (SELECT MAX(boardGroup) FROM BOARD) - ?) ORDER BY boardGroup DESC, boardSequence ASC"; 
-				SQL = "SELECT * FROM BOARD WHERE CONCAT(boardTitle, boardContent) LIKE ? HAVING (boardGroup > (SELECT MAX(boardGroup) FROM BOARD) - ? AND boardGroup <= (SELECT MAX(boardGroup) FROM BOARD) - ?) ORDER BY boardGroup DESC, boardSequence ASC";
+				SQL = "SELECT * FROM board WHERE CONCAT(boardTitle, boardContent) LIKE ? HAVING (boardGroup > (SELECT MAX(boardGroup) FROM board) - ? AND boardGroup <= (SELECT MAX(boardGroup) FROM board) - ?) ORDER BY boardGroup DESC, boardSequence ASC";
 					//(SELECT * FROM BOARD WHERE boardGroup > (SELECT MAX(boardGroup) FROM BOARD) - ? AND boardGroup <= (SELECT MAX(boardGroup) FROM BOARD) - ? ORDER BY boardGroup DESC, boardSequence ASC)\";
 
 				/*
 				SQL = "SELECT * FROM BOARD WHERE CONCAT(boardTitle, boardContent) LIKE " +
 					  "? ORDER BY boardID"; */					 
 			} 
-			else if (searchType.equals("ÃßÃµ¼ø")){
-				SQL = "SELECT * FROM BOARD WHERE CONCAT(boardTitle, boardContent) LIKE ? HAVING (boardGroup > (SELECT MAX(boardGroup) FROM BOARD) - ? AND boardGroup <= (SELECT MAX(boardGroup) FROM BOARD) - ?) ORDER BY likeCount DESC";
+			else if (searchType.equals("ì¶”ì²œìˆœ")){
+				SQL = "SELECT * FROM board WHERE CONCAT(boardTitle, boardContent) LIKE ? HAVING (boardGroup > (SELECT MAX(boardGroup) FROM board) - ? AND boardGroup <= (SELECT MAX(boardGroup) FROM board) - ?) ORDER BY likeCount DESC";
 				//SQL = "SELECT * FROM BOARD WHERE CONCAT(boardTitle, boardContent) LIKE ? ORDER BY boardID boardGroup > (SELECT MAX(boardGroup) FROM BOARD) - ? AND boardGroup <= (SELECT MAX(boardGroup) FROM BOARD) - ? ORDER BY boardGroup DESC, boardSequence ASC";
 			
 			}
@@ -216,7 +216,7 @@ public class BoardDAO {
 	public int hit(String boardID) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
-		String SQL = "UPDATE BOARD SET boardHit = boardHit + 1 WHERE boardID = ?";
+		String SQL = "UPDATE board SET boardHit = boardHit + 1 WHERE boardID = ?";
 		
 		try {
 			conn = dataSource.getConnection();
@@ -242,7 +242,7 @@ public class BoardDAO {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		String SQL = "SELECT boardFile FROM BOARD WHERE boardID = ?";
+		String SQL = "SELECT boardFile FROM board WHERE boardID = ?";
 		try {
 			conn = dataSource.getConnection();
 			pstmt = conn.prepareStatement(SQL);
@@ -272,7 +272,7 @@ public class BoardDAO {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		String SQL = "SELECT boardRealFile FROM BOARD WHERE boardID = ?";
+		String SQL = "SELECT boardRealFile FROM board WHERE boardID = ?";
 		try {
 			conn = dataSource.getConnection();
 			pstmt = conn.prepareStatement(SQL);
@@ -296,15 +296,15 @@ public class BoardDAO {
 		return "";
 	}
 	
-	// ¾È¾²ÀÌ´Â ÇÔ¼ö.
-	// ÇØ´ç ÆäÀÌÁö¸¦ ±âÁØÀ¸·Î ´ÙÀ½ ÆäÀÌÁö°¡ Á¸ÀçÇÏ´ÂÁö ¹°¾îº¸´Â ÇÔ¼ö.
+	// ì•ˆì“°ì´ëŠ” í•¨ìˆ˜.
+	// í•´ë‹¹ í˜ì´ì§€ë¥¼ ê¸°ì¤€ìœ¼ë¡œ ë‹¤ìŒ í˜ì´ì§€ê°€ ì¡´ì¬í•˜ëŠ”ì§€ ë¬¼ì–´ë³´ëŠ” í•¨ìˆ˜.
 	public boolean nextPage(String pageNumber, String search) {
 		
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		//String SQL = "SELECT * FROM BOARD WHERE boardGroup >= ?";
-		String SQL = "SELECT * FROM BOARD WHERE boardTitle OR boardContent LIKE ? AND boardGroup > ?";
+		String SQL = "SELECT * FROM board WHERE boardTitle OR boardContent LIKE ? AND boardGroup > ?";
 		try {
 			conn = dataSource.getConnection();
 			pstmt = conn.prepareStatement(SQL);
@@ -312,7 +312,7 @@ public class BoardDAO {
 			pstmt.setInt(2, Integer.parseInt(pageNumber) * 10);
 			rs = pstmt.executeQuery();
 			if (rs.next()) {
-				return true;  // ÇÑ°³¶óµµ ´ÙÀ½ÆäÀÌÁö¿¡ °Ô½Ã±ÛÀÌ Á¸ÀçÇÑ´Ù¸é true°ª ¹İÈ¯
+				return true;  // í•œê°œë¼ë„ ë‹¤ìŒí˜ì´ì§€ì— ê²Œì‹œê¸€ì´ ì¡´ì¬í•œë‹¤ë©´ trueê°’ ë°˜í™˜
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -335,7 +335,7 @@ public class BoardDAO {
 		
 		Connection conn = null;
 		PreparedStatement pstmt = null;
-		String SQL = "UPDATE BOARD SET boardTitle = ?, boardContent = ?, boardFile = ?, boardRealFile = ? WHERE boardID = ?";
+		String SQL = "UPDATE board SET boardTitle = ?, boardContent = ?, boardFile = ?, boardRealFile = ? WHERE boardID = ?";
 		
 		try {
 			conn = dataSource.getConnection();
@@ -365,7 +365,7 @@ public class BoardDAO {
 		
 		Connection conn = null;
 		PreparedStatement pstmt = null;
-		String SQL = "UPDATE BOARD SET boardAvailable = 0 WHERE boardID = ?";
+		String SQL = "UPDATE board SET boardAvailable = 0 WHERE boardID = ?";
 		
 		try {
 			conn = dataSource.getConnection();
@@ -391,7 +391,7 @@ public class BoardDAO {
 		
 		Connection conn = null;
 		PreparedStatement pstmt = null;
-		String SQL = "INSERT INTO BOARD SELECT ?, IFNULL((SELECT MAX(boardID) + 1 FROM BOARD), 1), ?, ?, now(), 0, ?, ?, ?, ?, ?, 1, 0";
+		String SQL = "INSERT INTO board SELECT ?, IFNULL((SELECT MAX(boardID) + 1 FROM board), 1), ?, ?, now(), 0, ?, ?, ?, ?, ?, 1, 0";
 		
 		try {
 			conn = dataSource.getConnection();
@@ -424,7 +424,7 @@ public class BoardDAO {
 		
 		Connection conn = null;
 		PreparedStatement pstmt = null;
-		String SQL = "UPDATE BOARD SET boardSequence = boardSequence + 1 WHERE boardGroup = ? AND boardSequence > ?";				
+		String SQL = "UPDATE board SET boardSequence = boardSequence + 1 WHERE boardGroup = ? AND boardSequence > ?";				
 		try {
 			conn = dataSource.getConnection();
 			pstmt = conn.prepareStatement(SQL);
@@ -440,8 +440,7 @@ public class BoardDAO {
 			} catch(Exception e) {
 				e.printStackTrace();
 			}
-		}
-		
+		}		
 		return -1;
 	}
 	
@@ -451,9 +450,9 @@ public class BoardDAO {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		// ÆäÀÌÁö°¡ ¾ó¸¶³ª Á¸ÀçÇÏ´ÂÁö °è»êÇÏ´Â ÇÔ¼ö.
+		// í˜ì´ì§€ê°€ ì–¼ë§ˆë‚˜ ì¡´ì¬í•˜ëŠ”ì§€ ê³„ì‚°í•˜ëŠ” í•¨ìˆ˜.
 		//String SQL = "SELECT COUNT(boardGroup) FROM BOARD WHERE boardGroup > ? ";
-		String SQL = "SELECT COUNT(boardGroup) FROM BOARD WHERE CONCAT (boardTitle, boardContent) LIKE ? AND boardGroup > ?";
+		String SQL = "SELECT COUNT(boardGroup) FROM board WHERE CONCAT (boardTitle, boardContent) LIKE ? AND boardGroup > ?";
 		try {
 			conn = dataSource.getConnection();
 			pstmt = conn.prepareStatement(SQL);
@@ -461,7 +460,7 @@ public class BoardDAO {
 			pstmt.setInt(2, (Integer.parseInt(pageNumber) - 1) * 10);
 			rs = pstmt.executeQuery();
 			if (rs.next()) {
-				return rs.getInt(1) / 10; //³ª¿Â°á°ú¿¡¼­ 10À» ³ª´« °ªÀ» ¹İÈ¯.
+				return rs.getInt(1) / 10; //ï¿½ï¿½ï¿½Â°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 10ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È¯.
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -474,12 +473,12 @@ public class BoardDAO {
 				e.printStackTrace();
 			}
 		}
-		return 0; //¿À·ù ¹ß»ı½Ã 0 ¹İÈ¯.
+		return 0; //ï¿½ï¿½ï¿½ï¿½ ï¿½ß»ï¿½ï¿½ï¿½ 0 ï¿½ï¿½È¯.
 	}
 	
 	
 	public int like(String boardID) {
-		String SQL = "UPDATE BOARD SET likeCount = likeCount + 1 WHERE boardID = ?";
+		String SQL = "UPDATE board SET likeCount = likeCount + 1 WHERE boardID = ?";
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -505,7 +504,7 @@ public class BoardDAO {
 	
 	
 	public String getUserID(String boardID) {
-		String SQL = "SELECT userID FROM BOARD WHERE boardID = ?";
+		String SQL = "SELECT userID FROM board WHERE boardID = ?";
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -529,8 +528,6 @@ public class BoardDAO {
 				e.printStackTrace();
 			}
 		}
-		return null; // Á¸ÀçÇÏÁö ¾Ê´Â ¾ÆÀÌµğ
+		return null; // ì¡´ì¬í•˜ì§€ ì•ŠëŠ” ì•„ì´ë””
 	}
-	
-
 }

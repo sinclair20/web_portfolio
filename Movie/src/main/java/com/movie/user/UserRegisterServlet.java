@@ -40,15 +40,15 @@ public class UserRegisterServlet extends HttpServlet {
 			userAge == null || userAge.equals("") || userGender == null || userGender.equals("") ||
 			userEmail == null || userEmail.equals("")) {
 			
-			request.getSession().setAttribute("messageType", "���� �޽���");
-			request.getSession().setAttribute("messageContent", "��� ������ �Է��ϼ���.");
+			request.getSession().setAttribute("messageType", "오류 메시지");
+			request.getSession().setAttribute("messageContent", "모든 내용을 입력하세요.");
 			response.sendRedirect("userJoin.jsp");
 			return;
 		}
 		
 		if (!userPassword1.equals(userPassword2)) {
-			request.getSession().setAttribute("messageType", "���� �޽���");
-			request.getSession().setAttribute("messageContent", "��й�ȣ�� ��ġ���� �ʽ��ϴ�.");
+			request.getSession().setAttribute("messageType", "오류 메시지");
+			request.getSession().setAttribute("messageContent", "비밀번호가 일치하지 않습니다.");
 			response.sendRedirect("userJoin.jsp");
 			return;
 		}
@@ -58,12 +58,12 @@ public class UserRegisterServlet extends HttpServlet {
 		int result = new UserDAO().register(userID, userPassword1, userName, userAge, userGender, userEmail, "",  SHA256.getSHA256(userEmail), userEmailChecked);
 		if (result == 1) {
 			request.getSession().setAttribute("userID", userID);
-			request.getSession().setAttribute("messageType", "���� �޽���");
-			request.getSession().setAttribute("messageContent", "ȸ�����Կ� �����߽��ϴ�. �̸��� ������ �������ּ���.");
+			request.getSession().setAttribute("messageType", "성공 메시지");
+			request.getSession().setAttribute("messageContent", "회원가입에 성공했습니다. 이메일 인증을 수행해주세요.");
 			response.sendRedirect("emailSendAction.jsp");
 		} else {
-			request.getSession().setAttribute("messageType", "���� �޽���");
-			request.getSession().setAttribute("messageContent", "�̹� �����ϴ� ȸ���Դϴ�.");
+			request.getSession().setAttribute("messageType", "오류 메시지");
+			request.getSession().setAttribute("messageContent", "이미 존재하는 회원입니다.");
 			response.sendRedirect("userJoin.jsp");
 		}
 	}

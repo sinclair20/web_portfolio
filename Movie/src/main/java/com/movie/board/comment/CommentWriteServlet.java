@@ -1,7 +1,9 @@
 package com.movie.board.comment;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
+import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -80,11 +82,31 @@ public class CommentWriteServlet extends HttpServlet  {
    	   			commentDAO.write(URLDecoder.decode(commentContent,"UTF-8"), URLDecoder.decode(commentWriter,"UTF-8"), boardID, userID, user.getUserPassword());	
    	   		}   	   			
    		
+   			response.getWriter().write(getID(URLDecoder.decode(boardID,"UTF-8")));
    			
-   	/*	session.setAttribute("messageType", "성공 메시지");
+   		/*session.setAttribute("messageType", "성공 메시지");
 		session.setAttribute("messageContent", "성공적으로 게시물이 작성되었습니다.");
-		response.sendRedirect("boardShow.jsp");*/		
+		response.sendRedirect("boardShow.jsp");	*/
    		return;
+	}
+   	
+   	public String getID (String boardID) throws UnsupportedEncodingException {
+		StringBuffer result = new StringBuffer("");
+		CommentDAO commentDAO = new CommentDAO();
+		CommentDTO comment = commentDAO.getComment(URLDecoder.decode(boardID, "UTF-8"));
+		
+		/*if (result.length() >= 1) result.setLength(0);*/
+		result.append("{\"result\":[");			
+			
+		result.append("[{\"value\": \"" + comment.getUserID() + "\"},");
+		result.append("{\"value\": \"" + comment.getCommentWriter() + "\"},");
+		result.append("{\"value\": \"" + comment.getCommentContent() + "\"},");
+		result.append("{\"value\": \"" + comment.getCommentDate() + "\"},");
+		result.append("{\"value\": \"" + comment.getCommentID() + "\"},");
+		result.append("{\"value\": \"" + comment.getCommentPassword() + "\"}]");			
+		
+		result.append("]}");		
+		return result.toString();
 	}
 
 }

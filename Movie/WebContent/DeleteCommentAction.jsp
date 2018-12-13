@@ -16,7 +16,7 @@
     public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
     
     	
-        int commentID = Integer.parseInt(request.getParameter("commentID"));
+        String commentID = request.getParameter("commentID");
         
         CommentDAO commentDAO = new CommentDAO();
         boolean result = commentDAO.deleteComment(commentID);
