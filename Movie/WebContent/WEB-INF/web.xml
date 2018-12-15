@@ -151,7 +151,7 @@
   
   
     <filter-name>nocachefilter</filter-name>
-    <filter-class>            s
+    <filter-class>
             com.movie.chat.open.NocacheFilter
         </filter-class>
   </filter>
