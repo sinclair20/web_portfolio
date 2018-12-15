@@ -186,7 +186,7 @@
 		function logout () {
 			
 			
-			window.location.href = "http://localhost:8000/localMovie/logoutAction.jsp";
+			window.location.href = "http://ec2-13-124-231-86.ap-northeast-2.compute.amazonaws.com:8080/Movie/logoutAction.jsp";
 		
 		}
 		
@@ -428,7 +428,7 @@ background-color: rgba(0,0,0,0.8);
 					<tr>
 					<td style="text-align: center;"> 
 					<a data-toggle="modal" href="#loginModal">
-					<img class="media-object img-circle" style="max-width: 300px; margin: 0 auto; " src="http://localhost:8000/localMovie/images/userIcon.png">
+					<img class="media-object img-circle" style="max-width: 300px; margin: 0 auto; " src="http://ec2-13-124-231-86.ap-northeast-2.compute.amazonaws.com:8080/Movie/images/userIcon.png">
 					
 					</a>					
 					</td>   
@@ -450,7 +450,7 @@ background-color: rgba(0,0,0,0.8);
 					<tr>
 					<td style="text-align: center;">
 					<a href="#profileModal" data-toggle="modal"> 
-					<img class="media-object img-circle" style="max-width: 300px; height: 300px; margin: 0 auto; " src="http://localhost:8000/localMovie/images/anonymousLogin.jpg">
+					<img class="media-object img-circle" style="max-width: 300px; height: 300px; margin: 0 auto; " src="http://ec2-13-124-231-86.ap-northeast-2.compute.amazonaws.com:8080/Movie/images/anonymousLogin.jpg">
 					</a>
 					
 					</td>   
@@ -494,7 +494,7 @@ background-color: rgba(0,0,0,0.8);
 					<tr>
 					<td style="text-align: center; padding-top:60px;"> 
 					<a onclick="logoutToChat();">
-					<img class="media-object img-circle" style="max-width: 300px; height: 300px; margin: 0 auto;" src="http://localhost:8000/localMovie/images/anonymousLogin.jpg">			
+					<img class="media-object img-circle" style="max-width: 300px; height: 300px; margin: 0 auto;" src="http://ec2-13-124-231-86.ap-northeast-2.compute.amazonaws.com:8080/Movie/images/anonymousLogin.jpg">			
 					</a>					
 					</td>   
 					</tr>
@@ -536,7 +536,7 @@ background-color: rgba(0,0,0,0.8);
 									'<div class="myslides">' +
 									'<div class="numbers">1 / 4</div>' +
 									'<div style="display:table-cell; vertical-align:middle; text-align:center">' +
-									'<img style="max-width: 500px; height: 560px; margin: 0 auto;" src="http://localhost:8000/localMovie/images/1.jpg"></div>' +
+									'<img style="max-width: 500px; height: 560px; margin: 0 auto;" src="http://ec2-13-124-231-86.ap-northeast-2.compute.amazonaws.com:8080/Movie/images/1.jpg"></div>' +
 									'<div class="caption">Text 1</div>' +
 									'</div>' +
 
@@ -544,7 +544,7 @@ background-color: rgba(0,0,0,0.8);
 									'<div class="myslides">' +
 									'<div class="numbers">2 / 4</div>' +
 									'<div style="display:table-cell; vertical-align:middle; text-align:center">' +
-									'<img style="max-width: 500px; height: 560px; margin: 0 auto;" src="http://localhost:8000/localMovie/images/2.jpg"></div>' +
+									'<img style="max-width: 500px; height: 560px; margin: 0 auto;" src="http://ec2-13-124-231-86.ap-northeast-2.compute.amazonaws.com:8080/Movie/images/2.jpg"></div>' +
 									'<div class="caption">Text 2</div>' +
 									'</div>' +
 
@@ -552,14 +552,14 @@ background-color: rgba(0,0,0,0.8);
 									'<div class="myslides">' +
 									'<div class="numbers">3 / 4</div>' +
 									'<div style="display:table-cell; vertical-align:middle; text-align:center">' + 
-									'<img style="max-width: 500px; height: 560px; margin: 0 auto;" src="http://localhost:8000/localMovie/images/3.jpg"></div>' +
+									'<img style="max-width: 500px; height: 560px; margin: 0 auto;" src="http://ec2-13-124-231-86.ap-northeast-2.compute.amazonaws.com:8080/Movie/images/3.jpg"></div>' +
 									'<div class="caption">Text 3</div>' +
 									'</div>' +
 
 									'<div class="myslides">' +
 									'<div class="numbers">4 / 4</div>' +
 									'<div style="display:table-cell; vertical-align:middle; text-align:center">' + 
-									'<img style="max-width: 500px; height: 560px; margin: 0 auto;" src="http://localhost:8000/localMovie/images/4.jpg"></div>' +
+									'<img style="max-width: 500px; height: 560px; margin: 0 auto;" src="http://ec2-13-124-231-86.ap-northeast-2.compute.amazonaws.com:8080/Movie/images/4.jpg"></div>' +
 									'<div class="caption">Text 4</div>' +
 									'</div>' +
 
@@ -624,7 +624,7 @@ background-color: rgba(0,0,0,0.8);
 									'<div class="myslides">' +
 									'<div class="numbers">1 / 4</div>' +
 									'<div style="display:table-cell; vertical-align:middle; text-align:center">' +
-									'<img style="max-width: 500px; height: 560px; margin: 0 auto;" src="http://localhost:8000/localMovie/images/1.jpg"></div>' +
+									'<img style="max-width: 500px; height: 560px; margin: 0 auto;" src="http://ec2-13-124-231-86.ap-northeast-2.compute.amazonaws.com:8080/Movie/images/1.jpg"></div>' +
 									'<div class="caption">Text 1</div>' +
 									'</div>' +
 
@@ -632,21 +632,21 @@ background-color: rgba(0,0,0,0.8);
 									'<div class="myslides">' +
 									'<div class="numbers">2 / 4</div>' +
 									'<div style="display:table-cell; vertical-align:middle; text-align:center">' +
-									'<img style="max-width: 500px; height: 560px; margin: 0 auto;" src="http://localhost:8000/localMovie/images/2.jpg"></div>' +
+									'<img style="max-width: 500px; height: 560px; margin: 0 auto;" src="http://ec2-13-124-231-86.ap-northeast-2.compute.amazonaws.com:8080/Movie/images/2.jpg"></div>' +
 									'<div class="caption">Text 2</div>' +
 									'</div>' +
 
 									'<div class="myslides">' +
 									'<div class="numbers">3 / 4</div>' +
 									'<div style="display:table-cell; vertical-align:middle; text-align:center">' + 
-									'<img style="max-width: 500px; height: 560px; margin: 0 auto;" src="http://localhost:8000/localMovie/images/3.jpg"></div>' +
+									'<img style="max-width: 500px; height: 560px; margin: 0 auto;" src="http://ec2-13-124-231-86.ap-northeast-2.compute.amazonaws.com:8080/Movie/images/3.jpg"></div>' +
 									'<div class="caption">Text 3</div>' +
 									'</div>' +
 
 									'<div class="myslides">' +
 									'<div class="numbers">4 / 4</div>' +
 									'<div style="display:table-cell; vertical-align:middle; text-align:center">' + 
-									'<img style="max-width: 500px; height: 560px; margin: 0 auto;" src="http://localhost:8000/localMovie/images/4.jpg"></div>' +
+									'<img style="max-width: 500px; height: 560px; margin: 0 auto;" src="http://ec2-13-124-231-86.ap-northeast-2.compute.amazonaws.com:8080/Movie/images/4.jpg"></div>' +
 									'<div class="caption">Text 4</div>' +
 									'</div>' +
 

@@ -13,7 +13,7 @@
 		response.setContentType("text/html;charset=UTF-8"); */
 		String previousPage = request.getHeader("referer");
 		
-		if (previousPage.equals("http://localhost:8000/localMovie/openChatIndex.jsp")) {
+		if (previousPage.equals("http://ec2-13-124-231-86.ap-northeast-2.compute.amazonaws.com:8080/Movie/openChatIndex.jsp")) {
 			session.invalidate();			
 			response.sendRedirect("openChatIndex.jsp?isLogout=Y"); 
 			return;

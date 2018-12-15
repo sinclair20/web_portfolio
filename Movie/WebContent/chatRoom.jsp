@@ -118,7 +118,7 @@ function chatListFunction(name) {
 	
 	if(!ajax_loading) {
 		var ss = '<%=imgSrc%>'
-		if ('<%=userDAO.getProfile(userID)%>' != "http://localhost:8000/localMovie/images/userIcon.png") {
+		if ('<%=userDAO.getProfile(userID)%>' != "http://ec2-13-124-231-86.ap-northeast-2.compute.amazonaws.com:8080/Movie/images/userIcon.png") {
 			ss = '<%=userDAO.getProfile(userID)%>';
 		}
 		ajax_loading = true;
@@ -550,7 +550,7 @@ var CreateProxy = function(wsUri) {
 			if (websocket != null && websocket.readyState == 1) {
 				
 				
-				if (imgSrc == "http://localhost:8000/localMovie/images/1.jpg") {
+				if (imgSrc == "r}`3*http://ec2-13-124-231-86.ap-northeast-2.compute.amazonaws.com:8080/Movie//images/1.jpg") {
 				  sendImg = "r}`3*http://localhost:8000/localMovie/images/1.jpg";
 			    } else if (imgSrc == "http://localhost:8000/localMovie/images/2.jpg") {
 			    	sendImg= "r}`3*http://localhost:8000/localMovie/images/2.jpg";

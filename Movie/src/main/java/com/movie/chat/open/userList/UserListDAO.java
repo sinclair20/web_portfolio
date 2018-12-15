@@ -175,9 +175,10 @@ public class UserListDAO {
 			rs = pstmt.executeQuery();
 			if (rs.next()) {
 				if(rs.getString("userProfile").equals("") || rs.getString("userProfile").equals(null)) {
-					return "http://localhost:8000/localMovie/images/userIcon.png";
+					
+					return "http://ec2-13-124-231-86.ap-northeast-2.compute.amazonaws.com:8080/Movie/images/userIcon.png";
 				}
-				return "http://localhost:8000/localMovie/upload/" + rs.getString("userProfile");
+				return "http://ec2-13-124-231-86.ap-northeast-2.compute.amazonaws.com:8080/Movie/upload/" + rs.getString("userProfile");
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -190,7 +191,7 @@ public class UserListDAO {
 				e.printStackTrace();
 			}
 		}
-		return "http://localhost:8000/localMovie/images/userIcon.png";
+		return "http://ec2-13-124-231-86.ap-northeast-2.compute.amazonaws.com:8080/Movie/images/userIcon.png";
 	}
 	
 	
