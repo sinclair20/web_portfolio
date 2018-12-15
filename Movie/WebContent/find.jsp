@@ -123,7 +123,7 @@
 			<ul class="nav navbar-nav">
 				<li><a href="index.jsp">메인</a>				
 				<li class="active"><a href="find.jsp">친구찾기</a></li>
-				<li><a href="box.jsp">메시지 함<span id="unread" class="label label-info"></span></a></li>
+				<li><a href="box.jsp">메세지 함<span id="unread" class="label label-info"></span></a></li>
 				<li><a href="boardView.jsp">자유게시판</a></li>
 				<li><a href="openChatIndex.jsp">오픈채팅</a></li>
 			</ul>
@@ -145,7 +145,7 @@
 	</nav>
 	
 <div class="container">
-	<table class="table table-bordered table-hover" style="text-align: center; border: 1px solid #dddddd">
+	<table class="table table-bordered table-hover" style="text-align: center; max-width:1024px; border: 1px solid #dddddd">
 		<thead>
 			<tr>
 				<th colspan="2"><h4>검색으로 친구찾기</h4></th>
@@ -163,7 +163,7 @@
 	</table>
 </div>
 <div class="container">
-	<table id="friendResult" class="table table-bordered table-hover" style="text-align: center;" border: 1px solid #dddddd;>
+	<table id="friendResult" class="table table-bordered table-hover" style="text-align: center; border: 1px solid #dddddd;">
 	</table>
 </div>
 	
@@ -240,10 +240,12 @@
 			$(document).ready(function() {
 				getUnread();
 				getInfiniteUnread();
+				
 			});
 		</script>
 	<%
 		}
 	%>
+
 </body>
 </html>

@@ -308,4 +308,45 @@ public class ChatDAO {
 		}
 		return -1;
 	}
+	
+	
+	
+	
+	public boolean deleteChatRoom(String fromID, String toID) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;		
+		
+        boolean result = false;
+
+		String SQL = "DELETE FROM chat WHERE (fromID = ? AND toID = ? ) OR (toID = ? AND fromID = ?)";
+		try {
+			conn = dataSource.getConnection();
+			pstmt = conn.prepareStatement(SQL);
+
+			pstmt.setString(1, fromID);
+			pstmt.setString(2, toID);
+			pstmt.setString(3, fromID);
+			pstmt.setString(4, toID);
+			conn.setAutoCommit( false );
+			
+			int flag = pstmt.executeUpdate();
+            if(flag > 0){
+                result = true;
+                conn.commit(); // 완료시 커밋
+            }    
+            
+			return result;			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (pstmt != null) pstmt.close();
+				if (conn != null) conn.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return false;
+	}
+
 }

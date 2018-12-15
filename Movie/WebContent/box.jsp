@@ -56,8 +56,39 @@
 			$('#unread').html(result);
 		}
 		
+		function deleteCheck(toID) {
+			if (confirm('대화방을 삭제하시겠습니까?') == true){
+				console.log('deleteCheck()');
+				deleteRoom(toID);
+			} else {
+				return;
+			}
+		}
+		
+		
+		
+		
+		function deleteRoom(toID) {
+			
+			$.ajax({
+				type: "POST",
+				url: "./chatRoomDelete",				
+				data: {
+					fromID: encodeURIComponent('<%=userID%>'),
+					toID: encodeURIComponent(toID),										
+				},
+				success: function () {					
+					$('.delete').parent().parent().parent().remove();
+					alert('대화방이 삭제되었습니다.')					
+				}
+			});			
+		}
+		
+		
+		
 		function chatBoxFunction() {
 			var userID = '<%= userID %>'
+			console.log()
 			$.ajax ({
 				type:"POST",
 				url: "./chatBox",
@@ -65,10 +96,12 @@
 					userID : encodeURIComponent(userID),					
 				},
 				success: function (data) {
-					if (data == "") return;
+					/* if (data == "") return; */
+					console.log("chatBoxFunction 1")
 					$('#boxTable').html(''); // boxTable의 html영역을 공백으로 초기화
+					if (data == "") return;
 					var parsed = JSON.parse(data);
-					var result = parsed.result;
+					var result = parsed.result;					
 					for (var i=0; i < result.length; i++) {
 						if (result[i][0].value == userID) {
 							result[i][0].value = result[i][1].value;
@@ -82,23 +115,29 @@
 		}
 		
 		function addBox(lastID, toID, chatContent, chatTime, unread, profile) {
-			$('#boxTable').append('<tr onclick="location.href=\'chat.jsp?toID=' + encodeURIComponent(toID) + '\'">' +
-					'<td style="width: 150px;">' +
+			$('#boxTable').append(
+					'<tr onclick="location.href=\'chat.jsp?toID=' + encodeURIComponent(toID) + '\'">' + 
+					'<tr>' +
+					'<td class="col-lg-3" style="width: 150px;">' +
 					'<img class="media-object img-circle" style="margin: 0 auto; max-width: 40px; max-height: 40px;" src="' + profile + '">' + 
 					'<h5>' + lastID + '</h5></td>' + 
-					'<td>' + 
+					'<td class="col-lg-6">' + 
 					'<h5>' + chatContent +
 					'<span class="label label-info">' + unread + '</span></h5>' + 
+					'</td>' +
+					'<td class="col-lg-3">' +
+					'<a href="#" style="margin-top:30px;" class="delete btn btn-danger pull-right" onclick="deleteCheck(' + "'" + toID + "'"+ ')">삭제</a>' +
 					'<div class="pull-right">' + chatTime + '</div>' +
-					'</td>' + 
+					'</td>' +
 					'</tr>'); 
 		}
+		
 		function getInfiniteBox() {
 			setInterval(function() {
 				chatBoxFunction();
 			}, 3000);
 		}
-		
+
 	</script>
 </head>
 <body>

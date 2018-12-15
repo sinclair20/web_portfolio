@@ -267,7 +267,7 @@
 			
 
 
-		function getInfiniteChat(){
+		function getInfiniteChat() {
 			setInterval(function() {				
 				chatListFunction('0');
 				autoNumber();
@@ -359,28 +359,7 @@
 					} 
 					
 					
-					/* for (var i=1; i < lastCommentOrder; i++) {
-						var a = Number($('.commentOrder' + i).text());
-						var b = Number($('.commentOrder' + i+1).text());
-						console.log("a",a);
-						console.log("b",b);
-						
-						if (a+1 != b) {
-							for (var k=1; k < lastCommentOrder; k++ ){								
-								$('.commentOrder'+ i ).text(i); 
-							}
-							break;
-						}		
-					}
-					 */
-					
-					
-					/* for (i=1; i <= lastCommentOrder; i++ ){
-						
-						$('.commentOrder'+i).text(i);
-					} 
-					 */
-					
+				
 					
 					alert('댓글이 삭제되었습니다.')
 					console.log("order ",order);
@@ -400,10 +379,7 @@
 				console.log('s',s);
 				if (a == '') {
 					console.log('다름',s)
-		/* 			for (var k=s; k <= lastCommentOrder; k++) {
-						$('.commentOrder' + Number(k+1)).text(k);
 		
-					} */
 					while(s <= lastCommentOrder){
 						$('.commentOrder' + Number(s+1)).text(s);
 						s++

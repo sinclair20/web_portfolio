@@ -29,7 +29,7 @@ public class CommentDAO {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		
-		String SQL = "INSERT INTO comment SELECT IFNULL((SELECT MAX(commentID) + 1 FROM comment), 1), ?, ?, now(), ?, ?, ?";
+		String SQL = "INSERT INTO comment SELECT IFNULL((SELECT MAX(commentID) + 1 FROM comment), 1), ?, ?, now(), ?, ?, ?, 1";
 		
 		try {
 			conn = dataSource.getConnection();
@@ -92,8 +92,6 @@ public class CommentDAO {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		
-			
-		
 		/*String SQL = "SELECT * comment WHERE boardID = ? AND commentID = ?";*/
 		String SQL = "SELECT * FROM comment WHERE boardID = ? ORDER BY commentID DESC LIMIT 1"; 
 		try {
@@ -137,40 +135,25 @@ public class CommentDAO {
 	}
 	
 	
-	/*public ArrayList<CommentDTO> getCommentList(String boardID, String commentID, String page) {
-				
-		String lastID = String.valueOf((Integer.parseInt(page) * 5)); 
-		System.out.println(lastID);
-		ArrayList<CommentDTO> commentList = null;
+	public int getNumberOfComment(String boardID) {
+		
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		
-		String SQL = "SELECT * FROM COMMENT WHERE boardID = ? AND ? < commentID < ? ORDER BY commentDate";
-		
+		String SQL = "SELECT COUNT(commentID) FROM comment WHERE boardID = ?";
 		try {
+			
 			conn = dataSource.getConnection();
 			pstmt = conn.prepareStatement(SQL);
 			pstmt.setString(1, boardID);
-			pstmt.setString(2, commentID);
-			pstmt.setString(3, lastID);
-			rs = pstmt.executeQuery();	
-			commentList = new ArrayList<CommentDTO>();
-			if (rs.getInt("commentID") < lastID) {
-				return "";
+			
+			rs = pstmt.executeQuery();			
+			if (rs.next()) {
+				return rs.getInt("COUNT(commentID)");
 			}
-			while (rs.next()) {
-				CommentDTO comment = new CommentDTO();
-				comment.setBoardID(rs.getInt("boardID"));
-				comment.setCommentID(rs.getInt("commentID"));
-				comment.setUserID(rs.getString("userID"));
-				comment.setCommentWriter(rs.getString("commentWriter"));
-				comment.setCommentContent(rs.getString("commentContent"));
-				comment.setCommentDate(rs.getString("commentDate").substring(0, 11));
-				comment.setCommentPassword(rs.getString("commentPassword"));
-				commentList.add(comment);
-			}
-		} catch (Exception e) {
+			return 0;
+		} catch (Exception e) {			
 			e.printStackTrace();
 		} finally {
 			try {
@@ -181,8 +164,11 @@ public class CommentDAO {
 				e.printStackTrace();
 			}
 		}
-		return commentList;
-	}*/
+		return -1;
+	}
+	
+	
+
 	
 	public ArrayList<CommentDTO> getCommentList(String boardID, String commentID) {
 		
@@ -191,7 +177,7 @@ public class CommentDAO {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		
-		String SQL = "SELECT * FROM comment WHERE boardID = ? AND commentID > ? ORDER BY commentDate";
+		String SQL = "SELECT * FROM comment WHERE boardID = ? AND commentID > ? AND commentAvailable = 1 ORDER BY commentDate";
 		
 		try {
 			conn = dataSource.getConnection();
@@ -266,28 +252,16 @@ public class CommentDAO {
 	}
 	
 	
-	public boolean deleteComment(String commentID) {
+	public int deleteComment(String commentID) {
 		Connection conn = null;
-		PreparedStatement pstmt = null;		
-		
-        boolean result = false;
+		PreparedStatement pstmt = null;				
 
 		String SQL = "DELETE FROM comment WHERE commentID = ?";
 		try {
 			conn = dataSource.getConnection();
 			pstmt = conn.prepareStatement(SQL);
-
 			pstmt.setInt(1, Integer.parseInt(commentID));
-			
-			conn.setAutoCommit( false );
-			
-			int flag = pstmt.executeUpdate();
-            if(flag > 0){
-                result = true;
-                conn.commit(); // 완료시 커밋
-            }    
-            
-			return result;			
+			return pstmt.executeUpdate();			
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -298,9 +272,36 @@ public class CommentDAO {
 				e.printStackTrace();
 			}
 		}
-		return false;
+		return -1;
 	}
 
+
+	
+	public int deleteCommentList(String boardID) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;		
+
+		String SQL = "UPDATE comment SET commentAvailable = 0 WHERE boardID = ?";
+		try {
+			conn = dataSource.getConnection();
+			pstmt = conn.prepareStatement(SQL);
+
+			pstmt.setInt(1, Integer.parseInt(boardID));
+			
+            return pstmt.executeUpdate();
+            
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (pstmt != null) pstmt.close();
+				if (conn != null) conn.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return -1;
+	}
 
 	
 /*public ArrayList<ChatDTO> getCommentListByID (String boardID) {
