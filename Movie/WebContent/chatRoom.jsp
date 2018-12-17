@@ -43,7 +43,8 @@
 	
 	System.out.println("1. userID:" + userID);
 	System.out.println("2. nickName:" + nickName);
-	System.out.println("3. userDAO.getProfile(userID):" + userDAO.getProfile(userID));
+	System.out.println("3. userDAO.getProfile(userID): " + userDAO.getProfile(userID));
+	System.out.println("4. imgSrc: " + imgSrc);
 
 
 
@@ -95,6 +96,45 @@
 	
 %>
 <script type="text/javascript">
+var audio = null;
+var playSound = function() {
+	if (audio == null) {
+		audio = new Audio('content/sounds/ring.wav');
+	}		
+	audio.play(); 
+};
+
+	
+	function getUnread() {
+		
+		$.ajax ({
+			type:"POST",
+			url: "./chatUnread",
+			data: {
+				userID : encodeURIComponent('<%= userID %>')					
+			},
+			success: function (result) {
+				var unread = Number($('#unread').text());
+				console.log("unread", unread);
+				if (result >= 1) {
+					console.log("result1 ", result);
+					console.log("unread1 ", unread);
+					showUnread(result);
+					if ( result == unread +1 ){
+						
+						console.log("result2 ", result);
+						console.log("unread2 ", unread);
+						playSound();
+					}
+					
+					
+				} else {
+					showUnread('');
+				}
+			}
+		});
+	}
+	
 function noEvent() { // 새로 고침 방지
     if (event.keyCode == 116) {
         alert("새로고침을 할 수 없습니다.");
@@ -350,7 +390,9 @@ var CreateProxy = function(wsUri) {
 	var imgSrc = encodeURI('<%=imgSrc%>');
 	
 	
-	console.log("imgSrc: ",imgSrc)
+	
+	
+	console.log("1. imgSrc: ",imgSrc)
 	var jbAry = new Array();
 	var jbAryy = new Array();
 	
@@ -549,19 +591,19 @@ var CreateProxy = function(wsUri) {
 			var sendImg = "";
 			if (websocket != null && websocket.readyState == 1) {
 				
-				
-				if (imgSrc == "r}`3*http://ec2-13-124-231-86.ap-northeast-2.compute.amazonaws.com:8080/Movie//images/1.jpg") {
-				  sendImg = "r}`3*http://localhost:8000/localMovie/images/1.jpg";
-			    } else if (imgSrc == "http://localhost:8000/localMovie/images/2.jpg") {
-			    	sendImg= "r}`3*http://localhost:8000/localMovie/images/2.jpg";
-			    } else if (imgSrc == "http://localhost:8000/localMovie/images/3.jpg") {
-			    	sendImg = "r}`3*http://localhost:8000/localMovie/images/3.jpg";
-			    } else if (imgSrc == "http://localhost:8000/localMovie/images/4.jpg") {
-			    	sendImg = "r}`3*http://localhost:8000/localMovie/images/4.jpg";
+
+				if (imgSrc == "http://ec2-13-124-231-86.ap-northeast-2.compute.amazonaws.com:8080/Movie/images/character1.jpg") {
+				  sendImg = "r}`3*http://ec2-13-124-231-86.ap-northeast-2.compute.amazonaws.com:8080/Movie/images/character1.jpg";
+			    } else if (imgSrc == "http://ec2-13-124-231-86.ap-northeast-2.compute.amazonaws.com:8080/Movie/images/character2.jpg") {
+			    	sendImg= "r}`3*http://ec2-13-124-231-86.ap-northeast-2.compute.amazonaws.com:8080/Movie/images/character2.jpg";
+			    } else if (imgSrc == "http://ec2-13-124-231-86.ap-northeast-2.compute.amazonaws.com:8080/Movie/images/character3.jpg") {
+			    	sendImg = "r}`3*http://ec2-13-124-231-86.ap-northeast-2.compute.amazonaws.com:8080/Movie/images/character3.jpg";
+			    } else if (imgSrc == "http://ec2-13-124-231-86.ap-northeast-2.compute.amazonaws.com:8080/Movie/images/character4.jpg") {
+			    	sendImg = "r}`3*http://ec2-13-124-231-86.ap-northeast-2.compute.amazonaws.com:8080/Movie/images/character4.jpg";
 			    } else {
 			    	sendImg = 'r}`3*<%=userDAO.getProfile(userID)%>';
-			    }
-			    		   
+			    }  
+			    
 				var input = $('#inputMessage').val() + sendImg
 				
 				if ($('#inputMessage').val() == '') { return; }

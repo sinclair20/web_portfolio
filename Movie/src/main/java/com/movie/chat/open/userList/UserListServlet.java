@@ -27,12 +27,7 @@ public class UserListServlet extends HttpServlet {
 		String name = request.getParameter("name");		
 		String page = request.getParameter("page");
 		String imgSrc = request.getParameter("imgSrc");
-		/*String imgSrc = request.getParameter("imgSrc");*/
-		
-		
-	/*	System.out.println("name : " + name);
-		System.out.println("page : " + page);*/
-		
+				
 		if (name.equals("0")) {
 			try {												
 				response.getWriter().write("");
@@ -45,15 +40,9 @@ public class UserListServlet extends HttpServlet {
 			
 		}
 		
-		response.getWriter().write(getID(page));						
-		
+		response.getWriter().write(getID(page));								
 		
 	}		
-	
-			/*response.getWriter().write("");*/
-	
-		//else response.getWriter().write(getTen(URLDecoder.decode(fromID, "UTF-8"), URLDecoder.decode(toID, "UTF-8")));
-		
 	
 	
 	
@@ -75,7 +64,7 @@ public class UserListServlet extends HttpServlet {
 				result.append(",");
 			}
 		}		
-		/*result.append("], \"last\":\"" + userList.get(userList.size() - 1) + "\"}");*/
+		
 		result.append("]}");
 		return result.toString();
 	}

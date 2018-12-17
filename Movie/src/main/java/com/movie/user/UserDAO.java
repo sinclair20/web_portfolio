@@ -298,7 +298,7 @@ public class UserDAO {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		
-		String SQL = "SELECT userProfile FROM USER WHERE userID = ?";
+		String SQL = "SELECT userProfile FROM user WHERE userID = ?";
 		try {
 			conn = dataSource.getConnection();
 			pstmt = conn.prepareStatement(SQL);
@@ -306,10 +306,10 @@ public class UserDAO {
 			rs = pstmt.executeQuery();
 			if (rs.next()) {
 				if(rs.getString("userProfile").equals("") || rs.getString("userProfile").equals(null)) {
-					return "http://ec2-54-180-114-30.ap-northeast-2.compute.amazonaws.com:8080/Movie/images/userIcon.png";
+					return "http://ec2-13-124-231-86.ap-northeast-2.compute.amazonaws.com:8080/Movie/images/userIcon.png";
 				}
-				return "http://ec2-54-180-114-30.ap-northeast-2.compute.amazonaws.com:8080/Movie/upload/" + rs.getString("userProfile");
-			}
+				return "http://ec2-13-124-231-86.ap-northeast-2.compute.amazonaws.com:8080/Movie/upload/" + rs.getString("userProfile");
+			}	
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -321,7 +321,7 @@ public class UserDAO {
 				e.printStackTrace();
 			}
 		}
-		return "http://ec2-54-180-114-30.ap-northeast-2.compute.amazonaws.com:8080/Movie/images/userIcon.png";
+		return "http://ec2-13-124-231-86.ap-northeast-2.compute.amazonaws.com:8080/Movie/images/userIcon.png";
 	}
 
 	

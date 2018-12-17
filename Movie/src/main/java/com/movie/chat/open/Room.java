@@ -23,9 +23,9 @@ public class Room {
 				try { session.getBasicRemote().sendText(message); }
 				catch (IOException e) { e.printStackTrace(); }
 			}
-		}
-		
+		}		
 	}
+	
 	public synchronized void sendUserList(List<String> userList) {
 		for (Session session: sessions) {	
 			 try {
@@ -41,7 +41,6 @@ public class Room {
 			}
 		}
 	}
-
 	
 	public synchronized static Room getRoom() {
 		if (instance == null) { instance = new Room(); }

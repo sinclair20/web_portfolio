@@ -45,7 +45,17 @@
 	
 	<script type="text/javascript">
 
+	var audio = null;
+	var playSound = function() {
+		if (audio == null) {
+			audio = new Audio('content/sounds/ring.wav');
+		}		
+		audio.play(); 
+	};
+	
+		
 		function getUnread() {
+			
 			$.ajax ({
 				type:"POST",
 				url: "./chatUnread",
@@ -53,8 +63,20 @@
 					userID : encodeURIComponent('<%= userID %>')					
 				},
 				success: function (result) {
+					var unread = Number($('#unread').text());
+					console.log("unread", unread);
 					if (result >= 1) {
+						console.log("result1 ", result);
+						console.log("unread1 ", unread);
 						showUnread(result);
+						if ( result == unread +1 ){
+							
+							console.log("result2 ", result);
+							console.log("unread2 ", unread);
+							playSound();
+						}
+						
+						
 					} else {
 						showUnread('');
 					}
@@ -196,6 +218,7 @@
 	
 <style type="text/css">
 
+
 body{
 
     font-family: verdana,sans-serif;
@@ -240,6 +263,8 @@ body{
     position: absolute;
 
     top: 50%;
+    
+    left: 0%;
 
     font-size: 18px;
 
@@ -251,7 +276,7 @@ body{
 
     border-radius: 0 3px 3px 0;
 
-    color: #fff;
+    color: #5D5D5D;
 
     cursor: pointer;
 
@@ -277,7 +302,7 @@ body{
 
     border-radius: 0 3px 3px 0;
 
-    color: #fff;
+    color: #5D5D5D;
 
     cursor: pointer;
 
@@ -324,14 +349,6 @@ background-color: rgba(0,0,0,0.8);
 
 }
 
-
-@keyframes fade{
-
-    from {opacity: 0.4;}
-
-    to {opacity: 1;}
-
-}
 
 .active, .dot:hover {
     background-color: #333;
@@ -531,67 +548,69 @@ background-color: rgba(0,0,0,0.8);
 							<div class="friendResult"  style="max-width: 540px; text-align: center; border: 1px solid #dddddd;">
 								<script type="text/javascript">
 								$('.friendResult').html( /* 결과를 담을 테이블에 담을 내용 정의. */
-									
-									'<div class="slideshow-container">' +
-									'<div class="myslides">' +
-									'<div class="numbers">1 / 4</div>' +
-									'<div style="display:table-cell; vertical-align:middle; text-align:center">' +
-									'<img style="max-width: 500px; height: 560px; margin: 0 auto;" src="http://ec2-13-124-231-86.ap-northeast-2.compute.amazonaws.com:8080/Movie/images/1.jpg"></div>' +
-									'<div class="caption">Text 1</div>' +
-									'</div>' +
+										'<div class="slideshow-container">' +
+										'<div class="myslides">' +
+										'<div class="numbers">1 / 4</div>' +
+										'<div style="display:table-cell; vertical-align:middle; text-align:center">' +
+										'<img style="width: 500px; height: 560px; margin: 0 auto;" src="http://localhost:8000/localMovie/images/character1.jpg"></div>' +
+										'<div class="caption">데드풀</div>' +
+										'</div>' +
 
 
-									'<div class="myslides">' +
-									'<div class="numbers">2 / 4</div>' +
-									'<div style="display:table-cell; vertical-align:middle; text-align:center">' +
-									'<img style="max-width: 500px; height: 560px; margin: 0 auto;" src="http://ec2-13-124-231-86.ap-northeast-2.compute.amazonaws.com:8080/Movie/images/2.jpg"></div>' +
-									'<div class="caption">Text 2</div>' +
-									'</div>' +
+										'<div class="myslides">' +
+										'<div class="numbers">2 / 4</div>' +
+										'<div style="display:table-cell; vertical-align:middle; text-align:center">' +
+										'<img style="width: 500px; height: 560px; margin: 0 auto;" src="http://localhost:8000/localMovie/images/character2.jpg"></div>' +
+										'<div class="caption">원더우먼</div>' +
+										'</div>' +
 
 
-									'<div class="myslides">' +
-									'<div class="numbers">3 / 4</div>' +
-									'<div style="display:table-cell; vertical-align:middle; text-align:center">' + 
-									'<img style="max-width: 500px; height: 560px; margin: 0 auto;" src="http://ec2-13-124-231-86.ap-northeast-2.compute.amazonaws.com:8080/Movie/images/3.jpg"></div>' +
-									'<div class="caption">Text 3</div>' +
-									'</div>' +
+										'<div class="myslides">' +
+										'<div class="numbers">3 / 4</div>' +
+										'<div style="display:table-cell; vertical-align:middle; text-align:center">' + 
+										'<img style="width: 500px; height: 560px; margin: 0 auto;" src="http://localhost:8000/localMovie/images/character3.jpg"></div>' +
+										'<div class="caption">아이언맨</div>' +
+										'</div>' +
 
-									'<div class="myslides">' +
-									'<div class="numbers">4 / 4</div>' +
-									'<div style="display:table-cell; vertical-align:middle; text-align:center">' + 
-									'<img style="max-width: 500px; height: 560px; margin: 0 auto;" src="http://ec2-13-124-231-86.ap-northeast-2.compute.amazonaws.com:8080/Movie/images/4.jpg"></div>' +
-									'<div class="caption">Text 4</div>' +
-									'</div>' +
+										'<div class="myslides">' +
+										'<div class="numbers">4 / 4</div>' +
+										'<div style="display:table-cell; vertical-align:middle; text-align:center">' + 
+										'<img style="width: 500px; height: 560px; margin: 0 auto;" src="http://localhost:8000/localMovie/images/character4.jpg"></div>' +
+										'<div class="caption">할리퀸</div>' +
+										'</div>' +
 
 
-									'<a class="prev" onclick="plusSlides(-1)">&#10094;</a>' +
-									'<a class="next" onclick="plusSlides(1)">&#10095;</a>' +
-									'</div>' +
+										'<a class="prev" onclick="plusSlides(-1)">&#10094;</a>' +
+										'<a class="next" onclick="plusSlides(1)">&#10095;</a>' +
+										'</div>' +
 
-									'<br>' +
-									'<div style="text-align:center">' + 
-									'<span name="img1" class="dots" onclick="currentSlide(1)"></span>' + 
-									'<span name="img2" class="dots" onclick="currentSlide(2)"></span>' +
-									'<span name="img3" class="dots" onclick="currentSlide(3)"></span>' +
-									'<span name="img4" class="dots" onclick="currentSlide(4)"></span>' +
-									'</div>' +
-									'</td>' +   
-									'</tr>' +
+										'<br>' +
+										'<div style="text-align:center">' + 
+										'<span name="img1" class="dots" onclick="currentSlide(1)"></span>' + 
+										'<span name="img2" class="dots" onclick="currentSlide(2)"></span>' +
+										'<span name="img3" class="dots" onclick="currentSlide(3)"></span>' +
+										'<span name="img4" class="dots" onclick="currentSlide(4)"></span>' +
+										'</div>' +
+										'</td>' +   
+										'</tr>' +
 									'</tbody>');
 								</script>
 								<div>
 								<div>
  								<input style="width:360px; height:50px" class="form-control nickName" name="nickName" type="text" 
 								class="txtLogin" maxlength="20" placeholder="닉네임 입력" required>
-								<button type="submit" class="btn pull-right">완료</button>
 								</div>
 								<div style="display:none;">
 								<textarea style="width:360px; height:50px" class="form-control imgSrc" maxlength="50" name="imgSrc"></textarea>
 								</div>
 								<%-- <a href='chat2.jsp>완료</a> --%>
 								<!-- <td><a href="chat2.jsp" class="btn btn-primary pull-right"><h4>완료</h4></a></td> -->
-								
-								
+								<script type="text/javascript">
+									if ($('.imgSrc').text() == "" ) {
+										$('.imgSrc').text('http://ec2-13-124-231-86.ap-northeast-2.compute.amazonaws.com:8080/Movie/images/character1.jpg')
+									}
+								</script>
+								<button type="submit" class="btn pull-right">완료</button>
 								</div>
 							</div>
 						</div>
@@ -619,41 +638,39 @@ background-color: rgba(0,0,0,0.8);
 							<div class="friendResult"  style="max-width: 540px; text-align: center; border: 1px solid #dddddd;">
 								<script type="text/javascript">
 								$('.friendResult').html( /* 결과를 담을 테이블에 담을 내용 정의. */
-									
 									'<div class="slideshow-container">' +
 									'<div class="myslides">' +
 									'<div class="numbers">1 / 4</div>' +
 									'<div style="display:table-cell; vertical-align:middle; text-align:center">' +
-									'<img style="max-width: 500px; height: 560px; margin: 0 auto;" src="http://ec2-13-124-231-86.ap-northeast-2.compute.amazonaws.com:8080/Movie/images/1.jpg"></div>' +
-									'<div class="caption">Text 1</div>' +
+									'<img style="width: 500px; height: 560px; margin: 0 auto;" src="http://localhost:8000/localMovie/images/character1.jpg"></div>' +
+									'<div class="caption">데드풀</div>' +
 									'</div>' +
 
 
 									'<div class="myslides">' +
 									'<div class="numbers">2 / 4</div>' +
 									'<div style="display:table-cell; vertical-align:middle; text-align:center">' +
-									'<img style="max-width: 500px; height: 560px; margin: 0 auto;" src="http://ec2-13-124-231-86.ap-northeast-2.compute.amazonaws.com:8080/Movie/images/2.jpg"></div>' +
-									'<div class="caption">Text 2</div>' +
+									'<img style="width: 500px; height: 560px; margin: 0 auto;" src="http://localhost:8000/localMovie/images/character2.jpg"></div>' +
+									'<div class="caption">원더우먼</div>' +
 									'</div>' +
 
 									'<div class="myslides">' +
 									'<div class="numbers">3 / 4</div>' +
 									'<div style="display:table-cell; vertical-align:middle; text-align:center">' + 
-									'<img style="max-width: 500px; height: 560px; margin: 0 auto;" src="http://ec2-13-124-231-86.ap-northeast-2.compute.amazonaws.com:8080/Movie/images/3.jpg"></div>' +
-									'<div class="caption">Text 3</div>' +
+									'<img style="width: 500px; height: 560px; margin: 0 auto;" src="http://localhost:8000/localMovie/images/character3.jpg"></div>' +
+									'<div class="caption">아이언맨</div>' +
 									'</div>' +
 
 									'<div class="myslides">' +
 									'<div class="numbers">4 / 4</div>' +
 									'<div style="display:table-cell; vertical-align:middle; text-align:center">' + 
-									'<img style="max-width: 500px; height: 560px; margin: 0 auto;" src="http://ec2-13-124-231-86.ap-northeast-2.compute.amazonaws.com:8080/Movie/images/4.jpg"></div>' +
-									'<div class="caption">Text 4</div>' +
+									'<img style="width: 500px; height: 560px; margin: 0 auto;" src="http://localhost:8000/localMovie/images/character4.jpg"></div>' +
+									'<div class="caption">할리퀸</div>' +
 									'</div>' +
 
 									'<a class="prev" onclick="plusSlides(-1)">&#10094;</a>' +
 									'<a class="next" onclick="plusSlides(1)">&#10095;</a>' +
 									'</div>' +
-
 									'<br>' +
 									'<div style="text-align:center">' + 
 									'<span name="img1" class="dots" onclick="currentSlide(1)"></span>' + 
@@ -669,14 +686,18 @@ background-color: rgba(0,0,0,0.8);
 								<div>
 								<input style="width:360px; height:50px" class="form-control nickName" name="nickName" type="text" 
 								class="txtLogin" maxlength="20" placeholder="닉네임 입력" required>
-								<button type="submit" class="btn pull-right">완료</button>
 								</div>
 								<div style="display:none;">
 								<textarea style="width:360px; height:50px" class="form-control imgSrc" maxlength="50" name="imgSrc"></textarea>
 								</div>
 								<%-- <a href='chat2.jsp>완료</a> --%>
 								<!-- <td><a href="chat2.jsp" class="btn btn-primary pull-right"><h4>완료</h4></a></td> -->
-								
+								<script type="text/javascript">
+									if ($('.imgSrc').text() == "" ) {
+										$('.imgSrc').text('http://ec2-13-124-231-86.ap-northeast-2.compute.amazonaws.com:8080/Movie/images/character1.jpg')
+									}
+								</script>							
+								<button type="submit" class="btn pull-right">완료</button>
 								</div>
 							</div>
 						</div>
@@ -688,8 +709,6 @@ background-color: rgba(0,0,0,0.8);
 	<%
 		}
 	%>
-
-	
 	<div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="modal" aria-hidden="true">
 		<div class="modal-dialog">
 			<div class = "modal-content">
@@ -717,7 +736,7 @@ background-color: rgba(0,0,0,0.8);
 	</div>
 	
 	
-		<%
+	<%
 		String messageContent = null;	
 		if (session.getAttribute("messageContent") != null) {
 			messageContent = (String) session.getAttribute("messageContent");
@@ -805,18 +824,16 @@ function currentSlide(n) {
     showSlide(slideIndex = n);
     slideIndex = n;
     /* sendIndex(n);  */
-    if (n == 2) {
-    	
-		 $('.imgSrc').text("http://localhost:8000/localMovie/images/2.jpg");
+    if (n == 2) {    	
+		 $('.imgSrc').text("http://ec2-13-124-231-86.ap-northeast-2.compute.amazonaws.com:8080/Movie/images/character2.jpg");
 	    } else if (n == 3 ) {
 	    	
-	    	$('.imgSrc').text("http://localhost:8000/localMovie/images/3.jpg");
+	    	$('.imgSrc').text("http://ec2-13-124-231-86.ap-northeast-2.compute.amazonaws.com:8080/Movie/images/character3.jpg");
 	    } else if (n == 4 ) {
 	    	
-	    	$('.imgSrc').text("http://localhost:8000/localMovie/images/4.jpg");
-	    } else {
-	    	
-	    	$('.imgSrc').text("http://localhost:8000/localMovie/images/1.jpg");
+	    	$('.imgSrc').text("http://ec2-13-124-231-86.ap-northeast-2.compute.amazonaws.com:8080/Movie/images/character4.jpg");
+	    } else {	    	
+	    	$('.imgSrc').text("http://ec2-13-124-231-86.ap-northeast-2.compute.amazonaws.com:8080/Movie/images/character1.jpg");
 	    }
 }	
     	  
@@ -826,16 +843,16 @@ function currentSlide(n) {
 function showSlide(n){
     if (n == 2) {
     	
-		 $('.imgSrc').text("http://localhost:8000/localMovie/images/2.jpg");
+		 $('.imgSrc').text("http://ec2-13-124-231-86.ap-northeast-2.compute.amazonaws.com:8080/Movie/images/character2.jpg");
 	    } else if (n == 3 ) {
 	    	
-	    	$('.imgSrc').text("http://localhost:8000/localMovie/images/3.jpg");
+	    	$('.imgSrc').text("http://ec2-13-124-231-86.ap-northeast-2.compute.amazonaws.com:8080/Movie/images/character3.jpg");
 	    } else if (n == 4 ) {
 	    	
-	    	$('.imgSrc').text("http://localhost:8000/localMovie/images/4.jpg");
+	    	$('.imgSrc').text("http://ec2-13-124-231-86.ap-northeast-2.compute.amazonaws.com:8080/Movie/images/character4.jpg");
 	    } else {
 	    	
-	    	$('.imgSrc').text("http://localhost:8000/localMovie/images/1.jpg");
+	    	$('.imgSrc').text("http://ec2-13-124-231-86.ap-northeast-2.compute.amazonaws.com:8080/Movie/images/character1.jpg");
 	    }
 	
     var i;
@@ -856,39 +873,10 @@ function showSlide(n){
 
     slides[slideIndex-1].style.display = "block";
     dots[slideIndex-1].className += " active";
+    
 }
 console.log("slideIndex: ",slideIndex);
 		
-		
-/* 	  function cmDeleteOpen(commentID){
-var msg = confirm("댓글을 삭제합니다.");    
-if(msg == true){ // 확인을 누를경우
-	deleteFunction(commentID);
-}
-else{
-    return false; // 삭제취소
-}
-} */
-
-
-
- /*
- function checkFunc(){
-  if (httpRequest.readyState == 4){
-      // 결과값을 가져온다.
-      var resultText = httpRequest.responseText;
-     if(resultText == 1){ 
-           document.location.reload(); // 상세보기 창 새로고침 
-      	
-      }  
-  }
-} 
- */
-
-
-// 댓글 삭제
-
-
 		
 </script> 
 	
@@ -896,9 +884,9 @@ else{
 	
 	
 
-		<script type="text/javascript">
-			$(document).ready(function() {
-		
+	<script type="text/javascript">
+		$(document).ready(function() {
+	
 				
 			<%
 				if (userID != null) {
@@ -911,27 +899,26 @@ else{
 				}
 			%>
 			
-						
-		<%	
-			 String isLogout = (String) request.getParameter("isLogout");
-			
-			if (isLogout != null && isLogout.equals("Y")) {
-				System.out.println("2. a: " + isLogout);
-				System.out.println("모달창 띄우기");
-		%>
-	 		$('#profileModal').modal('show');
-	 		history.replaceState({}, null, location.pathname);
-
-		<%
-			}
-			
-		%> 
-		
-		
+							
+			<%	
+				String isLogout = (String) request.getParameter("isLogout");
 				
-			});
+				if (isLogout != null && isLogout.equals("Y")) {
+					System.out.println("2. a: " + isLogout);
+					System.out.println("모달창 띄우기");
+			%>
+		 		$('#profileModal').modal('show');
+		 		history.replaceState({}, null, location.pathname);
+	
+			<%
+				}
 				
-		</script>
+			%> 
+			
+							
+		});
+				
+	</script>
 			
 				
 </body>

@@ -14,7 +14,5 @@ public class ChatMessage {
 	public void setMessageType(MessageType v) { this.messageType = v; }
 	public MessageType getMessageType() { return this.messageType; }
 	public void setMessage(String v) { this.message = v; }
-	public String getMessage() { return this.message; }
-
-	
+	public String getMessage() { return this.message; }	
 }

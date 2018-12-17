@@ -64,8 +64,7 @@ import com.movie.chat.open.userList.UserListDAO;
 					String name = chatMessage.getMessage();
 					properties.put("name", URLDecoder.decode(name, "UTF-8"));
 					String userName = chatMessage.getMessage();
-					properties.put("userName", URLDecoder.decode(name, "UTF-8"));
-					System.out.println(name);
+					
 								
 					/*userListDAO.write(URLDecoder.decode(userName,"UTF-8"));*/
 					room.join(session);

@@ -31,7 +31,17 @@
 	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 	<script src="js/bootstrap.js"></script>  <!-- 부트스트랩 프레임워크에서 제공하는 자바스크립트 파일 가져오기. -->
 	<script type="text/javascript">
+	var audio = null;
+	var playSound = function() {
+		if (audio == null) {
+			audio = new Audio('content/sounds/ring.wav');
+		}		
+		audio.play(); 
+	};
+	
+		
 		function getUnread() {
+			
 			$.ajax ({
 				type:"POST",
 				url: "./chatUnread",
@@ -39,14 +49,27 @@
 					userID : encodeURIComponent('<%= userID %>')					
 				},
 				success: function (result) {
+					var unread = Number($('#unread').text());
+					console.log("unread", unread);
 					if (result >= 1) {
+						console.log("result1 ", result);
+						console.log("unread1 ", unread);
 						showUnread(result);
+						if ( result == unread +1 ){
+							
+							console.log("result2 ", result);
+							console.log("unread2 ", unread);
+							playSound();
+						}
+						
+						
 					} else {
 						showUnread('');
 					}
 				}
 			});
 		}
+		
 		function getInfiniteUnread() {
 			setInterval(function() {
 				getUnread();
@@ -116,21 +139,21 @@
 		
 		function addBox(lastID, toID, chatContent, chatTime, unread, profile) {
 			$('#boxTable').append(
-					'<tr onclick="location.href=\'chat.jsp?toID=' + encodeURIComponent(toID) + '\'">' + 
-					'<tr>' +
-					'<td class="col-lg-3" style="width: 150px;">' +
+					'<tr>' + 					
+					'<td class="col-lg-3" onclick="location.href=\'chat.jsp?toID=' + encodeURIComponent(toID) + '\'" style="width: 150px; cursor: pointer;" >' +
 					'<img class="media-object img-circle" style="margin: 0 auto; max-width: 40px; max-height: 40px;" src="' + profile + '">' + 
 					'<h5>' + lastID + '</h5></td>' + 
-					'<td class="col-lg-6">' + 
+					'<td class="col-lg-6" onclick="location.href=\'chat.jsp?toID=' + encodeURIComponent(toID) + '\'" style="cursor: pointer;">' + 
 					'<h5>' + chatContent +
-					'<span class="label label-info">' + unread + '</span></h5>' + 
+					'<span class="label label-info">' + unread + '</span></h5>' + 					
 					'</td>' +
 					'<td class="col-lg-3">' +
 					'<a href="#" style="margin-top:30px;" class="delete btn btn-danger pull-right" onclick="deleteCheck(' + "'" + toID + "'"+ ')">삭제</a>' +
 					'<div class="pull-right">' + chatTime + '</div>' +
 					'</td>' +
-					'</tr>'); 
+					'</tr>' ); 
 		}
+		
 		
 		function getInfiniteBox() {
 			setInterval(function() {

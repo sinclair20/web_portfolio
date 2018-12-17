@@ -34,22 +34,46 @@
 	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 	<script src="js/bootstrap.js"></script>  <!-- 부트스트랩 프레임워크에서 제공하는 자바스크립트 파일 가져오기. -->
 	<script type="text/javascript">
+	var audio = null;
+	var playSound = function() {
+		if (audio == null) {
+			audio = new Audio('content/sounds/ring.wav');
+		}		
+		audio.play(); 
+	};
+	
+		
 		function getUnread() {
+			
 			$.ajax ({
 				type:"POST",
 				url: "./chatUnread",
 				data: {
-					userID : encodeURIComponent(' <%= userID %>'),					
+					userID : encodeURIComponent('<%= userID %>')					
 				},
 				success: function (result) {
+					var unread = Number($('#unread').text());
+					console.log("unread", unread);
 					if (result >= 1) {
+						console.log("result1 ", result);
+						console.log("unread1 ", unread);
 						showUnread(result);
+						if ( result == unread +1 ){
+							
+							console.log("result2 ", result);
+							console.log("unread2 ", unread);
+							playSound();
+						}
+						
+						
 					} else {
 						showUnread('');
 					}
 				}
 			});
 		}
+
+
 		function getInfiniteUnread() {
 			setInterval(function() {
 				getUnread();
