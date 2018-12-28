@@ -143,7 +143,7 @@
 					'<td class="col-lg-3" onclick="location.href=\'chat.jsp?toID=' + encodeURIComponent(toID) + '\'" style="width: 150px; cursor: pointer;" >' +
 					'<img class="media-object img-circle" style="margin: 0 auto; max-width: 40px; max-height: 40px;" src="' + profile + '">' + 
 					'<h5>' + lastID + '</h5></td>' + 
-					'<td class="col-lg-6" onclick="location.href=\'chat.jsp?toID=' + encodeURIComponent(toID) + '\'" style="cursor: pointer;">' + 
+					'<td class="col-lg-6" onclick="location.href=\'chat.jsp?toID=' + encodeURIComponent(toID) + '\'" style="width: 230px; cursor: pointer;">' + 
 					'<h5>' + chatContent +
 					'<span class="label label-info">' + unread + '</span></h5>' + 					
 					'</td>' +

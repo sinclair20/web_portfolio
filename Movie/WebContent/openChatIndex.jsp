@@ -552,7 +552,7 @@ background-color: rgba(0,0,0,0.8);
 										'<div class="myslides">' +
 										'<div class="numbers">1 / 4</div>' +
 										'<div style="display:table-cell; vertical-align:middle; text-align:center">' +
-										'<img style="width: 500px; height: 560px; margin: 0 auto;" src="http://localhost:8000/localMovie/images/character1.jpg"></div>' +
+										'<img style="width: 500px; height: 560px; margin: 0 auto;" src="http://ec2-13-124-231-86.ap-northeast-2.compute.amazonaws.com:8080/Movie/images/character1.jpg"></div>' +
 										'<div class="caption">데드풀</div>' +
 										'</div>' +
 
@@ -560,7 +560,7 @@ background-color: rgba(0,0,0,0.8);
 										'<div class="myslides">' +
 										'<div class="numbers">2 / 4</div>' +
 										'<div style="display:table-cell; vertical-align:middle; text-align:center">' +
-										'<img style="width: 500px; height: 560px; margin: 0 auto;" src="http://localhost:8000/localMovie/images/character2.jpg"></div>' +
+										'<img style="width: 500px; height: 560px; margin: 0 auto;" src="http://ec2-13-124-231-86.ap-northeast-2.compute.amazonaws.com:8080/Movie/images/character2.jpg"></div>' +
 										'<div class="caption">원더우먼</div>' +
 										'</div>' +
 
@@ -568,14 +568,14 @@ background-color: rgba(0,0,0,0.8);
 										'<div class="myslides">' +
 										'<div class="numbers">3 / 4</div>' +
 										'<div style="display:table-cell; vertical-align:middle; text-align:center">' + 
-										'<img style="width: 500px; height: 560px; margin: 0 auto;" src="http://localhost:8000/localMovie/images/character3.jpg"></div>' +
+										'<img style="width: 500px; height: 560px; margin: 0 auto;" src="http://ec2-13-124-231-86.ap-northeast-2.compute.amazonaws.com:8080/Movie/images/character3.jpg"></div>' +
 										'<div class="caption">아이언맨</div>' +
 										'</div>' +
 
 										'<div class="myslides">' +
 										'<div class="numbers">4 / 4</div>' +
 										'<div style="display:table-cell; vertical-align:middle; text-align:center">' + 
-										'<img style="width: 500px; height: 560px; margin: 0 auto;" src="http://localhost:8000/localMovie/images/character4.jpg"></div>' +
+										'<img style="width: 500px; height: 560px; margin: 0 auto;" src="http://ec2-13-124-231-86.ap-northeast-2.compute.amazonaws.com:8080/Movie/images/character4.jpg"></div>' +
 										'<div class="caption">할리퀸</div>' +
 										'</div>' +
 
@@ -642,7 +642,7 @@ background-color: rgba(0,0,0,0.8);
 									'<div class="myslides">' +
 									'<div class="numbers">1 / 4</div>' +
 									'<div style="display:table-cell; vertical-align:middle; text-align:center">' +
-									'<img style="width: 500px; height: 560px; margin: 0 auto;" src="http://localhost:8000/localMovie/images/character1.jpg"></div>' +
+									'<img style="width: 500px; height: 560px; margin: 0 auto;" src="http://ec2-13-124-231-86.ap-northeast-2.compute.amazonaws.com:8080/Movie/images/character1.jpg"></div>' +
 									'<div class="caption">데드풀</div>' +
 									'</div>' +
 
@@ -650,21 +650,21 @@ background-color: rgba(0,0,0,0.8);
 									'<div class="myslides">' +
 									'<div class="numbers">2 / 4</div>' +
 									'<div style="display:table-cell; vertical-align:middle; text-align:center">' +
-									'<img style="width: 500px; height: 560px; margin: 0 auto;" src="http://localhost:8000/localMovie/images/character2.jpg"></div>' +
+									'<img style="width: 500px; height: 560px; margin: 0 auto;" src="http://ec2-13-124-231-86.ap-northeast-2.compute.amazonaws.com:8080/Movie/images/character2.jpg"></div>' +
 									'<div class="caption">원더우먼</div>' +
 									'</div>' +
 
 									'<div class="myslides">' +
 									'<div class="numbers">3 / 4</div>' +
 									'<div style="display:table-cell; vertical-align:middle; text-align:center">' + 
-									'<img style="width: 500px; height: 560px; margin: 0 auto;" src="http://localhost:8000/localMovie/images/character3.jpg"></div>' +
+									'<img style="width: 500px; height: 560px; margin: 0 auto;" src="http://ec2-13-124-231-86.ap-northeast-2.compute.amazonaws.com:8080/Movie/images/character3.jpg"></div>' +
 									'<div class="caption">아이언맨</div>' +
 									'</div>' +
 
 									'<div class="myslides">' +
 									'<div class="numbers">4 / 4</div>' +
 									'<div style="display:table-cell; vertical-align:middle; text-align:center">' + 
-									'<img style="width: 500px; height: 560px; margin: 0 auto;" src="http://localhost:8000/localMovie/images/character4.jpg"></div>' +
+									'<img style="width: 500px; height: 560px; margin: 0 auto;" src="http://ec2-13-124-231-86.ap-northeast-2.compute.amazonaws.com:8080/Movie/images/character4.jpg"></div>' +
 									'<div class="caption">할리퀸</div>' +
 									'</div>' +
 

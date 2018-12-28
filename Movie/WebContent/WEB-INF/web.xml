@@ -58,6 +58,14 @@
     <url-pattern>/chatBox</url-pattern>
   </servlet-mapping>
   <servlet>
+    <servlet-name>ChatRoomDeleteServlet</servlet-name>
+    <servlet-class>com.movie.chat.member.ChatRoomDeleteServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ChatRoomDeleteServlet</servlet-name>
+    <url-pattern>/chatRoomDelete</url-pattern>
+  </servlet-mapping>
+  <servlet>
     <servlet-name>UserUpdateServlet</servlet-name>
     <servlet-class>com.movie.user.UserUpdateServlet</servlet-class>
   </servlet>

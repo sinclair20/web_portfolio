@@ -181,6 +181,20 @@
 		}
 	    
 	    
+	    /* 전역변수를 var bool_sw = true; 선언하신 후 
+	    if(bool_sw){ 
+	    sendData(); //실행 
+	    } 
+	    function sendData(){ 
+	    bool_sw = false; 
+	    $.ajax({ 
+	        url:....., 
+	        sucess: function(dd){ 
+	            setTimeout(function(){bool_sw = true;},500) 
+	        } 
+	    }); 
+	    }  */
+	    
 		var lastID = 0;
 		var page = 1;
 		var last = 0;
