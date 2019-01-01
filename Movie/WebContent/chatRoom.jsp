@@ -43,9 +43,6 @@
 	
 	String userID = (String) session.getAttribute("userID");
 	
-	System.out.println("1. userID:" + userID);
-	System.out.println("2. nickName:" + nickName);
-	System.out.println("3. userDAO.getProfile(userID):" + userDAO.getProfile(userID));
 	if (imgSrc == null || nickName == null) {
 		imgSrc = userDAO.getProfile(userID);
 		nickName = userID;
@@ -57,13 +54,10 @@
 	
 	ArrayList<UserListDTO> userList = userListDAO.getUserList();
 	
-	System.out.println("userList: " + userList);
-	System.out.println("userList.size(): " + userList.size());
 	for (int i=0; i < userList.size(); i++) {
 		users.add(i, userList.get(i).toString()); 	
 	}
 
-	 System.out.println("Arrays: "+users);
 	
  	if (nickName == null) {
  		session.setAttribute("messageType", "실패 메시지");
@@ -685,7 +679,7 @@ var CreateProxy = function(wsUri) {
 	    
 	    
 	   return oneToOne(fromName, fromImg, toName, toImg, toSessionId, fromSessionId) 
-	 }
+	 };
  
 	 
 
@@ -856,7 +850,7 @@ var CreateProxy = function(wsUri) {
 		        	var chat = e.data;
 		        	console.log("e.fromPerson: ",e.fromPerson);
 		        	console.log("chat: ",chat);
-		        	if (chat.match('님이 들어왔습니다.')){
+		        	if(chat.match('님이 들어왔습니다.')){
 		        		console.log("chat", chat);
 		        		
 		        		var userAry = chat.split('님이 들어왔습니다.')
