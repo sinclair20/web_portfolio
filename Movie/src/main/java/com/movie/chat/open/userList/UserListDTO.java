@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 public class UserListDTO {
 	private String userName;
-	private String userProfile;
+	
 	
 	public String getUserName() {
 		return userName;
@@ -14,16 +14,6 @@ public class UserListDTO {
 		this.userName = userName;
 	}
 	
-	public String getUserProfile() {
-		return userProfile;
-	}
-	public void setUserProfile(String userProfile) {
-		this.userProfile = userProfile;
-	}
-	
-	@Override
-	public String toString() {
-	  return userName;
-	}
+
 
 }

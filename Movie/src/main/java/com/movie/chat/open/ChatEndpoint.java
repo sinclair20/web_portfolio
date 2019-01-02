@@ -2,9 +2,6 @@ package com.movie.chat.open;
 
 import java.io.IOException;
 
-
-
-
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.util.ArrayList;
@@ -19,6 +16,9 @@ import java.util.logging.Logger;
 
 import javax.json.Json;
 import javax.json.JsonArrayBuilder;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.websocket.CloseReason;
 import javax.websocket.EncodeException;
 import javax.websocket.EndpointConfig;
@@ -30,6 +30,7 @@ import javax.websocket.Session;
 import javax.websocket.server.ServerEndpoint;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.movie.chat.member.ChatDAO;
 import com.movie.chat.open.userList.UserListDAO;
 
 
@@ -42,6 +43,7 @@ public class ChatEndpoint {
 	private Session session;
 	UserListDAO userListDAO = new UserListDAO();
 	ArrayList<String> userList = new ArrayList<String>();
+	ArrayList<String> userNames = new ArrayList<String>();
 	static List<String> dataList;
 	
 	@OnOpen
@@ -49,10 +51,11 @@ public class ChatEndpoint {
 	}
 		
 	@OnMessage
-	public void onMessage(final Session session, final String messageJson) throws UnsupportedEncodingException, EncodeException {
+	public void onMessage(final Session session, final String messageJson) throws EncodeException, IOException {
+		
 		ObjectMapper mapper = new ObjectMapper();
 		ChatMessage chatMessage = null;
-        
+		
 
 		try {
 			chatMessage = mapper.readValue(messageJson, ChatMessage.class);
@@ -66,22 +69,30 @@ public class ChatEndpoint {
 		Map<String, Object> properties = session.getUserProperties();
 		if (chatMessage.getMessageType().equals(MessageType.LOGIN)) {
 			String name = chatMessage.getMessage();
+			System.out.println(name);
 			properties.put("name", URLDecoder.decode(name, "UTF-8"));
-		
-								
-			/*userListDAO.write(URLDecoder.decode(userName,"UTF-8"));*/
+			
+			
+			int number = name.indexOf("r}`3*");
+			String names = name.substring(0, number);
+			
+			/*if (!userNames.isEmpty() && isExistsName(names)) {
+				String sessionId = session.getId();
+				System.out.println("중복됨 " + names);
+				mainRoom.leaveUser(sessionId,"1wnd:qh.r");
+			}*/
+			
+			
+			UserListDAO userListDAO = new UserListDAO();
+			
+			userListDAO.write(names);
 			mainRoom.join(session);
-			System.out.println("sendUserList: " + sendUserList());
+			
 			this.session = session;
 			connections.add(mainRoom);
-			
+						
 			mainRoom.sendMessage(URLDecoder.decode(name, "UTF-8") + sendUserList() + "님이 들어왔습니다.");
-			/*if (strFrom == null || strFrom.equals("") || strTo == null || strTo.equals("") || strToSession == null || strToSession.equals("")) {
-				mainRoom.sendMessage(URLDecoder.decode(name, "UTF-8") + sendUserList() + "님이 들어왔습니다.");
-			} else {
-				sendToOne(strToSession, strTo, strFrom, strMsg);	
-			}*/
-				
+		
 		} else if (chatMessage.getMessageType() == MessageType.MESSAGE) {
 			
 			String name = (String) properties.get("name");
@@ -95,10 +106,6 @@ public class ChatEndpoint {
 			String strTo = chatMessage.getChatPerson();
 			String strToSession = chatMessage.getChatPersonSession();
 			
-		/*	System.out.println(strMsg);
-			System.out.println(strFrom);
-			System.out.println(strTo);
-			System.out.println(strToSession);*/
 			loginToOneChat(strToSession, strTo, strFrom, strMsg);				
 			
 		} else if (chatMessage.getMessageType() == MessageType.MESSAGETOONE) {
@@ -111,31 +118,35 @@ public class ChatEndpoint {
 			String strToSession = chatMessage.getChatPersonSession();
 			String strFromSession = chatMessage.getFromPersonSession();
 			System.out.println("strFromSession: "+strFromSession);
-		/*	System.out.println(strMsg);
-			System.out.println(strFrom);
-			System.out.println(strTo);
-			System.out.println(strToSession);*/
+		
 			sendToOne(strToSession, strTo, strFrom, strMsg, strFromSession);				
 			
 		}
 	} 
 	
-	
-		public String sendUserList() {
+		
 
-			for (Session ses : mainRoom.getUserList()) {
-				for (int i=0; i< mainRoom.getUserList().size(); i++) {
-					userList.add(i, ses.getId() + "$5_~" + ses.getUserProperties().get("name").toString().replace("r}`3*", "(&c-1./") );
-					
-				}
-			 HashSet<String> distinctData = new HashSet<String>(userList);
-		          dataList = new ArrayList<String>(distinctData);
-		          System.out.println("dataList: " + userList);
+		public String sendUserList() {
 			
-				}
+			for (Session ses : mainRoom.getUserList()) {
+				
+				int i = 0;
+				userList.add(i, ses.getId() + "$5_~" + ses.getUserProperties().get("name").toString().replace("r}`3*", "(&c-1./") );
+				userNames.add(i, ses.getUserProperties().get("name").toString().split("r}`3*")[0]);
+				i++;
+					
+				
+				HashSet<String> distinctData = new HashSet<String>(userList);
+			    dataList = new ArrayList<String>(distinctData);
+			    System.out.println("dataList: " + userList);
+			
+			}
 			 return "r}`3*" + dataList;
 		 }
 		
+	
+		
+
 		
 		public void sendToOne(String strCurSessionId, String strTo, String strFrom, String strMessage, String strFromSession){
 			
@@ -148,22 +159,13 @@ public class ChatEndpoint {
 			mainRoom.sendMessageToOne(strMsg, strCurSessionId, fromName, strFromSession);
 		}
 		
-		/*public void sendToOne(String strCurSessionId, String strTo, String strFrom, String strMessage){
-			String fromName = (String) session.getUserProperties().get("name");
-			String[] toName = strTo.split("http://");
-			System.out.println("toName: " + toName);
-			System.out.println("toName2: " + toName[0].toString());
-			String toUser = toName[0].toString();
-			String strMsg = toName[0].toString() + "r}`3*" + strFrom + "r}`3*" + strMessage;				
-			mainRoom.sendMessageToOne(strMsg, toUser, fromName);
-		}
-		*/
+	
 		
 
 		public void loginToOneChat(String strCurSessionId, String strTo, String strFrom, String strMessage){	
 			String fromName = (String) session.getUserProperties().get("name");
 			System.out.println("fromName: "+fromName);
-			/*boolean sessionId = session.getUserProperties().get("name").equals(fromName);*/
+			
 			String fromSessionId = "";
 			for (Session session : MainRoom.sessions) {
 				if (session.isOpen()) {
@@ -182,9 +184,11 @@ public class ChatEndpoint {
 			
 		@OnClose
 		public void onClose(Session session, CloseReason reason) {	
-			String userName= (String) session.getUserProperties().get("name");
+			String name= (String) session.getUserProperties().get("name");
+			int number = name.indexOf("r}`3*");
+			String names = name.substring(0, number);
 			try {
-			userListDAO.deleteUser(URLDecoder.decode(userName,"UTF-8"));
+			userListDAO.deleteUser(URLDecoder.decode(names,"UTF-8"));
 			} catch (UnsupportedEncodingException e) {
 					// TODO Auto-generated catch block
 				e.printStackTrace();
